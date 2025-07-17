@@ -1,9 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -12,632 +20,545 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Progress } from "@/components/ui/progress";
 import {
-  Calendar,
-  MapPin,
+  Rocket,
   Users,
-  Clock,
+  Calendar,
+  DollarSign,
+  Award,
   Search,
   Filter,
-  Award,
+  Clock,
+  MapPin,
   Target,
-  Lightbulb,
-  Rocket,
   BookOpen,
-  Trophy,
-  ArrowRight,
-  CheckCircle,
-  Star,
+  Zap,
 } from "lucide-react";
 
+const initiatives = [
+  {
+    id: 1,
+    title: "AI Startup Accelerator",
+    description:
+      "3-month intensive program for AI-focused startups with mentorship, funding, and go-to-market support.",
+    type: "Accelerator",
+    duration: "3 months",
+    location: "San Francisco, CA",
+    funding: "$100K",
+    equity: "6%",
+    startDate: "April 1, 2024",
+    applicationDeadline: "March 15, 2024",
+    status: "open",
+    participants: 12,
+    maxParticipants: 15,
+    image: "🤖",
+    tags: ["AI", "Machine Learning", "B2B"],
+    organizer: "TechVenture Labs",
+    benefits: [
+      "$100K funding",
+      "Expert mentorship",
+      "Demo day",
+      "Office space",
+    ],
+    requirements: ["AI/ML focus", "MVP ready", "Team of 2-4", "B2B market"],
+  },
+  {
+    id: 2,
+    title: "Women Founders Bootcamp",
+    description:
+      "Intensive 6-week program designed specifically for women entrepreneurs to build and scale their startups.",
+    type: "Bootcamp",
+    duration: "6 weeks",
+    location: "Virtual",
+    funding: "N/A",
+    equity: "0%",
+    startDate: "March 20, 2024",
+    applicationDeadline: "March 10, 2024",
+    status: "closing-soon",
+    participants: 28,
+    maxParticipants: 30,
+    image: "👩‍💼",
+    tags: ["Women", "Leadership", "Networking"],
+    organizer: "WomenTech Alliance",
+    benefits: [
+      "Mentorship network",
+      "Pitch training",
+      "Investor connections",
+      "Community access",
+    ],
+    requirements: [
+      "Women-led startup",
+      "Early stage",
+      "Scalable business model",
+      "Commitment to program",
+    ],
+  },
+  {
+    id: 3,
+    title: "HealthTech Innovation Challenge",
+    description:
+      "Global competition for healthcare startups solving critical problems in digital health and medical technology.",
+    type: "Challenge",
+    duration: "4 months",
+    location: "Boston, MA",
+    funding: "$250K",
+    equity: "0%",
+    startDate: "May 1, 2024",
+    applicationDeadline: "April 15, 2024",
+    status: "open",
+    participants: 45,
+    maxParticipants: 100,
+    image: "🏥",
+    tags: ["HealthTech", "Innovation", "Competition"],
+    organizer: "HealthTech Ventures",
+    benefits: [
+      "$250K prize",
+      "Hospital partnerships",
+      "Regulatory guidance",
+      "Clinical trials support",
+    ],
+    requirements: [
+      "Healthcare focus",
+      "Proven traction",
+      "Regulatory compliance",
+      "Clinical validation",
+    ],
+  },
+  {
+    id: 4,
+    title: "Sustainable Tech Incubator",
+    description:
+      "12-month program for startups developing sustainable technology solutions for climate change and environmental challenges.",
+    type: "Incubator",
+    duration: "12 months",
+    location: "Austin, TX",
+    funding: "$50K",
+    equity: "5%",
+    startDate: "June 1, 2024",
+    applicationDeadline: "May 1, 2024",
+    status: "open",
+    participants: 8,
+    maxParticipants: 10,
+    image: "🌱",
+    tags: ["Sustainability", "CleanTech", "Environment"],
+    organizer: "Green Innovation Hub",
+    benefits: [
+      "$50K funding",
+      "Lab access",
+      "Sustainability experts",
+      "Corporate partnerships",
+    ],
+    requirements: [
+      "Environmental impact",
+      "Scalable solution",
+      "Technical feasibility",
+      "Market validation",
+    ],
+  },
+  {
+    id: 5,
+    title: "Fintech Fast Track",
+    description:
+      "8-week intensive program for fintech startups with focus on regulatory compliance and market entry strategies.",
+    type: "Fast Track",
+    duration: "8 weeks",
+    location: "New York, NY",
+    funding: "$75K",
+    equity: "4%",
+    startDate: "April 15, 2024",
+    applicationDeadline: "March 30, 2024",
+    status: "closed",
+    participants: 20,
+    maxParticipants: 20,
+    image: "💰",
+    tags: ["Fintech", "Compliance", "Banking"],
+    organizer: "Financial Innovation Lab",
+    benefits: [
+      "$75K funding",
+      "Regulatory support",
+      "Bank partnerships",
+      "Compliance training",
+    ],
+    requirements: [
+      "Financial services",
+      "Regulatory readiness",
+      "B2B focus",
+      "Experienced team",
+    ],
+  },
+  {
+    id: 6,
+    title: "EdTech Innovation Program",
+    description:
+      "10-week program for education technology startups focused on K-12 and higher education solutions.",
+    type: "Program",
+    duration: "10 weeks",
+    location: "Seattle, WA",
+    funding: "$60K",
+    equity: "3%",
+    startDate: "September 1, 2024",
+    applicationDeadline: "August 1, 2024",
+    status: "upcoming",
+    participants: 0,
+    maxParticipants: 12,
+    image: "📚",
+    tags: ["EdTech", "Education", "K-12"],
+    organizer: "Education Ventures",
+    benefits: [
+      "$60K funding",
+      "School partnerships",
+      "Educator network",
+      "Pilot programs",
+    ],
+    requirements: [
+      "Education focus",
+      "Proven pedagogy",
+      "User validation",
+      "Scalable platform",
+    ],
+  },
+];
+
+const types = [
+  "All",
+  "Accelerator",
+  "Bootcamp",
+  "Challenge",
+  "Incubator",
+  "Fast Track",
+  "Program",
+];
+const statuses = ["All", "Open", "Closing Soon", "Closed", "Upcoming"];
+
 export default function InitiativesPage() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedType, setSelectedType] = useState("all");
-  const [selectedStatus, setSelectedStatus] = useState("all");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedType, setSelectedType] = useState("All");
+  const [selectedStatus, setSelectedStatus] = useState("All");
+  const [filteredInitiatives, setFilteredInitiatives] = useState(initiatives);
 
-  const initiatives = [
-    {
-      id: 1,
-      title: "Global Startup Accelerator 2025",
-      type: "accelerator",
-      status: "open",
-      duration: "12 weeks",
-      startDate: "2025-03-01",
-      location: "Virtual + San Francisco",
-      participants: 50,
-      maxParticipants: 100,
-      description:
-        "Intensive 12-week program designed to accelerate early-stage startups with mentorship, funding opportunities, and global market access.",
-      image:
-        "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800",
-      benefits: [
-        "$50K Seed Funding",
-        "Expert Mentorship",
-        "Global Network Access",
-        "Demo Day Pitch",
-      ],
-      requirements: [
-        "Early-stage startup",
-        "Scalable business model",
-        "Committed founding team",
-      ],
-      applicationDeadline: "2025-02-15",
-      featured: true,
-      difficulty: "Intermediate",
-      rating: 4.8,
-      reviews: 124,
-    },
-    {
-      id: 2,
-      title: "AI Innovation Challenge",
-      type: "challenge",
-      status: "open",
-      duration: "6 weeks",
-      startDate: "2025-02-01",
-      location: "Global (Virtual)",
-      participants: 200,
-      maxParticipants: 500,
-      description:
-        "Compete to build innovative AI solutions that solve real-world problems. Winners receive funding and mentorship opportunities.",
-      image:
-        "https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=800",
-      benefits: [
-        "$100K Prize Pool",
-        "AI Expert Mentorship",
-        "Tech Resources",
-        "Industry Recognition",
-      ],
-      requirements: [
-        "AI/ML experience",
-        "Working prototype",
-        "Problem-solution fit",
-      ],
-      applicationDeadline: "2025-01-25",
-      featured: true,
-      difficulty: "Advanced",
-      rating: 4.9,
-      reviews: 89,
-    },
-    {
-      id: 3,
-      title: "Sustainable Tech Bootcamp",
-      type: "bootcamp",
-      status: "open",
-      duration: "8 weeks",
-      startDate: "2025-02-15",
-      location: "Berlin, Germany",
-      participants: 30,
-      maxParticipants: 40,
-      description:
-        "Learn to build sustainable technology solutions with focus on environmental impact and social responsibility.",
-      image:
-        "https://images.pexels.com/photos/3861458/pexels-photo-3861458.jpeg?auto=compress&cs=tinysrgb&w=800",
-      benefits: [
-        "Sustainability Certification",
-        "Green Tech Network",
-        "Impact Measurement Tools",
-        "Investor Connections",
-      ],
-      requirements: [
-        "Tech background",
-        "Sustainability passion",
-        "Commitment to program",
-      ],
-      applicationDeadline: "2025-02-01",
-      featured: false,
-      difficulty: "Beginner",
-      rating: 4.7,
-      reviews: 56,
-    },
-    {
-      id: 4,
-      title: "Women in Tech Leadership Program",
-      type: "program",
-      status: "open",
-      duration: "16 weeks",
-      startDate: "2025-03-15",
-      location: "New York, NY",
-      participants: 25,
-      maxParticipants: 30,
-      description:
-        "Empowering women entrepreneurs with leadership skills, networking opportunities, and mentorship from successful female leaders.",
-      image:
-        "https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800",
-      benefits: [
-        "Leadership Training",
-        "Female Mentor Network",
-        "Speaking Opportunities",
-        "Funding Access",
-      ],
-      requirements: [
-        "Female entrepreneur",
-        "Leadership potential",
-        "Growth-stage startup",
-      ],
-      applicationDeadline: "2025-03-01",
-      featured: false,
-      difficulty: "Intermediate",
-      rating: 4.9,
-      reviews: 78,
-    },
-    {
-      id: 5,
-      title: "FinTech Innovation Lab",
-      type: "lab",
-      status: "closed",
-      duration: "10 weeks",
-      startDate: "2024-11-01",
-      location: "London, UK",
-      participants: 40,
-      maxParticipants: 40,
-      description:
-        "Collaborative lab for FinTech startups to experiment with new financial technologies and regulatory frameworks.",
-      image:
-        "https://images.pexels.com/photos/3861972/pexels-photo-3861972.jpeg?auto=compress&cs=tinysrgb&w=800",
-      benefits: [
-        "Regulatory Guidance",
-        "Banking Partnerships",
-        "Tech Infrastructure",
-        "Market Access",
-      ],
-      requirements: ["FinTech focus", "Regulatory compliance", "MVP ready"],
-      applicationDeadline: "2024-10-15",
-      featured: false,
-      difficulty: "Advanced",
-      rating: 4.6,
-      reviews: 34,
-    },
-    {
-      id: 6,
-      title: "Healthcare Innovation Sprint",
-      type: "sprint",
-      status: "upcoming",
-      duration: "4 weeks",
-      startDate: "2025-04-01",
-      location: "Boston, MA",
-      participants: 0,
-      maxParticipants: 60,
-      description:
-        "Fast-paced sprint to develop healthcare solutions addressing current medical challenges and patient needs.",
-      image:
-        "https://images.pexels.com/photos/3861961/pexels-photo-3861961.jpeg?auto=compress&cs=tinysrgb&w=800",
-      benefits: [
-        "Healthcare Expert Access",
-        "Clinical Trial Support",
-        "Regulatory Guidance",
-        "Hospital Partnerships",
-      ],
-      requirements: [
-        "Healthcare focus",
-        "Medical validation",
-        "Scalable solution",
-      ],
-      applicationDeadline: "2025-03-20",
-      featured: false,
-      difficulty: "Advanced",
-      rating: 0,
-      reviews: 0,
-    },
-  ];
+  const handleFilter = () => {
+    let filtered = initiatives;
 
-  const types = [
-    { value: "all", label: "All Types" },
-    { value: "accelerator", label: "Accelerators" },
-    { value: "bootcamp", label: "Bootcamps" },
-    { value: "challenge", label: "Challenges" },
-    { value: "program", label: "Programs" },
-    { value: "lab", label: "Innovation Labs" },
-    { value: "sprint", label: "Sprints" },
-  ];
+    if (searchTerm) {
+      filtered = filtered.filter(
+        (initiative) =>
+          initiative.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          initiative.description
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase()) ||
+          initiative.tags.some((tag) =>
+            tag.toLowerCase().includes(searchTerm.toLowerCase())
+          )
+      );
+    }
 
-  const statuses = [
-    { value: "all", label: "All Status" },
-    { value: "open", label: "Open for Applications" },
-    { value: "upcoming", label: "Upcoming" },
-    { value: "closed", label: "Closed" },
-  ];
+    if (selectedType !== "All") {
+      filtered = filtered.filter(
+        (initiative) => initiative.type === selectedType
+      );
+    }
 
-  const getStatusColor = (status: string) => {
+    if (selectedStatus !== "All") {
+      const statusMap: { [key: string]: string } = {
+        Open: "open",
+        "Closing Soon": "closing-soon",
+        Closed: "closed",
+        Upcoming: "upcoming",
+      };
+      filtered = filtered.filter(
+        (initiative) => initiative.status === statusMap[selectedStatus]
+      );
+    }
+
+    setFilteredInitiatives(filtered);
+  };
+
+  const getStatusBadge = (status: string) => {
     switch (status) {
       case "open":
-        return "bg-green-100 text-green-800 border-green-200";
-      case "upcoming":
-        return "bg-blue-100 text-blue-800 border-blue-200";
+        return <Badge className="bg-green-100 text-green-800">Open</Badge>;
+      case "closing-soon":
+        return (
+          <Badge className="bg-orange-100 text-orange-800">Closing Soon</Badge>
+        );
       case "closed":
-        return "bg-gray-100 text-gray-800 border-gray-200";
+        return <Badge className="bg-red-100 text-red-800">Closed</Badge>;
+      case "upcoming":
+        return <Badge className="bg-blue-100 text-blue-800">Upcoming</Badge>;
       default:
-        return "bg-gray-100 text-gray-800 border-gray-200";
+        return <Badge variant="secondary">Unknown</Badge>;
     }
   };
 
   const getTypeIcon = (type: string) => {
     switch (type) {
-      case "accelerator":
-        return Rocket;
-      case "bootcamp":
-        return BookOpen;
-      case "challenge":
-        return Trophy;
-      case "program":
-        return Target;
-      case "lab":
-        return Lightbulb;
-      case "sprint":
-        return Award;
+      case "Accelerator":
+        return <Rocket className="h-5 w-5" />;
+      case "Bootcamp":
+        return <Zap className="h-5 w-5" />;
+      case "Challenge":
+        return <Award className="h-5 w-5" />;
+      case "Incubator":
+        return <BookOpen className="h-5 w-5" />;
       default:
-        return Target;
+        return <Target className="h-5 w-5" />;
     }
   };
-
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty) {
-      case "Beginner":
-        return "bg-green-100 text-green-800";
-      case "Intermediate":
-        return "bg-yellow-100 text-yellow-800";
-      case "Advanced":
-        return "bg-red-100 text-red-800";
-      default:
-        return "bg-gray-100 text-gray-800";
-    }
-  };
-
-  const filteredInitiatives = initiatives.filter((initiative) => {
-    const matchesSearch =
-      initiative.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      initiative.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesType =
-      selectedType === "all" || initiative.type === selectedType;
-    const matchesStatus =
-      selectedStatus === "all" || initiative.status === selectedStatus;
-    return matchesSearch && matchesType && matchesStatus;
-  });
-
-  const stats = [
-    { label: "Active Programs", value: "12", icon: Target },
-    { label: "Participants", value: "2,500+", icon: Users },
-    { label: "Success Rate", value: "85%", icon: Trophy },
-    { label: "Funding Raised", value: "$50M+", icon: Award },
-  ];
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-slate-50 to-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Badge className="mb-6 px-4 py-2 bg-gradient-to-r from-[#00BFCB]/10 to-[#891C74]/10 text-[#00BFCB] border-[#00BFCB]/20">
-            <Rocket className="w-4 h-4 mr-2" />
-            Growth Programs
-          </Badge>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-            Accelerate Your{" "}
-            <span className="text-gradient">Startup Journey</span>
-          </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8 leading-relaxed">
-            Join our comprehensive programs, challenges, and bootcamps designed
-            to accelerate your startup growth and connect you with the resources
-            you need to succeed.
-          </p>
-        </div>
-      </section>
+      <Header />
+      <main className="py-12">
+        <div className="container mx-auto px-6 lg:px-20">
+          <div className="mb-8">
+            <h1 className="text-4xl font-bold text-neutral-dark mb-4">
+              Programs & Initiatives
+            </h1>
+            <p className="text-lg text-gray-600">
+              Discover accelerators, bootcamps, and innovation programs to grow
+              your startup
+            </p>
+          </div>
 
-      {/* Stats Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {stats.map((stat, index) => (
-              <Card key={index} className="text-center border-0 shadow-lg">
-                <CardContent className="p-6">
-                  <div className="w-12 h-12 bg-gradient-to-br from-[#00BFCB]/20 to-[#891C74]/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <stat.icon className="w-6 h-6 text-[#00BFCB]" />
+          {/* Search and Filters */}
+          <Card className="border-0 shadow-md mb-8">
+            <CardContent className="p-6">
+              <div className="flex flex-col md:flex-row gap-4">
+                <div className="flex-1">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                    <Input
+                      placeholder="Search programs, technologies, or focus areas..."
+                      className="pl-10"
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                    />
                   </div>
-                  <div className="text-2xl font-bold text-gray-900 mb-1">
-                    {stat.value}
+                </div>
+
+                <Select value={selectedType} onValueChange={setSelectedType}>
+                  <SelectTrigger className="w-full md:w-48">
+                    <SelectValue placeholder="Program Type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {types.map((type) => (
+                      <SelectItem key={type} value={type}>
+                        {type}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <Select
+                  value={selectedStatus}
+                  onValueChange={setSelectedStatus}
+                >
+                  <SelectTrigger className="w-full md:w-48">
+                    <SelectValue placeholder="Status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {statuses.map((status) => (
+                      <SelectItem key={status} value={status}>
+                        {status}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <Button
+                  onClick={handleFilter}
+                  className="bg-teal-primary hover:bg-teal-primary/90"
+                >
+                  <Filter className="h-4 w-4 mr-2" />
+                  Filter
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Results */}
+          <div className="mb-6">
+            <p className="text-gray-600">
+              Showing {filteredInitiatives.length} programs
+            </p>
+          </div>
+
+          {/* Initiatives Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {filteredInitiatives.map((initiative) => (
+              <Card
+                key={initiative.id}
+                className="border-0 shadow-md hover:shadow-lg transition-shadow duration-300"
+              >
+                <CardHeader className="pb-4">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center space-x-3">
+                      <div className="text-3xl">{initiative.image}</div>
+                      <div className="flex items-center space-x-2 text-teal-primary">
+                        {getTypeIcon(initiative.type)}
+                        <Badge variant="outline" className="text-xs">
+                          {initiative.type}
+                        </Badge>
+                      </div>
+                    </div>
+                    {getStatusBadge(initiative.status)}
                   </div>
-                  <div className="text-sm text-gray-600">{stat.label}</div>
+                  <CardTitle className="text-xl">{initiative.title}</CardTitle>
+                  <CardDescription className="text-gray-600">
+                    {initiative.description}
+                  </CardDescription>
+                </CardHeader>
+
+                <CardContent className="space-y-6">
+                  {/* Key Details */}
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div className="flex items-center space-x-2 text-gray-500">
+                      <Clock className="h-4 w-4" />
+                      <span>{initiative.duration}</span>
+                    </div>
+                    <div className="flex items-center space-x-2 text-gray-500">
+                      <MapPin className="h-4 w-4" />
+                      <span>{initiative.location}</span>
+                    </div>
+                    <div className="flex items-center space-x-2 text-gray-500">
+                      <DollarSign className="h-4 w-4" />
+                      <span>{initiative.funding}</span>
+                    </div>
+                    <div className="flex items-center space-x-2 text-gray-500">
+                      <Users className="h-4 w-4" />
+                      <span>
+                        {initiative.participants}/{initiative.maxParticipants}{" "}
+                        participants
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Progress Bar */}
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-gray-600">Applications</span>
+                      <span className="text-gray-600">
+                        {initiative.participants}/{initiative.maxParticipants}
+                      </span>
+                    </div>
+                    <Progress
+                      value={
+                        (initiative.participants / initiative.maxParticipants) *
+                        100
+                      }
+                      className="h-2"
+                    />
+                  </div>
+
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-1">
+                    {initiative.tags.map((tag) => (
+                      <Badge
+                        key={tag}
+                        variant="outline"
+                        className="text-xs bg-gray-50"
+                      >
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+
+                  {/* Benefits */}
+                  <div>
+                    <h4 className="font-medium text-sm mb-2">What You Get:</h4>
+                    <div className="grid grid-cols-2 gap-1 text-xs text-gray-600">
+                      {initiative.benefits.map((benefit, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center space-x-1"
+                        >
+                          <div className="w-1 h-1 bg-teal-primary rounded-full"></div>
+                          <span>{benefit}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Requirements */}
+                  <div>
+                    <h4 className="font-medium text-sm mb-2">Requirements:</h4>
+                    <div className="grid grid-cols-2 gap-1 text-xs text-gray-600">
+                      {initiative.requirements.map((requirement, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center space-x-1"
+                        >
+                          <div className="w-1 h-1 bg-magenta-primary rounded-full"></div>
+                          <span>{requirement}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Dates */}
+                  <div className="bg-gray-50 rounded-lg p-3 text-sm">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-gray-600">
+                        Application Deadline:
+                      </span>
+                      <span className="font-medium">
+                        {initiative.applicationDeadline}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-600">Program Starts:</span>
+                      <span className="font-medium">
+                        {initiative.startDate}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex space-x-2">
+                    <Button
+                      className="bg-teal-primary hover:bg-teal-primary/90 flex-1"
+                      disabled={initiative.status === "closed"}
+                    >
+                      {initiative.status === "closed"
+                        ? "Applications Closed"
+                        : initiative.status === "upcoming"
+                        ? "Coming Soon"
+                        : "Apply Now"}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="border-magenta-primary text-magenta-primary hover:bg-magenta-primary hover:text-white"
+                    >
+                      Learn More
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
             ))}
           </div>
+
+          {filteredInitiatives.length === 0 && (
+            <div className="text-center py-12">
+              <p className="text-gray-500 text-lg mb-4">
+                No programs found matching your criteria
+              </p>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setSearchTerm("");
+                  setSelectedType("All");
+                  setSelectedStatus("All");
+                  setFilteredInitiatives(initiatives);
+                }}
+              >
+                Clear Filters
+              </Button>
+            </div>
+          )}
         </div>
-      </section>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Search and Filters */}
-        <div className="mb-8 flex flex-col md:flex-row gap-4">
-          <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-            <Input
-              placeholder="Search initiatives..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10"
-            />
-          </div>
-          <Select value={selectedType} onValueChange={setSelectedType}>
-            <SelectTrigger className="w-full md:w-48">
-              <SelectValue placeholder="Filter by type" />
-            </SelectTrigger>
-            <SelectContent>
-              {types.map((type) => (
-                <SelectItem key={type.value} value={type.value}>
-                  {type.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Select value={selectedStatus} onValueChange={setSelectedStatus}>
-            <SelectTrigger className="w-full md:w-48">
-              <SelectValue placeholder="Filter by status" />
-            </SelectTrigger>
-            <SelectContent>
-              {statuses.map((status) => (
-                <SelectItem key={status.value} value={status.value}>
-                  {status.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-
-        {/* Featured Initiatives */}
-        <div className="mb-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">
-            Featured Programs
-          </h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {filteredInitiatives
-              .filter((initiative) => initiative.featured)
-              .map((initiative) => {
-                const TypeIcon = getTypeIcon(initiative.type);
-                return (
-                  <Card
-                    key={initiative.id}
-                    className="group hover:shadow-xl transition-all duration-300 overflow-hidden"
-                  >
-                    <div className="relative">
-                      <img
-                        src={initiative.image}
-                        alt={initiative.title}
-                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                      <div className="absolute top-4 left-4 flex space-x-2">
-                        <Badge className="bg-[#00BFCB] text-white">
-                          Featured
-                        </Badge>
-                        <Badge className={getStatusColor(initiative.status)}>
-                          {initiative.status.charAt(0).toUpperCase() +
-                            initiative.status.slice(1)}
-                        </Badge>
-                      </div>
-                      <div className="absolute top-4 right-4">
-                        <Badge
-                          className={getDifficultyColor(initiative.difficulty)}
-                        >
-                          {initiative.difficulty}
-                        </Badge>
-                      </div>
-                    </div>
-                    <CardHeader className="pb-4">
-                      <div className="flex items-center space-x-3 mb-2">
-                        <div className="w-8 h-8 bg-[#00BFCB]/10 rounded-lg flex items-center justify-center">
-                          <TypeIcon className="w-4 h-4 text-[#00BFCB]" />
-                        </div>
-                        <Badge variant="outline" className="text-xs">
-                          {
-                            types.find((t) => t.value === initiative.type)
-                              ?.label
-                          }
-                        </Badge>
-                        {initiative.rating > 0 && (
-                          <div className="flex items-center space-x-1">
-                            <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                            <span className="text-sm font-medium">
-                              {initiative.rating}
-                            </span>
-                            <span className="text-sm text-gray-500">
-                              ({initiative.reviews})
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                      <CardTitle className="text-xl font-semibold text-gray-900 group-hover:text-[#00BFCB] transition-colors">
-                        {initiative.title}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <p className="text-gray-600 text-sm leading-relaxed">
-                        {initiative.description}
-                      </p>
-
-                      <div className="grid grid-cols-2 gap-4 text-sm text-gray-500">
-                        <div className="flex items-center space-x-2">
-                          <Clock className="w-4 h-4" />
-                          <span>{initiative.duration}</span>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <Calendar className="w-4 h-4" />
-                          <span>
-                            {new Date(
-                              initiative.startDate
-                            ).toLocaleDateString()}
-                          </span>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <MapPin className="w-4 h-4" />
-                          <span>{initiative.location}</span>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <Users className="w-4 h-4" />
-                          <span>
-                            {initiative.participants}/
-                            {initiative.maxParticipants}
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="space-y-3">
-                        <div>
-                          <h4 className="font-medium text-gray-900 mb-2">
-                            Key Benefits:
-                          </h4>
-                          <div className="flex flex-wrap gap-2">
-                            {initiative.benefits
-                              .slice(0, 3)
-                              .map((benefit, index) => (
-                                <Badge
-                                  key={index}
-                                  variant="secondary"
-                                  className="text-xs"
-                                >
-                                  {benefit}
-                                </Badge>
-                              ))}
-                            {initiative.benefits.length > 3 && (
-                              <Badge variant="secondary" className="text-xs">
-                                +{initiative.benefits.length - 3} more
-                              </Badge>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center justify-between pt-4 border-t">
-                        <div className="text-sm text-gray-500">
-                          Apply by:{" "}
-                          {new Date(
-                            initiative.applicationDeadline
-                          ).toLocaleDateString()}
-                        </div>
-                        <Button
-                          className="bg-[#00BFCB] hover:bg-[#00BFCB]/90 text-white"
-                          disabled={initiative.status === "closed"}
-                        >
-                          {initiative.status === "closed"
-                            ? "Closed"
-                            : "Apply Now"}
-                          <ArrowRight className="w-4 h-4 ml-2" />
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                );
-              })}
-          </div>
-        </div>
-
-        {/* All Initiatives */}
-        <div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">
-            All Programs
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredInitiatives.map((initiative) => {
-              const TypeIcon = getTypeIcon(initiative.type);
-              return (
-                <Card
-                  key={initiative.id}
-                  className="group hover:shadow-xl transition-all duration-300 overflow-hidden"
-                >
-                  <div className="relative">
-                    <img
-                      src={initiative.image}
-                      alt={initiative.title}
-                      className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <div className="absolute top-2 left-2">
-                      <Badge className={getStatusColor(initiative.status)}>
-                        {initiative.status.charAt(0).toUpperCase() +
-                          initiative.status.slice(1)}
-                      </Badge>
-                    </div>
-                    <div className="absolute top-2 right-2">
-                      <Badge
-                        className={getDifficultyColor(initiative.difficulty)}
-                      >
-                        {initiative.difficulty}
-                      </Badge>
-                    </div>
-                    {initiative.featured && (
-                      <div className="absolute bottom-2 left-2">
-                        <Badge className="bg-[#00BFCB] text-white text-xs">
-                          Featured
-                        </Badge>
-                      </div>
-                    )}
-                  </div>
-                  <CardHeader className="pb-3">
-                    <div className="flex items-center space-x-2 mb-2">
-                      <div className="w-6 h-6 bg-[#00BFCB]/10 rounded flex items-center justify-center">
-                        <TypeIcon className="w-3 h-3 text-[#00BFCB]" />
-                      </div>
-                      <Badge variant="outline" className="text-xs">
-                        {types.find((t) => t.value === initiative.type)?.label}
-                      </Badge>
-                      {initiative.rating > 0 && (
-                        <div className="flex items-center space-x-1">
-                          <Star className="w-3 h-3 text-yellow-400 fill-current" />
-                          <span className="text-xs">{initiative.rating}</span>
-                        </div>
-                      )}
-                    </div>
-                    <CardTitle className="text-lg font-semibold text-gray-900 group-hover:text-[#00BFCB] transition-colors line-clamp-2">
-                      {initiative.title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
-                    <p className="text-gray-600 text-sm leading-relaxed line-clamp-2">
-                      {initiative.description}
-                    </p>
-
-                    <div className="grid grid-cols-2 gap-2 text-xs text-gray-500">
-                      <div className="flex items-center space-x-1">
-                        <Clock className="w-3 h-3" />
-                        <span>{initiative.duration}</span>
-                      </div>
-                      <div className="flex items-center space-x-1">
-                        <Users className="w-3 h-3" />
-                        <span>
-                          {initiative.participants}/{initiative.maxParticipants}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between pt-3">
-                      <div className="text-xs text-gray-500">
-                        Deadline:{" "}
-                        {new Date(
-                          initiative.applicationDeadline
-                        ).toLocaleDateString()}
-                      </div>
-                      <Button
-                        size="sm"
-                        className="bg-[#00BFCB] hover:bg-[#00BFCB]/90 text-white"
-                        disabled={initiative.status === "closed"}
-                      >
-                        {initiative.status === "closed" ? "Closed" : "Apply"}
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* No results */}
-        {filteredInitiatives.length === 0 && (
-          <div className="text-center py-12">
-            <Target className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              No initiatives found
-            </h3>
-            <p className="text-gray-600">
-              Try adjusting your search or filter criteria.
-            </p>
-          </div>
-        )}
-      </div>
+      </main>
+      <Footer />
     </div>
   );
 }

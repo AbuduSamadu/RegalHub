@@ -5,8 +5,7 @@
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
   
-  /* Custom brand colors */
-  /* Custom brand colors - use proper format */
+  /* Custom brand colors - consistent format */
   --teal-primary: #00BFCB;
   --magenta-primary: #891C74;
   --neutral-dark: #111111;
@@ -53,31 +52,73 @@
   }
 }
 
-/* Update your utility classes */
-.bg-teal-primary {
-  background-color: var(--teal-primary);
+@layer utilities {
+  /* Teal Primary utilities */
+  .bg-teal-primary {
+    background-color: var(--teal-primary);
+  }
+  .text-teal-primary {
+    color: var(--teal-primary);
+  }
+  .border-teal-primary {
+    border-color: var(--teal-primary);
+  }
+  
+  /* Teal hover states */
+  .hover\:bg-teal-primary:hover {
+    background-color: var(--teal-primary);
+  }
+  .hover\:bg-teal-primary\/90:hover {
+    background-color: rgba(0, 191, 203, 0.9);
+  }
+  .hover\:bg-teal-primary\/80:hover {
+    background-color: rgba(0, 191, 203, 0.8);
+  }
+  .hover\:bg-teal-primary\/70:hover {
+    background-color: rgba(0, 191, 203, 0.7);
+  }
+
+  /* Magenta Primary utilities - FIXED */
+  .bg-magenta-primary {
+    background-color: var(--magenta-primary);
+  }
+  .text-magenta-primary {
+    color: var(--magenta-primary);
+  }
+  .border-magenta-primary {
+    border-color: var(--magenta-primary);
+  }
+  
+  /* Magenta hover states */
+  .hover\:bg-magenta-primary:hover {
+    background-color: var(--magenta-primary);
+  }
+  .hover\:bg-magenta-primary\/90:hover {
+    background-color: rgba(137, 28, 116, 0.9);
+  }
+  .hover\:bg-magenta-primary\/80:hover {
+    background-color: rgba(137, 28, 116, 0.8);
+  }
+  .hover\:bg-magenta-primary\/70:hover {
+    background-color: rgba(137, 28, 116, 0.7);
+  }
+
+  .hover\:text-white:hover {
+    color: white;
+  }
+
+  /* Hero gradient */
+  .hero-gradient {
+    background: linear-gradient(135deg, #00BFCB 0%, #891C74 100%);
+  }
+
+  /* World map pattern */
+  .world-map-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f0f0f0' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
 }
 
-.bg-magenta-primary {
-  background-color: var(--magenta-primary);
-}
-
-.text-teal-primary {
-  color: var(--teal-primary);
-}
-
-.text-magenta-primary {
-  color: var(--magenta-primary);
-}
-
-.border-magenta-primary {
-  border-color: var(--magenta-primary);
-}
-
-.hero-gradient {
-  background: linear-gradient(135deg, #00BFCB 0%, #891C74 100%);
-}
-
-.world-map-pattern {
-  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f0f0f0' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
 }

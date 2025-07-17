@@ -96,7 +96,9 @@ export default function Header() {
           <div className="hidden md:flex items-center space-x-4">
             <GlobalSearch />
             <NotificationDropdown />
-            <Button variant="ghost" asChild>
+            <Button variant="outline" asChild
+               className="border-2 border-magenta-primary text-magenta-primary hover:bg-magenta-primary hover:text-white font-semibold px-4 py-3 "
+            >
               <Link href="/login">Sign In</Link>
             </Button>
             <Button

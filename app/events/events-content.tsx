@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import {
   Card,
   CardContent,
@@ -20,7 +18,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Calendar } from "@/components/ui/calendar";
 import {
   Calendar as CalendarIcon,
   Clock,
@@ -31,8 +28,8 @@ import {
   Grid,
   List,
   Plus,
-  ExternalLink,
 } from "lucide-react";
+import { JsonLd } from "@/components/seo/JsonLd";
 
 const events = [
   {
@@ -158,7 +155,42 @@ const locations = [
   "Los Angeles, CA",
 ];
 
-export default function EventsPage() {
+// Generate structured data for events
+const eventsSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Startup Ecosystem Events",
+  description:
+    "Upcoming events, workshops, and networking opportunities in the startup ecosystem",
+  itemListElement: events.map((event, index) => ({
+    "@type": "Event",
+    position: index + 1,
+    name: event.title,
+    description: event.description,
+    startDate: "2024-03-15T19:00:00-08:00", // This would be dynamic in real app
+    location: {
+      "@type": event.location === "Virtual" ? "VirtualLocation" : "Place",
+      name: event.location,
+      address: event.location !== "Virtual" ? event.location : undefined,
+      url:
+        event.location === "Virtual"
+          ? "https://startupeco.com/virtual-event"
+          : undefined,
+    },
+    organizer: {
+      "@type": "Organization",
+      name: event.organizer,
+    },
+    offers: {
+      "@type": "Offer",
+      price: event.price === "Free" ? "0" : event.price.replace("$", ""),
+      priceCurrency: "USD",
+      availability: event.status === "sold-out" ? "SoldOut" : "InStock",
+    },
+  })),
+};
+
+export default function EventsContent() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedType, setSelectedType] = useState("All");
@@ -209,17 +241,17 @@ export default function EventsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
-      <main className="py-12">
+      <JsonLd data={eventsSchema} />
+      <main className="py-12" role="main">
         <div className="container mx-auto px-6 lg:px-20">
-          <div className="mb-8">
+          <header className="mb-8">
             <h1 className="text-4xl font-bold text-neutral-dark mb-4">
               Events & Workshops
             </h1>
             <p className="text-lg text-gray-600">
               Discover upcoming events, workshops, and networking opportunities
             </p>
-          </div>
+          </header>
 
           {/* Search and Filters */}
           <Card className="border-0 shadow-md mb-8">
@@ -454,7 +486,6 @@ export default function EventsPage() {
           )}
         </div>
       </main>
-      <Footer />
     </div>
   );
 }

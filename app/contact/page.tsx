@@ -1,10 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
@@ -18,12 +25,65 @@ import {
   Phone,
   MapPin,
   Clock,
+  MessageSquare,
   Send,
-  MessageCircle,
-  Building,
-  Users,
+  CheckCircle,
   Globe,
+  Users,
+  Building,
 } from "lucide-react";
+
+const contactMethods = [
+  {
+    icon: Mail,
+    title: "Email Us",
+    description: "Get in touch via email",
+    contact: "hello@startupeco.com",
+    response: "We respond within 24 hours",
+  },
+  {
+    icon: Phone,
+    title: "Call Us",
+    description: "Speak with our team",
+    contact: "+1 (555) 123-4567",
+    response: "Mon-Fri, 9AM-6PM PST",
+  },
+  {
+    icon: MapPin,
+    title: "Visit Us",
+    description: "Our headquarters",
+    contact: "123 Innovation Drive, San Francisco, CA 94105",
+    response: "By appointment only",
+  },
+  {
+    icon: MessageSquare,
+    title: "Live Chat",
+    description: "Chat with support",
+    contact: "Available on our website",
+    response: "Mon-Fri, 9AM-6PM PST",
+  },
+];
+
+const offices = [
+  {
+    city: "San Francisco",
+    address: "123 Innovation Drive, San Francisco, CA 94105",
+    phone: "+1 (555) 123-4567",
+    email: "sf@startupeco.com",
+  },
+  {
+    city: "New York",
+    address: "456 Tech Avenue, New York, NY 10001",
+    phone: "+1 (555) 234-5678",
+    email: "ny@startupeco.com",
+  },
+  {
+    city: "Austin",
+    address: "789 Startup Street, Austin, TX 73301",
+    phone: "+1 (555) 345-6789",
+    email: "austin@startupeco.com",
+  },
+];
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -34,360 +94,357 @@ export default function ContactPage() {
     message: "",
     inquiryType: "",
   });
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    // Handle form submission
+    // Handle form submission logic here
+    setIsSubmitted(true);
+    setTimeout(() => setIsSubmitted(false), 5000);
+    setFormData({
+      name: "",
+      email: "",
+      company: "",
+      subject: "",
+      message: "",
+      inquiryType: "",
+    });
   };
 
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const contactInfo = [
-    {
-      icon: Mail,
-      title: "Email Us",
-      content: "hello@startupeco.com",
-      description: "Send us an email anytime",
-      color: "text-[#00BFCB]",
-      bgColor: "bg-[#00BFCB]/10",
-    },
-    {
-      icon: Phone,
-      title: "Call Us",
-      content: "+1 (555) 123-4567",
-      description: "Mon-Fri from 9am to 6pm",
-      color: "text-[#891C74]",
-      bgColor: "bg-[#891C74]/10",
-    },
-    {
-      icon: MapPin,
-      title: "Visit Us",
-      content: "123 Innovation Street",
-      description: "San Francisco, CA 94105",
-      color: "text-[#00BFCB]",
-      bgColor: "bg-[#00BFCB]/10",
-    },
-    {
-      icon: Clock,
-      title: "Office Hours",
-      content: "Monday - Friday",
-      description: "9:00 AM - 6:00 PM PST",
-      color: "text-[#891C74]",
-      bgColor: "bg-[#891C74]/10",
-    },
-  ];
-
-  const inquiryTypes = [
-    { value: "general", label: "General Inquiry" },
-    { value: "partnership", label: "Partnership" },
-    { value: "support", label: "Technical Support" },
-    { value: "media", label: "Media & Press" },
-    { value: "investment", label: "Investment Opportunities" },
-    { value: "events", label: "Events & Speaking" },
-  ];
-
-  const offices = [
-    {
-      city: "San Francisco",
-      country: "United States",
-      address: "123 Innovation Street, San Francisco, CA 94105",
-      phone: "+1 (555) 123-4567",
-      email: "sf@startupeco.com",
-    },
-    {
-      city: "London",
-      country: "United Kingdom",
-      address: "456 Tech Avenue, London EC2A 4DP",
-      phone: "+44 20 7123 4567",
-      email: "london@startupeco.com",
-    },
-    {
-      city: "Singapore",
-      country: "Singapore",
-      address: "789 Startup Boulevard, Singapore 018956",
-      phone: "+65 6123 4567",
-      email: "singapore@startupeco.com",
-    },
-  ];
-
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Get in Touch
-          </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Have questions about our platform? Want to partner with us? We'd
-            love to hear from you.
-          </p>
-        </div>
+      <Header />
+      <main className="py-12">
+        <div className="container mx-auto px-6 lg:px-20">
+          <div className="mb-12 text-center">
+            <h1 className="text-4xl font-bold text-neutral-dark mb-4">
+              Get in Touch
+            </h1>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Have questions about our platform? Want to partner with us?
+              We&apos;d love to hear from you and help you succeed.
+            </p>
+          </div>
 
-        {/* Contact Info Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {contactInfo.map((info, index) => (
-            <Card
-              key={index}
-              className="text-center hover:shadow-lg transition-shadow duration-200"
-            >
-              <CardContent className="p-6">
-                <div
-                  className={`w-12 h-12 ${info.bgColor} rounded-full flex items-center justify-center mx-auto mb-4`}
-                >
-                  <info.icon className={`w-6 h-6 ${info.color}`} />
-                </div>
-                <h3 className="font-semibold text-gray-900 mb-2">
-                  {info.title}
-                </h3>
-                <p className="text-lg font-medium text-gray-900 mb-1">
-                  {info.content}
-                </p>
-                <p className="text-sm text-gray-600">{info.description}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Contact Form */}
-          <Card className="shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold text-gray-900 flex items-center">
-                <MessageCircle className="w-6 h-6 mr-2 text-[#00BFCB]" />
-                Send us a Message
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Full Name *</Label>
-                    <Input
-                      id="name"
-                      value={formData.name}
-                      onChange={(e) =>
-                        handleInputChange("name", e.target.value)
-                      }
-                      placeholder="Enter your full name"
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email Address *</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={(e) =>
-                        handleInputChange("email", e.target.value)
-                      }
-                      placeholder="Enter your email"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="company">Company/Organization</Label>
-                  <Input
-                    id="company"
-                    value={formData.company}
-                    onChange={(e) =>
-                      handleInputChange("company", e.target.value)
-                    }
-                    placeholder="Enter your company name"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="inquiryType">Inquiry Type *</Label>
-                  <Select
-                    value={formData.inquiryType}
-                    onValueChange={(value) =>
-                      handleInputChange("inquiryType", value)
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select inquiry type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {inquiryTypes.map((type) => (
-                        <SelectItem key={type.value} value={type.value}>
-                          {type.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="subject">Subject *</Label>
-                  <Input
-                    id="subject"
-                    value={formData.subject}
-                    onChange={(e) =>
-                      handleInputChange("subject", e.target.value)
-                    }
-                    placeholder="Enter message subject"
-                    required
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="message">Message *</Label>
-                  <Textarea
-                    id="message"
-                    value={formData.message}
-                    onChange={(e) =>
-                      handleInputChange("message", e.target.value)
-                    }
-                    placeholder="Tell us how we can help you..."
-                    className="min-h-[120px]"
-                    required
-                  />
-                </div>
-
-                <Button
-                  type="submit"
-                  className="w-full bg-[#00BFCB] hover:bg-[#00BFCB]/90 text-white py-3"
-                >
-                  <Send className="w-4 h-4 mr-2" />
-                  Send Message
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-
-          {/* Map and Office Locations */}
-          <div className="space-y-6">
-            {/* Map Placeholder */}
-            <Card className="shadow-lg">
-              <CardContent className="p-0">
-                <div className="w-full h-64 bg-gradient-to-br from-[#00BFCB]/20 to-[#891C74]/20 rounded-t-lg flex items-center justify-center">
-                  <div className="text-center">
-                    <MapPin className="w-12 h-12 text-[#00BFCB] mx-auto mb-2" />
-                    <p className="text-gray-600">Interactive Map</p>
-                    <p className="text-sm text-gray-500">
-                      Find our offices worldwide
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Office Locations */}
-            <Card className="shadow-lg">
-              <CardHeader>
-                <CardTitle className="text-xl font-bold text-gray-900 flex items-center">
-                  <Globe className="w-5 h-5 mr-2 text-[#00BFCB]" />
-                  Our Offices
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {offices.map((office, index) => (
-                  <div key={index} className="p-4 bg-gray-50 rounded-lg">
-                    <h4 className="font-semibold text-gray-900 mb-2">
-                      {office.city}, {office.country}
-                    </h4>
-                    <div className="space-y-1 text-sm text-gray-600">
-                      <div className="flex items-center space-x-2">
-                        <MapPin className="w-4 h-4" />
-                        <span>{office.address}</span>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Contact Form */}
+            <div className="lg:col-span-2">
+              <Card className="border-0 shadow-lg">
+                <CardHeader>
+                  <CardTitle className="text-2xl">Send us a Message</CardTitle>
+                  <CardDescription>
+                    Fill out the form below and we&apos;ll get back to you as
+                    soon as possible
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {!isSubmitted ? (
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium">
+                            Full Name *
+                          </label>
+                          <Input
+                            placeholder="Your full name"
+                            value={formData.name}
+                            onChange={(e) =>
+                              handleInputChange("name", e.target.value)
+                            }
+                            required
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium">
+                            Email Address *
+                          </label>
+                          <Input
+                            type="email"
+                            placeholder="your@email.com"
+                            value={formData.email}
+                            onChange={(e) =>
+                              handleInputChange("email", e.target.value)
+                            }
+                            required
+                          />
+                        </div>
                       </div>
-                      <div className="flex items-center space-x-2">
-                        <Phone className="w-4 h-4" />
-                        <span>{office.phone}</span>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium">
+                            Company/Organization
+                          </label>
+                          <Input
+                            placeholder="Your company name"
+                            value={formData.company}
+                            onChange={(e) =>
+                              handleInputChange("company", e.target.value)
+                            }
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium">
+                            Inquiry Type *
+                          </label>
+                          <Select
+                            value={formData.inquiryType}
+                            onValueChange={(value) =>
+                              handleInputChange("inquiryType", value)
+                            }
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select inquiry type" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="general">
+                                General Inquiry
+                              </SelectItem>
+                              <SelectItem value="partnership">
+                                Partnership
+                              </SelectItem>
+                              <SelectItem value="support">
+                                Technical Support
+                              </SelectItem>
+                              <SelectItem value="media">
+                                Media & Press
+                              </SelectItem>
+                              <SelectItem value="investment">
+                                Investment Opportunities
+                              </SelectItem>
+                              <SelectItem value="other">Other</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
                       </div>
-                      <div className="flex items-center space-x-2">
-                        <Mail className="w-4 h-4" />
-                        <span>{office.email}</span>
+
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Subject *</label>
+                        <Input
+                          placeholder="Brief subject line"
+                          value={formData.subject}
+                          onChange={(e) =>
+                            handleInputChange("subject", e.target.value)
+                          }
+                          required
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Message *</label>
+                        <Textarea
+                          placeholder="Tell us more about your inquiry..."
+                          rows={6}
+                          value={formData.message}
+                          onChange={(e) =>
+                            handleInputChange("message", e.target.value)
+                          }
+                          required
+                        />
+                      </div>
+
+                      <Button
+                        type="submit"
+                        className="w-full bg-teal-primary hover:bg-teal-primary/90 text-lg py-6"
+                      >
+                        <Send className="h-5 w-5 mr-2" />
+                        Send Message
+                      </Button>
+                    </form>
+                  ) : (
+                    <div className="text-center py-12 space-y-4">
+                      <CheckCircle className="h-16 w-16 text-green-500 mx-auto" />
+                      <h3 className="text-2xl font-semibold text-neutral-dark">
+                        Message Sent!
+                      </h3>
+                      <p className="text-gray-600">
+                        Thank you for reaching out. We&apos;ll get back to you
+                        within 24 hours.
+                      </p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Contact Information */}
+            <div className="space-y-6">
+              {/* Contact Methods */}
+              <Card className="border-0 shadow-md">
+                <CardHeader>
+                  <CardTitle>Contact Information</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  {contactMethods.map((method) => (
+                    <div
+                      key={method.title}
+                      className="flex items-start space-x-3"
+                    >
+                      <div className="bg-teal-primary/10 p-2 rounded-lg">
+                        <method.icon className="h-5 w-5 text-teal-primary" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-medium text-neutral-dark">
+                          {method.title}
+                        </h4>
+                        <p className="text-sm text-gray-600 mb-1">
+                          {method.description}
+                        </p>
+                        <p className="text-sm font-medium">{method.contact}</p>
+                        <p className="text-xs text-gray-500">
+                          {method.response}
+                        </p>
                       </div>
                     </div>
+                  ))}
+                </CardContent>
+              </Card>
+
+              {/* Office Locations */}
+              <Card className="border-0 shadow-md">
+                <CardHeader>
+                  <CardTitle>Our Offices</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {offices.map((office) => (
+                    <div
+                      key={office.city}
+                      className="border-b border-gray-100 last:border-b-0 pb-4 last:pb-0"
+                    >
+                      <h4 className="font-medium text-neutral-dark mb-2">
+                        {office.city}
+                      </h4>
+                      <div className="space-y-1 text-sm text-gray-600">
+                        <div className="flex items-center space-x-2">
+                          <MapPin className="h-3 w-3" />
+                          <span>{office.address}</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <Phone className="h-3 w-3" />
+                          <span>{office.phone}</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <Mail className="h-3 w-3" />
+                          <span>{office.email}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+
+              {/* Business Hours */}
+              <Card className="border-0 shadow-md">
+                <CardHeader>
+                  <CardTitle>Business Hours</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Monday - Friday</span>
+                    <span className="font-medium">9:00 AM - 6:00 PM PST</span>
                   </div>
-                ))}
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Saturday</span>
+                    <span className="font-medium">10:00 AM - 4:00 PM PST</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Sunday</span>
+                    <span className="font-medium">Closed</span>
+                  </div>
+                  <div className="pt-2 border-t border-gray-100">
+                    <div className="flex items-center space-x-2 text-teal-primary">
+                      <Clock className="h-4 w-4" />
+                      <span className="text-sm font-medium">
+                        Emergency support available 24/7
+                      </span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+
+          {/* FAQ Section */}
+          <div className="mt-16">
+            <Card className="border-0 shadow-md">
+              <CardHeader className="text-center">
+                <CardTitle className="text-2xl">
+                  Frequently Asked Questions
+                </CardTitle>
+                <CardDescription>
+                  Quick answers to common questions
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="space-y-4">
+                    <div>
+                      <h4 className="font-medium mb-2">
+                        How do I join the ecosystem?
+                      </h4>
+                      <p className="text-sm text-gray-600">
+                        Click &quot;Join Ecosystem&quot; in the header and complete our
+                        onboarding process. It takes just a few minutes to get
+                        started.
+                      </p>
+                    </div>
+                    <div>
+                      <h4 className="font-medium mb-2">
+                        Is there a cost to join?
+                      </h4>
+                      <p className="text-sm text-gray-600">
+                        Basic membership is free. Premium features and programs
+                        may have associated costs.
+                      </p>
+                    </div>
+                    <div>
+                      <h4 className="font-medium mb-2">
+                        How do I find a mentor?
+                      </h4>
+                      <p className="text-sm text-gray-600">
+                        Use our mentor matching system in your dashboard to find
+                        mentors based on your industry and needs.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <div>
+                      <h4 className="font-medium mb-2">Can I host an event?</h4>
+                      <p className="text-sm text-gray-600">
+                        Yes! Community members can submit events for approval.
+                        Contact us for event hosting guidelines.
+                      </p>
+                    </div>
+                    <div>
+                      <h4 className="font-medium mb-2">
+                        How do I apply for programs?
+                      </h4>
+                      <p className="text-sm text-gray-600">
+                        Browse our initiatives page and click &quot;Apply Now&quot; on
+                        programs that match your startup&#39;s stage and focus.
+                      </p>
+                    </div>
+                    <div>
+                      <h4 className="font-medium mb-2">
+                        Do you offer investor connections?
+                      </h4>
+                      <p className="text-sm text-gray-600">
+                        Yes, we facilitate connections between startups and
+                        investors through our platform and events.
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </div>
         </div>
-
-        {/* FAQ Section */}
-        <div className="mt-16">
-          <Card className="shadow-lg">
-            <CardHeader className="text-center">
-              <CardTitle className="text-2xl font-bold text-gray-900">
-                Frequently Asked Questions
-              </CardTitle>
-              <p className="text-gray-600">Quick answers to common questions</p>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="space-y-4">
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">
-                      How do I join the platform?
-                    </h4>
-                    <p className="text-sm text-gray-600">
-                      Simply click "Join the Ecosystem" and complete our
-                      onboarding process. It takes less than 5 minutes!
-                    </p>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">
-                      Is there a cost to join?
-                    </h4>
-                    <p className="text-sm text-gray-600">
-                      Basic membership is free. We offer premium features for
-                      advanced users and organizations.
-                    </p>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">
-                      How do I find a mentor?
-                    </h4>
-                    <p className="text-sm text-gray-600">
-                      Browse our mentor directory, filter by expertise, and send
-                      connection requests directly through the platform.
-                    </p>
-                  </div>
-                </div>
-                <div className="space-y-4">
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">
-                      Can I host my own events?
-                    </h4>
-                    <p className="text-sm text-gray-600">
-                      Yes! Community members can propose and host events.
-                      Contact us for guidelines and support.
-                    </p>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">
-                      How do I apply for funding programs?
-                    </h4>
-                    <p className="text-sm text-gray-600">
-                      Check our funding opportunities page and follow the
-                      application process for each program.
-                    </p>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">
-                      Do you offer international support?
-                    </h4>
-                    <p className="text-sm text-gray-600">
-                      Yes, we have offices in multiple countries and support
-                      startups globally.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
+      </main>
+      <Footer />
     </div>
   );
 }

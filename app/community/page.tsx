@@ -1,399 +1,387 @@
 "use client";
 
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  MessageCircle,
-  ThumbsUp,
-  Eye,
-  Clock,
-  Search,
-  Plus,
-  Filter,
-  TrendingUp,
-  Users,
   MessageSquare,
+  ThumbsUp,
+  Users,
+  Plus,
+  Search,
+  Filter,
+  Pin,
+  Clock,
+  Eye,
+  Reply,
 } from "lucide-react";
 
+const discussions = [
+  {
+    id: 1,
+    title: "Best practices for MVP development in 2024",
+    author: "Sarah Chen",
+    avatar: "SC",
+    category: "Product Development",
+    replies: 23,
+    likes: 45,
+    views: 234,
+    timeAgo: "2 hours ago",
+    isPinned: true,
+    preview:
+      "I've been working on my MVP for the past 3 months and wanted to share some insights...",
+  },
+  {
+    id: 2,
+    title: "Seeking co-founder for HealthTech startup",
+    author: "Michael Rodriguez",
+    avatar: "MR",
+    category: "Co-founder Search",
+    replies: 12,
+    likes: 28,
+    views: 156,
+    timeAgo: "4 hours ago",
+    isPinned: false,
+    preview:
+      "Looking for a technical co-founder to join our mission of revolutionizing healthcare...",
+  },
+  {
+    id: 3,
+    title: "How to pitch to investors effectively",
+    author: "Emily Johnson",
+    avatar: "EJ",
+    category: "Funding",
+    replies: 34,
+    likes: 67,
+    views: 445,
+    timeAgo: "1 day ago",
+    isPinned: false,
+    preview:
+      "After raising Series A, here are the key lessons I learned about pitching...",
+  },
+  {
+    id: 4,
+    title: "Remote team management strategies",
+    author: "David Kim",
+    avatar: "DK",
+    category: "Team Building",
+    replies: 18,
+    likes: 32,
+    views: 189,
+    timeAgo: "2 days ago",
+    isPinned: false,
+    preview: "Managing a distributed team across 5 time zones has taught me...",
+  },
+];
+
+const categories = [
+  { name: "All", count: 156, color: "bg-gray-100 text-gray-800" },
+  {
+    name: "Product Development",
+    count: 45,
+    color: "bg-teal-primary/10 text-teal-primary",
+  },
+  {
+    name: "Funding",
+    count: 32,
+    color: "bg-magenta-primary/10 text-magenta-primary",
+  },
+  { name: "Co-founder Search", count: 28, color: "bg-blue-100 text-blue-800" },
+  { name: "Team Building", count: 24, color: "bg-green-100 text-green-800" },
+  { name: "Marketing", count: 19, color: "bg-orange-100 text-orange-800" },
+  { name: "Legal", count: 8, color: "bg-purple-100 text-purple-800" },
+];
+
+const topContributors = [
+  { name: "Sarah Chen", avatar: "SC", posts: 45, reputation: 1250 },
+  { name: "Michael Rodriguez", avatar: "MR", posts: 38, reputation: 980 },
+  { name: "Emily Johnson", avatar: "EJ", posts: 32, reputation: 875 },
+  { name: "David Kim", avatar: "DK", posts: 28, reputation: 720 },
+];
+
 export default function CommunityPage() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [selectedSort, setSelectedSort] = useState("recent");
-
-  const discussions = [
-    {
-      id: 1,
-      title: "How to validate your startup idea in 2025?",
-      content:
-        "I've been working on a new SaaS product for the past few months and I'm looking for advice on how to properly validate the idea before investing more time and resources...",
-      author: {
-        name: "Sarah Chen",
-        avatar: "👩‍💼",
-        role: "Founder",
-        company: "TechFlow AI",
-      },
-      category: "validation",
-      tags: ["validation", "startup", "advice"],
-      upvotes: 24,
-      replies: 12,
-      views: 156,
-      timeAgo: "2h ago",
-      isPinned: false,
-      isHot: true,
-    },
-    {
-      id: 2,
-      title: "Best practices for remote team management",
-      content:
-        "Our startup has grown to 15 remote employees across different time zones. What are some proven strategies for maintaining productivity and team cohesion?",
-      author: {
-        name: "Marcus Rodriguez",
-        avatar: "👨‍💻",
-        role: "CEO",
-        company: "EcoGreen Solutions",
-      },
-      category: "management",
-      tags: ["remote", "management", "team"],
-      upvotes: 18,
-      replies: 8,
-      views: 89,
-      timeAgo: "4h ago",
-      isPinned: true,
-      isHot: false,
-    },
-    {
-      id: 3,
-      title: "Raising seed funding in current market conditions",
-      content:
-        "With the current economic climate, what should startups focus on when preparing for seed funding? Any recent success stories or lessons learned?",
-      author: {
-        name: "Alex Johnson",
-        avatar: "👨‍🚀",
-        role: "Founder",
-        company: "FinanceFlow",
-      },
-      category: "funding",
-      tags: ["funding", "seed", "investment"],
-      upvotes: 32,
-      replies: 15,
-      views: 203,
-      timeAgo: "6h ago",
-      isPinned: false,
-      isHot: true,
-    },
-    {
-      id: 4,
-      title: "AI integration in healthcare startups",
-      content:
-        "Looking to integrate AI capabilities into our healthcare platform. What are the key compliance considerations and best practices?",
-      author: {
-        name: "Dr. Emily Watson",
-        avatar: "👩‍⚕️",
-        role: "Co-founder",
-        company: "MedConnect",
-      },
-      category: "technology",
-      tags: ["ai", "healthcare", "compliance"],
-      upvotes: 15,
-      replies: 6,
-      views: 67,
-      timeAgo: "8h ago",
-      isPinned: false,
-      isHot: false,
-    },
-    {
-      id: 5,
-      title: "Sustainable startup practices and B-Corp certification",
-      content:
-        "Our team is interested in making our startup more sustainable and possibly pursuing B-Corp certification. Has anyone gone through this process?",
-      author: {
-        name: "Green Innovator",
-        avatar: "🌱",
-        role: "Founder",
-        company: "EcoTech Solutions",
-      },
-      category: "sustainability",
-      tags: ["sustainability", "b-corp", "certification"],
-      upvotes: 12,
-      replies: 4,
-      views: 45,
-      timeAgo: "12h ago",
-      isPinned: false,
-      isHot: false,
-    },
-    {
-      id: 6,
-      title: "Finding the right co-founder: lessons learned",
-      content:
-        "After going through the co-founder search process, I wanted to share some insights that might help other solo founders...",
-      author: {
-        name: "Lisa Park",
-        avatar: "👩‍🔬",
-        role: "Solo Founder",
-        company: "BioInnovate",
-      },
-      category: "co-founder",
-      tags: ["co-founder", "partnership", "lessons"],
-      upvotes: 28,
-      replies: 11,
-      views: 134,
-      timeAgo: "1d ago",
-      isPinned: false,
-      isHot: false,
-    },
-  ];
-
-  const categories = [
-    { value: "all", label: "All Topics" },
-    { value: "validation", label: "Validation" },
-    { value: "funding", label: "Funding" },
-    { value: "management", label: "Management" },
-    { value: "technology", label: "Technology" },
-    { value: "sustainability", label: "Sustainability" },
-    { value: "co-founder", label: "Co-founder" },
-  ];
-
-  const sortOptions = [
-    { value: "recent", label: "Most Recent" },
-    { value: "popular", label: "Most Popular" },
-    { value: "trending", label: "Trending" },
-    { value: "unanswered", label: "Unanswered" },
-  ];
-
-  const filteredDiscussions = discussions.filter((discussion) => {
-    const matchesSearch =
-      discussion.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      discussion.content.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory =
-      selectedCategory === "all" || discussion.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
-
-  const sortedDiscussions = [...filteredDiscussions].sort((a, b) => {
-    switch (selectedSort) {
-      case "popular":
-        return b.upvotes - a.upvotes;
-      case "trending":
-        return b.views - a.views;
-      case "unanswered":
-        return a.replies - b.replies;
-      default:
-        return 0; // Keep original order for 'recent'
-    }
-  });
-
-  const stats = [
-    { label: "Total Discussions", value: "2,340", icon: MessageSquare },
-    { label: "Active Members", value: "12,500", icon: Users },
-    { label: "This Week", value: "156", icon: TrendingUp },
-    { label: "Online Now", value: "89", icon: Eye },
-  ];
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [showNewPost, setShowNewPost] = useState(false);
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Community Hub
-          </h1>
-          <p className="text-gray-600">
-            Connect with fellow entrepreneurs, share insights, and get support
-            from the community.
-          </p>
-        </div>
-
-        {/* Stats */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          {stats.map((stat, index) => (
-            <Card key={index} className="bg-white border-0 shadow-lg">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">
-                      {stat.label}
-                    </p>
-                    <p className="text-2xl font-bold text-gray-900">
-                      {stat.value}
-                    </p>
-                  </div>
-                  <div className="w-12 h-12 bg-[#00BFCB]/10 rounded-full flex items-center justify-center">
-                    <stat.icon className="w-6 h-6 text-[#00BFCB]" />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* Search and Filters */}
-        <div className="mb-8 flex flex-col md:flex-row gap-4">
-          <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-            <Input
-              placeholder="Search discussions..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10"
-            />
-          </div>
-          <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-            <SelectTrigger className="w-full md:w-48">
-              <SelectValue placeholder="Filter by category" />
-            </SelectTrigger>
-            <SelectContent>
-              {categories.map((category) => (
-                <SelectItem key={category.value} value={category.value}>
-                  {category.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Select value={selectedSort} onValueChange={setSelectedSort}>
-            <SelectTrigger className="w-full md:w-48">
-              <SelectValue placeholder="Sort by" />
-            </SelectTrigger>
-            <SelectContent>
-              {sortOptions.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
-                  {option.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Button className="bg-[#00BFCB] hover:bg-[#00BFCB]/90 text-white">
-            <Plus className="w-4 h-4 mr-2" />
-            New Discussion
-          </Button>
-        </div>
-
-        {/* Discussions */}
-        <div className="space-y-4">
-          {sortedDiscussions.map((discussion) => (
-            <Card
-              key={discussion.id}
-              className="bg-white hover:shadow-lg transition-shadow duration-200"
-            >
-              <CardContent className="p-6">
-                <div className="flex items-start space-x-4">
-                  {/* Avatar */}
-                  <div className="w-12 h-12 bg-gradient-to-br from-[#00BFCB]/20 to-[#891C74]/20 rounded-full flex items-center justify-center text-2xl flex-shrink-0">
-                    {discussion.author.avatar}
-                  </div>
-
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center space-x-2 mb-2">
-                      {discussion.isPinned && (
-                        <Badge className="bg-[#891C74]/10 text-[#891C74] border-[#891C74]/20">
-                          Pinned
-                        </Badge>
-                      )}
-                      {discussion.isHot && (
-                        <Badge className="bg-red-100 text-red-600 border-red-200">
-                          🔥 Hot
-                        </Badge>
-                      )}
-                      <Badge variant="outline" className="text-xs">
-                        {
-                          categories.find(
-                            (c) => c.value === discussion.category
-                          )?.label
-                        }
-                      </Badge>
-                    </div>
-
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2 hover:text-[#00BFCB] transition-colors cursor-pointer">
-                      {discussion.title}
-                    </h3>
-
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                      {discussion.content}
-                    </p>
-
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {discussion.tags.map((tag, index) => (
-                        <Badge
-                          key={index}
-                          variant="secondary"
-                          className="text-xs"
-                        >
-                          #{tag}
-                        </Badge>
-                      ))}
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-4 text-sm text-gray-500">
-                        <div className="flex items-center space-x-1">
-                          <ThumbsUp className="w-4 h-4" />
-                          <span>{discussion.upvotes}</span>
-                        </div>
-                        <div className="flex items-center space-x-1">
-                          <MessageCircle className="w-4 h-4" />
-                          <span>{discussion.replies}</span>
-                        </div>
-                        <div className="flex items-center space-x-1">
-                          <Eye className="w-4 h-4" />
-                          <span>{discussion.views}</span>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center space-x-4 text-sm text-gray-500">
-                        <div className="flex items-center space-x-2">
-                          <Clock className="w-4 h-4" />
-                          <span>{discussion.timeAgo}</span>
-                        </div>
-                        <div className="text-right">
-                          <div className="font-medium text-gray-900">
-                            {discussion.author.name}
-                          </div>
-                          <div className="text-xs">
-                            {discussion.author.role} at{" "}
-                            {discussion.author.company}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* No results */}
-        {sortedDiscussions.length === 0 && (
-          <div className="text-center py-12">
-            <MessageCircle className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              No discussions found
-            </h3>
-            <p className="text-gray-600">
-              Try adjusting your search or filter criteria.
+      <Header />
+      <main className="py-12">
+        <div className="container mx-auto px-6 lg:px-20">
+          <div className="mb-8">
+            <h1 className="text-4xl font-bold text-neutral-dark mb-4">
+              Community Hub
+            </h1>
+            <p className="text-lg text-gray-600">
+              Connect, share knowledge, and grow together with fellow
+              entrepreneurs
             </p>
           </div>
-        )}
 
-        {/* Load More */}
-        {sortedDiscussions.length > 0 && (
-          <div className="text-center mt-8">
-            <Button variant="outline" size="lg">
-              Load More Discussions
-            </Button>
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            {/* Main Content */}
+            <div className="lg:col-span-3 space-y-6">
+              {/* Search and Actions */}
+              <Card className="border-0 shadow-md">
+                <CardContent className="p-6">
+                  <div className="flex flex-col md:flex-row gap-4">
+                    <div className="flex-1">
+                      <div className="relative">
+                        <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                        <Input
+                          placeholder="Search discussions..."
+                          className="pl-10"
+                          value={searchTerm}
+                          onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button variant="outline">
+                        <Filter className="h-4 w-4 mr-2" />
+                        Filter
+                      </Button>
+                      <Button
+                        className="bg-teal-primary hover:bg-teal-primary/90"
+                        onClick={() => setShowNewPost(!showNewPost)}
+                      >
+                        <Plus className="h-4 w-4 mr-2" />
+                        New Post
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* New Post Form */}
+              {showNewPost && (
+                <Card className="border-0 shadow-md">
+                  <CardHeader>
+                    <CardTitle>Start a New Discussion</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <Input placeholder="Discussion title..." />
+                    <select className="w-full p-2 border border-gray-300 rounded-md">
+                      <option>Select Category</option>
+                      {categories.slice(1).map((cat) => (
+                        <option key={cat.name} value={cat.name}>
+                          {cat.name}
+                        </option>
+                      ))}
+                    </select>
+                    <Textarea placeholder="Share your thoughts..." rows={4} />
+                    <div className="flex gap-2">
+                      <Button className="bg-teal-primary hover:bg-teal-primary/90">
+                        Post Discussion
+                      </Button>
+                      <Button
+                        variant="outline"
+                        onClick={() => setShowNewPost(false)}
+                      >
+                        Cancel
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+
+              {/* Category Tabs */}
+              <div className="flex flex-wrap gap-2">
+                {categories.map((category) => (
+                  <Badge
+                    key={category.name}
+                    variant={
+                      selectedCategory === category.name
+                        ? "default"
+                        : "secondary"
+                    }
+                    className={`cursor-pointer px-3 py-1 ${
+                      selectedCategory === category.name
+                        ? "bg-teal-primary text-white"
+                        : category.color
+                    }`}
+                    onClick={() => setSelectedCategory(category.name)}
+                  >
+                    {category.name} ({category.count})
+                  </Badge>
+                ))}
+              </div>
+
+              {/* Discussions List */}
+              <div className="space-y-4">
+                {discussions.map((discussion) => (
+                  <Card
+                    key={discussion.id}
+                    className="border-0 shadow-md hover:shadow-lg transition-shadow duration-300"
+                  >
+                    <CardContent className="p-6">
+                      <div className="flex items-start space-x-4">
+                        <Avatar>
+                          <AvatarImage
+                            src={`/api/placeholder/40/40`}
+                            alt={discussion.author}
+                          />
+                          <AvatarFallback className="bg-teal-primary text-white">
+                            {discussion.avatar}
+                          </AvatarFallback>
+                        </Avatar>
+
+                        <div className="flex-1 space-y-3">
+                          <div className="flex items-center space-x-2">
+                            {discussion.isPinned && (
+                              <Pin className="h-4 w-4 text-magenta-primary" />
+                            )}
+                            <h3 className="text-lg font-semibold text-neutral-dark hover:text-teal-primary cursor-pointer">
+                              {discussion.title}
+                            </h3>
+                          </div>
+
+                          <p className="text-gray-600 text-sm">
+                            {discussion.preview}
+                          </p>
+
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center space-x-4 text-sm text-gray-500">
+                              <span className="font-medium">
+                                {discussion.author}
+                              </span>
+                              <Badge variant="outline" className="text-xs">
+                                {discussion.category}
+                              </Badge>
+                              <div className="flex items-center space-x-1">
+                                <Clock className="h-3 w-3" />
+                                <span>{discussion.timeAgo}</span>
+                              </div>
+                            </div>
+
+                            <div className="flex items-center space-x-4 text-sm text-gray-500">
+                              <div className="flex items-center space-x-1">
+                                <Eye className="h-4 w-4" />
+                                <span>{discussion.views}</span>
+                              </div>
+                              <div className="flex items-center space-x-1">
+                                <ThumbsUp className="h-4 w-4" />
+                                <span>{discussion.likes}</span>
+                              </div>
+                              <div className="flex items-center space-x-1">
+                                <Reply className="h-4 w-4" />
+                                <span>{discussion.replies}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+
+            {/* Sidebar */}
+            <div className="space-y-6">
+              {/* Community Stats */}
+              <Card className="border-0 shadow-md">
+                <CardHeader>
+                  <CardTitle className="text-lg">Community Stats</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-600">Total Members</span>
+                    <span className="font-semibold">10,247</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-600">Active Today</span>
+                    <span className="font-semibold text-teal-primary">
+                      1,234
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-600">Total Posts</span>
+                    <span className="font-semibold">45,678</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-600">This Week</span>
+                    <span className="font-semibold text-magenta-primary">
+                      +156
+                    </span>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Top Contributors */}
+              <Card className="border-0 shadow-md">
+                <CardHeader>
+                  <CardTitle className="text-lg">Top Contributors</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {topContributors.map((contributor, index) => (
+                    <div
+                      key={contributor.name}
+                      className="flex items-center space-x-3"
+                    >
+                      <div className="text-sm font-medium text-gray-500 w-4">
+                        #{index + 1}
+                      </div>
+                      <Avatar className="w-8 h-8">
+                        <AvatarImage
+                          src={`/api/placeholder/32/32`}
+                          alt={contributor.name}
+                        />
+                        <AvatarFallback className="bg-teal-primary text-white text-xs">
+                          {contributor.avatar}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1">
+                        <div className="text-sm font-medium">
+                          {contributor.name}
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          {contributor.posts} posts • {contributor.reputation}{" "}
+                          rep
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+
+              {/* Community Guidelines */}
+              <Card className="border-0 shadow-md">
+                <CardHeader>
+                  <CardTitle className="text-lg">
+                    Community Guidelines
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3 text-sm text-gray-600">
+                  <div>• Be respectful and professional</div>
+                  <div>• Stay on topic and provide value</div>
+                  <div>• No spam or self-promotion</div>
+                  <div>• Help others and share knowledge</div>
+                  <div>• Report inappropriate content</div>
+                  <Button variant="outline" size="sm" className="w-full mt-4">
+                    Read Full Guidelines
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
           </div>
-        )}
-      </div>
+        </div>
+      </main>
+      <Footer />
     </div>
   );
 }
