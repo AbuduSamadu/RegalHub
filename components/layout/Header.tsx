@@ -15,7 +15,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import Logo from "@/components/ui/Logo"
+// import Logo from "../ui/Logo";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,7 +24,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-6 lg:px-20">
         <div className="flex h-16 items-center justify-between">
-          <Logo />
+          {/* <Logo /> */}
 
           {/* Desktop Navigation */}
           <NavigationMenu className="hidden md:flex">
@@ -152,7 +152,7 @@ export default function Header() {
                   Gallery
                 </Link>
                 <div className="flex flex-col gap-2 mt-4">
-                  <Button variant="ghost" asChild>
+                  <Button variant="outline" asChild>
                     <Link href="/login" onClick={() => setIsOpen(false)}>
                       Sign In
                     </Link>

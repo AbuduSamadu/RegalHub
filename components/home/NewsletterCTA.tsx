@@ -19,58 +19,36 @@ export default function NewsletterCTA() {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-br from-teal-primary/10 to-magenta-primary/10">
-      <div className="container mx-auto px-6 lg:px-20">
-        <Card className="max-w-2xl mx-auto border-0 shadow-lg">
-          <CardContent className="p-8 text-center space-y-6">
-            <div className="flex items-center justify-center mb-4">
-              <Mail className="h-12 w-12 text-teal-primary" />
-            </div>
-            
-            <h2 className="text-3xl font-bold text-neutral-dark">
-              Stay in the Loop
-            </h2>
-            
-            <p className="text-lg text-gray-600">
-              Get the latest updates on startups, events, and opportunities 
-              delivered straight to your inbox.
-            </p>
-            
-            {!isSubscribed ? (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <Input
-                    type="email"
-                    placeholder="Enter your email address"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="flex-1"
-                    required
-                  />
-                  <Button 
-                    type="submit" 
-                    className="bg-teal-primary hover:bg-teal-primary/90 px-8"
-                  >
-                    Subscribe
-                  </Button>
-                </div>
-                <p className="text-sm text-gray-500">
-                  No spam, unsubscribe at any time.
-                </p>
-              </form>
-            ) : (
-              <div className="space-y-4">
-                <div className="flex items-center justify-center space-x-2 text-green-600">
-                  <CheckCircle className="h-6 w-6" />
-                  <span className="font-medium">Thank you for subscribing!</span>
-                </div>
-                <p className="text-sm text-gray-500">
-                  You'll receive our next newsletter soon.
-                </p>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+    <section className="py-20 bg-gradient-to-br from-[#00BFCB] to-[#891C74]">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="mb-8">
+          <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
+            <Mail className="w-8 h-8 text-white" />
+          </div>
+          <h2 className="text-3xl font-bold text-white mb-4">
+            Stay Updated with Our Ecosystem
+          </h2>
+          <p className="text-xl text-white/90 max-w-2xl mx-auto">
+            Get weekly insights, upcoming events, and exclusive opportunities
+            delivered to your inbox.
+          </p>
+        </div>
+
+        <div className="max-w-md mx-auto">
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Input
+              type="email"
+              placeholder="Enter your email"
+              className="flex-1 bg-white/90 border-white/20 placeholder:text-gray-500"
+            />
+            <Button className="bg-white text-[#00BFCB] hover:bg-white/90 px-8 font-semibold">
+              Subscribe
+            </Button>
+          </div>
+          <p className="text-white/70 text-sm mt-4">
+            No spam, unsubscribe at any time.
+          </p>
+        </div>
       </div>
     </section>
   );

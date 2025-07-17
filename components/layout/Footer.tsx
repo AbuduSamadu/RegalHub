@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
 import Link from "next/link";
-import Logo from "@/components/ui/Logo";
+// import Logo from "../ui/Logo";
 
 
 export default function Footer() {
@@ -12,7 +12,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="space-y-4">
-            <Logo />
+            {/* <Logo /> */}
             <p className="text-gray-400 text-sm">
               Connecting the global startup ecosystem through mentorship,
               funding, and community.
