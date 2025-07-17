@@ -273,7 +273,7 @@ export default function EventsContent() {
                   <SelectTrigger className="w-full lg:w-48">
                     <SelectValue placeholder="Event Type" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-white border border-gray-200">
                     {eventTypes.map((type) => (
                       <SelectItem key={type} value={type}>
                         {type}
@@ -289,7 +289,7 @@ export default function EventsContent() {
                   <SelectTrigger className="w-full lg:w-48">
                     <SelectValue placeholder="Location" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-white border border-gray-200">
                     {locations.map((location) => (
                       <SelectItem key={location} value={location}>
                         {location}

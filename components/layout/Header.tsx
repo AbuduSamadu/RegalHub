@@ -15,7 +15,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-// import Logo from "../ui/Logo";
+import Logo from "./logo";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,19 +24,19 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-6 lg:px-20">
         <div className="flex h-16 items-center justify-between">
-          {/* <Logo /> */}
+         <Logo />
 
           {/* Desktop Navigation */}
           <NavigationMenu className="hidden md:flex">
             <NavigationMenuList>
               <NavigationMenuItem>
                 <NavigationMenuTrigger>Discover</NavigationMenuTrigger>
-                <NavigationMenuContent>
+                <NavigationMenuContent className="bg-white border border-gray-20">
                   <div className="grid gap-3 p-4 md:w-[400px]">
                     <NavigationMenuLink asChild>
                       <Link
                         href="/startups"
-                        className="block p-2 hover:bg-muted rounded-md"
+                        className="block p-2 hover:bg-teal-primary/90 rounded-md"
                       >
                         <div className="font-medium">Startups</div>
                         <div className="text-sm text-muted-foreground">
@@ -47,7 +47,7 @@ export default function Header() {
                     <NavigationMenuLink asChild>
                       <Link
                         href="/events"
-                        className="block p-2 hover:bg-muted rounded-md"
+                        className="block p-2 hover:bg-teal-primary/90"
                       >
                         <div className="font-medium">Events</div>
                         <div className="text-sm text-muted-foreground">
@@ -58,7 +58,7 @@ export default function Header() {
                     <NavigationMenuLink asChild>
                       <Link
                         href="/initiatives"
-                        className="block p-2 hover:bg-muted rounded-md"
+                        className="block p-2 hover:bg-teal-primary/90"
                       >
                         <div className="font-medium">Initiatives</div>
                         <div className="text-sm text-muted-foreground">
@@ -96,8 +96,10 @@ export default function Header() {
           <div className="hidden md:flex items-center space-x-4">
             <GlobalSearch />
             <NotificationDropdown />
-            <Button variant="outline" asChild
-               className="border-2 border-magenta-primary text-magenta-primary hover:bg-magenta-primary hover:text-white font-semibold px-4 py-3 "
+            <Button
+              variant="outline"
+              asChild
+              className="border-2 border-magenta-primary text-magenta-primary hover:bg-magenta-primary hover:text-white font-semibold px-4 py-3 "
             >
               <Link href="/login">Sign In</Link>
             </Button>
@@ -116,7 +118,10 @@ export default function Header() {
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+            <SheetContent
+              side="right"
+              className="w-[300px] sm:w-[400px] bg-white border border-gray-200"
+            >
               <div className="flex flex-col gap-4 mt-8">
                 <Link
                   href="/startups"

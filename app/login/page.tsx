@@ -14,6 +14,7 @@ import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Globe, Mail, Lock, Eye, EyeOff, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import Logo from "@/components/layout/logo";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -32,14 +33,8 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-teal-primary/10 to-magenta-primary/10 flex items-center justify-center p-6">
       <div className="w-full max-w-md">
-        {/* Logo */}
-        <div className="text-center mb-8">
-          <Link href="/" className="inline-flex items-center space-x-2">
-            <Globe className="h-8 w-8 text-teal-primary" />
-            <span className="text-2xl font-bold text-neutral-dark">
-              StartupEco
-            </span>
-          </Link>
+        <div className="text-center mb-8 flex justify-center">
+          <Logo />
         </div>
 
         <Card className="border-0 shadow-lg">

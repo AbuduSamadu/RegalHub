@@ -3,13 +3,46 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Globe, Users, Lightbulb } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+
+const AnimatedCounter = ({
+  target,
+  suffix = "",
+}: {
+  target: number;
+  suffix?: string;
+}) => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const duration = 2000; // 2 seconds
+    const increment = target / (duration / 50);
+    let current = 0;
+
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= target) {
+        setCount(target);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(current));
+      }
+    }, 50);
+
+    return () => clearInterval(timer);
+  }, [target]);
+
+  return (
+    <span>
+      {count.toLocaleString()}
+      {suffix}
+    </span>
+  );
+};
 
 export default function HeroSection() {
   return (
-    <section
-      className="relative min-h-[80vh] flex items-center justify-center overflow-hidden"
-      role="banner"
-    >
+    <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
       <div
         className="absolute inset-0 opacity-10"
         style={{
@@ -30,9 +63,8 @@ export default function HeroSection() {
       <div className="relative z-10 container mx-auto px-6 lg:px-20 text-center">
         <div className="max-w-4xl mx-auto space-y-8">
           <h1 className="text-5xl lg:text-6xl font-bold text-neutral-dark leading-tight tracking-tight">
-            Connect, Collaborate, and
-            <span className="text-teal-primary"> Grow {" "} </span>
-            Together
+            Connect, Collaborate, and{" "}
+            <span className="text-teal-primary">Grow</span> Together
           </h1>
 
           <p className="text-lg lg:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed font-medium">
@@ -67,14 +99,14 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Stats */}
+        {/* Animated Stats */}
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto">
           <div className="text-center space-y-2">
             <div className="flex items-center justify-center">
               <Users className="h-8 w-8 text-teal-primary" aria-hidden="true" />
             </div>
             <div className="text-3xl font-bold text-neutral-dark tracking-tight">
-              10K+
+              <AnimatedCounter target={10000} suffix="+" />
             </div>
             <div className="text-gray-600">Community Members</div>
           </div>
@@ -87,7 +119,7 @@ export default function HeroSection() {
               />
             </div>
             <div className="text-3xl font-bold text-neutral-dark tracking-tight">
-              500+
+              <AnimatedCounter target={500} suffix="+" />
             </div>
             <div className="text-gray-600">Startups Launched</div>
           </div>
@@ -97,7 +129,7 @@ export default function HeroSection() {
               <Globe className="h-8 w-8 text-teal-primary" aria-hidden="true" />
             </div>
             <div className="text-3xl font-bold text-neutral-dark tracking-tight">
-              50+
+              <AnimatedCounter target={50} suffix="+" />
             </div>
             <div className="text-gray-600">Countries</div>
           </div>

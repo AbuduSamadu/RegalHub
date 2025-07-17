@@ -341,7 +341,7 @@ export default function InitiativesPage() {
                   <SelectTrigger className="w-full md:w-48">
                     <SelectValue placeholder="Program Type" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-white border border-gray-200">
                     {types.map((type) => (
                       <SelectItem key={type} value={type}>
                         {type}
@@ -357,7 +357,7 @@ export default function InitiativesPage() {
                   <SelectTrigger className="w-full md:w-48">
                     <SelectValue placeholder="Status" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-white border border-gray-200">
                     {statuses.map((status) => (
                       <SelectItem key={status} value={status}>
                         {status}

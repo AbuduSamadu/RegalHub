@@ -1,5 +1,5 @@
-import Image from "next/image";
-import { cn } from "@/lib/utils";
+import Image from 'next/image';
+import { cn } from '@/lib/utils';
 
 interface OptimizedImageProps {
   src: string;
@@ -24,22 +24,22 @@ export function OptimizedImage({
   sizes = "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw",
   quality = 85,
   ...props
-}: OptimizedImageProps) {
+}:Readonly <OptimizedImageProps>) {
   // Convert to Cloudinary URL with optimizations
   const getOptimizedSrc = (originalSrc: string) => {
-    if (originalSrc.startsWith("http")) {
+    if (originalSrc.startsWith('http')) {
       return originalSrc;
     }
-
+    
     // For demo purposes, using placeholder service
     // In production, replace with your Cloudinary setup
-    const cloudinaryBase = "https://res.cloudinary.com/demo/image/fetch";
+    const cloudinaryBase = 'https://res.cloudinary.com/demo/image/fetch';
     const transformations = `q_auto,f_auto,w_auto:responsive`;
-
-    if (originalSrc.startsWith("/")) {
+    
+    if (originalSrc.startsWith('/')) {
       return `${cloudinaryBase}/${transformations}/https://startupeco.com${originalSrc}`;
     }
-
+    
     return originalSrc;
   };
 

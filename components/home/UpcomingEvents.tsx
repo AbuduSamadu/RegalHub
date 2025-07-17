@@ -1,7 +1,10 @@
+"use client";
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock, MapPin, Users } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const upcomingEvents = [
   {
@@ -51,6 +54,11 @@ const upcomingEvents = [
 ];
 
 export default function UpcomingEvents() {
+  const router = useRouter();
+
+  const handleViewAllEvents = () => {
+    router.push("/events")
+  }
   return (
     <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-6 lg:px-20">
@@ -131,6 +139,7 @@ export default function UpcomingEvents() {
             variant="outline" 
             size="lg" 
             className="border-2 border-teal-primary text-teal-primary hover:bg-teal-primary hover:text-white"
+            onClick={handleViewAllEvents}
           >
             View All Events
           </Button>
