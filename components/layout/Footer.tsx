@@ -2,7 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
 import Link from "next/link";
-import Logo from "@/components/ui/Logo";
+import Logo from "./logo";
+
 
 
 export default function Footer() {
@@ -31,25 +32,25 @@ export default function Footer() {
             <div className="space-y-2">
               <Link
                 href="/startups"
-                className="block text-gray-400 hover:text-white text-sm"
+                className="block text-gray-400 hover:text-gray-800 text-sm"
               >
                 Startups
               </Link>
               <Link
                 href="/events"
-                className="block text-gray-400 hover:text-white text-sm"
+                className="block text-gray-400  hover:text-gray-800 text-sm"
               >
                 Events
               </Link>
               <Link
                 href="/initiatives"
-                className="block text-gray-400 hover:text-white text-sm"
+                className="block text-gray-400  hover:text-gray-800 text-sm"
               >
                 Initiatives
               </Link>
               <Link
                 href="/community"
-                className="block text-gray-400 hover:text-white text-sm"
+                className="block text-gray-400  hover:text-gray-800 text-sm"
               >
                 Community
               </Link>
@@ -62,25 +63,25 @@ export default function Footer() {
             <div className="space-y-2">
               <Link
                 href="/contact"
-                className="block text-gray-400 hover:text-white text-sm"
+                className="block text-gray-400 hover:text-gray-800 text-sm"
               >
                 Contact Us
               </Link>
               <Link
                 href="/help"
-                className="block text-gray-400 hover:text-white text-sm"
+                className="block text-gray-400 hover:text-gray-800 text-sm"
               >
                 Help Center
               </Link>
               <Link
                 href="/privacy"
-                className="block text-gray-400 hover:text-white text-sm"
+                className="block text-gray-400 hover:text-gray-800 text-sm"
               >
                 Privacy Policy
               </Link>
               <Link
                 href="/terms"
-                className="block text-gray-400 hover:text-white text-sm"
+                className="block text-gray-400 hover:text-gray-800 text-sm"
               >
                 Terms of Service
               </Link>

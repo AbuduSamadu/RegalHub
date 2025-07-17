@@ -11,7 +11,14 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Bell, Calendar, MessageSquare, DollarSign, Users, CheckCircle } from "lucide-react";
+import {
+  Bell,
+  Calendar,
+  MessageSquare,
+  DollarSign,
+  Users,
+  CheckCircle,
+} from "lucide-react";
 
 interface Notification {
   id: string;
@@ -31,7 +38,7 @@ const mockNotifications: Notification[] = [
     description: "Sarah Chen wants to connect with you",
     time: "2 hours ago",
     read: false,
-    actionUrl: "/mentorship/requests"
+    actionUrl: "/mentorship/requests",
   },
   {
     id: "2",
@@ -40,7 +47,7 @@ const mockNotifications: Notification[] = [
     description: "Startup Pitch Night starts in 1 hour",
     time: "1 hour ago",
     read: false,
-    actionUrl: "/events/startup-pitch-night"
+    actionUrl: "/events/startup-pitch-night",
   },
   {
     id: "3",
@@ -49,7 +56,7 @@ const mockNotifications: Notification[] = [
     description: "New accelerator program matches your profile",
     time: "3 hours ago",
     read: true,
-    actionUrl: "/funding/accelerators"
+    actionUrl: "/funding/accelerators",
   },
   {
     id: "4",
@@ -58,7 +65,7 @@ const mockNotifications: Notification[] = [
     description: "John Davis sent you a message",
     time: "5 hours ago",
     read: true,
-    actionUrl: "/messages/john-davis"
+    actionUrl: "/messages/john-davis",
   },
   {
     id: "5",
@@ -67,8 +74,8 @@ const mockNotifications: Notification[] = [
     description: "Your bootcamp application was approved!",
     time: "1 day ago",
     read: false,
-    actionUrl: "/applications/bootcamp-2024"
-  }
+    actionUrl: "/applications/bootcamp-2024",
+  },
 ];
 
 const getNotificationIcon = (type: string) => {
@@ -90,16 +97,16 @@ const getNotificationIcon = (type: string) => {
 
 export default function NotificationDropdown() {
   const [notifications, setNotifications] = useState(mockNotifications);
-  const unreadCount = notifications.filter(n => !n.read).length;
+  const unreadCount = notifications.filter((n) => !n.read).length;
 
   const markAsRead = (id: string) => {
-    setNotifications(prev => 
-      prev.map(n => n.id === id ? { ...n, read: true } : n)
+    setNotifications((prev) =>
+      prev.map((n) => (n.id === id ? { ...n, read: true } : n))
     );
   };
 
   const markAllAsRead = () => {
-    setNotifications(prev => prev.map(n => ({ ...n, read: true })));
+    setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
   };
 
   return (
@@ -108,8 +115,8 @@ export default function NotificationDropdown() {
         <Button variant="ghost" size="icon" className="relative">
           <Bell className="h-5 w-5" />
           {unreadCount > 0 && (
-            <Badge 
-              variant="destructive" 
+            <Badge
+              variant="magenta"
               className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs"
             >
               {unreadCount}
@@ -117,13 +124,16 @@ export default function NotificationDropdown() {
           )}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-80">
-        <div className="flex items-center justify-between p-4">
+      <DropdownMenuContent
+        align="end"
+        className="w-80 bg-white border border-gray-200 shadow-lg"
+      >
+        <div className="flex items-center justify-between p-4 bg-white">
           <h3 className="font-semibold">Notifications</h3>
           {unreadCount > 0 && (
-            <Button 
-              variant="ghost" 
-              size="sm" 
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={markAllAsRead}
               className="text-xs text-teal-primary hover:text-teal-primary/80"
             >
@@ -132,18 +142,18 @@ export default function NotificationDropdown() {
           )}
         </div>
         <Separator />
-        <ScrollArea className="h-96">
+        <ScrollArea className="h-96 bg-white">
           {notifications.length === 0 ? (
-            <div className="p-4 text-center text-gray-500">
+            <div className="p-4 text-center text-gray-500 bg-white">
               No notifications
             </div>
           ) : (
-            <div className="space-y-1">
+            <div className="space-y-1 bg-white">
               {notifications.map((notification) => (
-                <Card 
+                <Card
                   key={notification.id}
                   className={`border-0 shadow-none cursor-pointer hover:bg-gray-50 ${
-                    !notification.read ? 'bg-blue-50/50' : ''
+                    !notification.read ? "bg-blue-50/50" : "bg-white"
                   }`}
                   onClick={() => markAsRead(notification.id)}
                 >
@@ -176,7 +186,7 @@ export default function NotificationDropdown() {
           )}
         </ScrollArea>
         <Separator />
-        <div className="p-2">
+        <div className="p-2 bg-white">
           <Button variant="ghost" className="w-full text-sm">
             View All Notifications
           </Button>

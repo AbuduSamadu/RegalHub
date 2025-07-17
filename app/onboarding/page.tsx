@@ -2,24 +2,10 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import {
-  ArrowRight,
-  ArrowLeft,
-  Building,
-  Users,
-  DollarSign,
-  User,
-  Handshake,
-} from "lucide-react";
+import { ArrowRight, ArrowLeft, Building, Users, DollarSign, User, Handshake } from "lucide-react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
@@ -30,11 +16,7 @@ const userRoles = [
     description: "Building the next big thing",
     icon: Building,
     color: "bg-teal-primary",
-    benefits: [
-      "Access to mentors",
-      "Funding opportunities",
-      "Networking events",
-    ],
+    benefits: ["Access to mentors", "Funding opportunities", "Networking events"]
   },
   {
     id: "mentor",
@@ -42,7 +24,7 @@ const userRoles = [
     description: "Share your expertise and guide others",
     icon: User,
     color: "bg-magenta-primary",
-    benefits: ["Give back to community", "Expand network", "Recognition"],
+    benefits: ["Give back to community", "Expand network", "Recognition"]
   },
   {
     id: "investor",
@@ -50,7 +32,7 @@ const userRoles = [
     description: "Discover promising startups",
     icon: DollarSign,
     color: "bg-teal-primary",
-    benefits: ["Deal flow", "Due diligence tools", "Portfolio management"],
+    benefits: ["Deal flow", "Due diligence tools", "Portfolio management"]
   },
   {
     id: "talent",
@@ -58,7 +40,7 @@ const userRoles = [
     description: "Find opportunities in innovative companies",
     icon: Users,
     color: "bg-magenta-primary",
-    benefits: ["Job opportunities", "Skills development", "Career growth"],
+    benefits: ["Job opportunities", "Skills development", "Career growth"]
   },
   {
     id: "partner",
@@ -66,12 +48,8 @@ const userRoles = [
     description: "Connect with the ecosystem",
     icon: Handshake,
     color: "bg-teal-primary",
-    benefits: [
-      "Collaboration opportunities",
-      "Market access",
-      "Brand exposure",
-    ],
-  },
+    benefits: ["Collaboration opportunities", "Market access", "Brand exposure"]
+  }
 ];
 
 export default function OnboardingPage() {
@@ -81,7 +59,7 @@ export default function OnboardingPage() {
     name: "",
     email: "",
     company: "",
-    interests: [] as string[],
+    interests: [] as string[]
   });
 
   const totalSteps = 4;
@@ -100,11 +78,11 @@ export default function OnboardingPage() {
   };
 
   const handleInterestToggle = (interest: string) => {
-    setFormData((prev) => ({
+    setFormData(prev => ({
       ...prev,
       interests: prev.interests.includes(interest)
-        ? prev.interests.filter((i) => i !== interest)
-        : [...prev.interests, interest],
+        ? prev.interests.filter(i => i !== interest)
+        : [...prev.interests, interest]
     }));
   };
 
@@ -170,7 +148,7 @@ export default function OnboardingPage() {
                               {role.description}
                             </p>
                           </div>
-                          <div className="flex flex-wrap gap-1 justify-center">
+                          <div className="flex flex-wrap gap-2 justify-center">
                             {role.benefits.map((benefit) => (
                               <Badge
                                 key={benefit}

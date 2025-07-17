@@ -1,0 +1,29 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://startupeco.com/sitemap.xml
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /api/
+Disallow: /dashboard/private/
+Disallow: /_next/
+Disallow: /static/
+
+# Allow important pages
+Allow: /
+Allow: /about
+Allow: /events
+Allow: /startups
+Allow: /community
+Allow: /initiatives
+Allow: /gallery
+Allow: /contact
+Allow: /onboarding
+Allow: /help
+Allow: /privacy
+Allow: /terms
+
+# Crawl delay
+Crawl-delay: 1

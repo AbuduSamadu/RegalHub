@@ -151,34 +151,40 @@ export default function StartupsPage() {
                     />
                   </div>
                 </div>
-                
-                <Select value={selectedIndustry} onValueChange={setSelectedIndustry}>
+
+                <Select
+                  value={selectedIndustry}
+                  onValueChange={setSelectedIndustry}
+                >
                   <SelectTrigger className="w-full md:w-48">
                     <SelectValue placeholder="Industry" />
                   </SelectTrigger>
-                  <SelectContent>
-                    {industries.map(industry => (
+                  <SelectContent className="bg-white border border-gray-200">
+                    {industries.map((industry) => (
                       <SelectItem key={industry} value={industry}>
                         {industry === "all" ? "All Industries" : industry}
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
-                
+
                 <Select value={selectedStage} onValueChange={setSelectedStage}>
                   <SelectTrigger className="w-full md:w-48">
                     <SelectValue placeholder="Stage" />
                   </SelectTrigger>
-                  <SelectContent>
-                    {stages.map(stage => (
+                  <SelectContent className="bg-white border border-gray-200">
+                    {stages.map((stage) => (
                       <SelectItem key={stage} value={stage}>
                         {stage === "all" ? "All Stages" : stage}
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
-                
-                <Button onClick={handleSearch} className="bg-teal-primary hover:bg-teal-primary/90">
+
+                <Button
+                  onClick={handleSearch}
+                  className="bg-teal-primary hover:bg-teal-primary/90"
+                >
                   <Filter className="h-4 w-4 mr-2" />
                   Filter
                 </Button>
@@ -196,20 +202,28 @@ export default function StartupsPage() {
           {/* Startup Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredStartups.map((startup) => (
-              <Card key={startup.id} className="border-0 shadow-md hover:shadow-lg transition-shadow duration-300 group">
+              <Card
+                key={startup.id}
+                className="border-0 shadow-md hover:shadow-lg transition-shadow duration-300 group"
+              >
                 <CardHeader className="pb-4">
                   <div className="flex items-center space-x-3 mb-3">
                     <div className="text-3xl">{startup.logo}</div>
                     <div className="flex-1">
                       <div className="flex items-center justify-between">
-                        <CardTitle className="text-lg">{startup.name}</CardTitle>
-                        <Badge 
-                          variant="secondary" 
+                        <CardTitle className="text-lg">
+                          {startup.name}
+                        </CardTitle>
+                        <Badge
+                          variant="secondary"
                           className={`text-xs ${
-                            startup.lookingFor === "Funding" ? "bg-green-100 text-green-800" :
-                            startup.lookingFor === "Talent" ? "bg-blue-100 text-blue-800" :
-                            startup.lookingFor === "Mentorship" ? "bg-purple-100 text-purple-800" :
-                            "bg-orange-100 text-orange-800"
+                            startup.lookingFor === "Funding"
+                              ? "bg-green-100 text-green-800"
+                              : startup.lookingFor === "Talent"
+                              ? "bg-blue-100 text-blue-800"
+                              : startup.lookingFor === "Mentorship"
+                              ? "bg-purple-100 text-purple-800"
+                              : "bg-orange-100 text-orange-800"
                           }`}
                         >
                           Looking for {startup.lookingFor}
@@ -219,8 +233,8 @@ export default function StartupsPage() {
                         <Badge variant="outline" className="text-xs">
                           {startup.industry}
                         </Badge>
-                        <Badge 
-                          variant="secondary" 
+                        <Badge
+                          variant="secondary"
                           className="text-xs bg-teal-primary/10 text-teal-primary"
                         >
                           {startup.stage}
@@ -233,7 +247,7 @@ export default function StartupsPage() {
                   <CardDescription className="text-gray-600 line-clamp-2">
                     {startup.description}
                   </CardDescription>
-                  
+
                   <div className="space-y-2 text-sm">
                     <div className="flex items-center space-x-2 text-gray-500">
                       <MapPin className="h-4 w-4" />
@@ -248,29 +262,29 @@ export default function StartupsPage() {
                       <span>{startup.team}</span>
                     </div>
                   </div>
-                  
+
                   <div className="flex flex-wrap gap-1">
                     {startup.tags.map((tag) => (
-                      <Badge 
-                        key={tag} 
-                        variant="outline" 
+                      <Badge
+                        key={tag}
+                        variant="outline"
                         className="text-xs bg-gray-50"
                       >
                         {tag}
                       </Badge>
                     ))}
                   </div>
-                  
+
                   <div className="flex space-x-2">
-                    <Button 
-                      size="sm" 
+                    <Button
+                      size="sm"
                       className="bg-teal-primary hover:bg-teal-primary/90 flex-1"
                     >
                       View Profile
                     </Button>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
+                    <Button
+                      variant="outline"
+                      size="sm"
                       className="border-magenta-primary text-magenta-primary hover:bg-magenta-primary hover:text-white"
                     >
                       Connect
@@ -286,8 +300,8 @@ export default function StartupsPage() {
               <p className="text-gray-500 text-lg">
                 No startups found matching your criteria
               </p>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="mt-4"
                 onClick={() => {
                   setSearchTerm("");
