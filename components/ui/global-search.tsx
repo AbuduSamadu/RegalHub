@@ -11,7 +11,7 @@ import {
   DialogTrigger,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Search, Building, Calendar, User, DollarSign, X } from "lucide-react";
+import { Search, Building, Calendar, User, DollarSign } from "lucide-react";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 interface SearchResult {
@@ -57,28 +57,6 @@ const mockResults: SearchResult[] = [
     url: "/programs/ai-accelerator",
   },
 ];
-
-const getResultIcon = (type: string) => {
-  switch (type) {
-    case "startup":
-      return <Building className="h-4 w-4 text-teal-primary" />;
-    case "event":
-      return <Calendar className="h-4 w-4 text-magenta-primary" />;
-    case "mentor":
-      return <User className="h-4 w-4 text-blue-600" />;
-    case "program":
-      return <DollarSign className="h-4 w-4 text-green-600" />;
-    default:
-      return <Search className="h-4 w-4" />;
-  }
-};
-
-const categoryColors = {
-  startup: "bg-teal-primary/10 text-teal-primary",
-  event: "bg-magenta-primary/10 text-magenta-primary",
-  mentor: "bg-blue-100 text-blue-800",
-  program: "bg-green-100 text-green-800",
-};
 
 export default function GlobalSearch() {
   const [isOpen, setIsOpen] = useState(false);
