@@ -28,13 +28,13 @@ import {
   List,
   Calendar,
   MapPin,
-  Users,
   Play,
   Download,
   Share,
   Heart,
   Eye,
 } from "lucide-react";
+import Image from "next/image";
 
 const galleryItems = [
   {
@@ -169,9 +169,6 @@ export default function GalleryPage() {
   const [selectedYear, setSelectedYear] = useState("All");
   const [selectedEvent, setSelectedEvent] = useState("All");
   const [filteredItems, setFilteredItems] = useState(galleryItems);
-  const [selectedItem, setSelectedItem] = useState<
-    (typeof galleryItems)[0] | null
-  >(null);
 
   const handleFilter = () => {
     let filtered = galleryItems;
@@ -238,7 +235,7 @@ export default function GalleryPage() {
                   <SelectTrigger className="w-full lg:w-32">
                     <SelectValue placeholder="Type" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-white border border-gray-200">
                     {mediaTypes.map((type) => (
                       <SelectItem key={type} value={type}>
                         {type}
@@ -251,7 +248,7 @@ export default function GalleryPage() {
                   <SelectTrigger className="w-full lg:w-32">
                     <SelectValue placeholder="Year" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-white border border-gray-200">
                     {years.map((year) => (
                       <SelectItem key={year} value={year}>
                         {year}
@@ -264,7 +261,7 @@ export default function GalleryPage() {
                   <SelectTrigger className="w-full lg:w-48">
                     <SelectValue placeholder="Event" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-white border border-gray-200">
                     {events.map((event) => (
                       <SelectItem key={event} value={event}>
                         {event.length > 25
@@ -380,9 +377,11 @@ export default function GalleryPage() {
                     ) : (
                       <CardContent className="p-4 flex items-center space-x-4 w-full">
                         <div className="relative">
-                          <img
+                          <Image
                             src={item.thumbnail}
-                            alt={item.title}
+                              alt={item.title}
+                              width={20}
+                              height={20}
                             className="w-20 h-20 object-cover rounded-lg"
                           />
                           {item.type === "video" && (
@@ -431,7 +430,9 @@ export default function GalleryPage() {
                   </Card>
                 </DialogTrigger>
 
-                <DialogContent className="max-w-4xl">
+                <DialogContent
+                  className="max-w-4xl bg-white border border-gray-200 shadow-lg rounded-lg"
+                >
                   <DialogHeader>
                     <DialogTitle>{item.title}</DialogTitle>
                   </DialogHeader>

@@ -21,9 +21,15 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
 
 export function AdminTopbar() {
   const [searchQuery, setSearchQuery] = useState("");
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push("/")
+  }
 
   const notifications = [
     {
@@ -72,7 +78,7 @@ export function AdminTopbar() {
   };
 
   return (
-    <header className="bg-white ml-64 border-b px-6 py-4 flex items-center justify-between">
+    <header className="bg-white lg:ml-64 border-b px-6 py-4 flex items-center justify-between">
       {/* Search */}
       <div className="flex-1 max-w-md">
         <div className="relative">
@@ -100,7 +106,10 @@ export function AdminTopbar() {
               )}
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-80" align="end">
+          <DropdownMenuContent
+            align="end"
+            className="bg-white border border-gray-200 w-80"
+          >
             <div className="p-4 border-b">
               <h3 className="font-semibold text-gray-900">Notifications</h3>
               <p className="text-sm text-gray-500">
@@ -169,7 +178,10 @@ export function AdminTopbar() {
               </span>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent
+            align="end"
+            className="bg-white border border-gray-200"
+          >
             <DropdownMenuItem>
               <User className="w-4 h-4 mr-2" />
               Profile
@@ -179,7 +191,7 @@ export function AdminTopbar() {
               Settings
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-red-600">
+            <DropdownMenuItem onClick={handleClick} className="text-red-600">
               <LogOut className="w-4 h-4 mr-2" />
               Logout
             </DropdownMenuItem>

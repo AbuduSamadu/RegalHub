@@ -9,16 +9,16 @@ import {
   LayoutDashboard,
   Building,
   Calendar,
-  Image,
   Users,
   BarChart3,
   Settings,
-  Globe,
   Menu,
   X,
   MessageCircle,
-  Mail
+  Mail,
+  ImagesIcon,
 } from "lucide-react";
+import Image from "next/image";
 
 export function AdminSidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -29,7 +29,7 @@ export function AdminSidebar() {
     { href: "/admin/startups", label: "Startups", icon: Building, badge: "12" },
     { href: "/admin/mentors", label: "Mentors", icon: Users, badge: "3" },
     { href: "/admin/events", label: "Events", icon: Calendar, badge: "3" },
-    { href: "/admin/gallery", label: "Gallery", icon: Image, badge: null },
+    { href: "/admin/gallery", label: "Gallery", icon: ImagesIcon, badge: null },
     {
       href: "/admin/messages",
       label: "Messages",
@@ -67,7 +67,13 @@ export function AdminSidebar() {
           <div className="flex items-center justify-between p-6 border-b">
             <Link href="/admin" className="flex items-center space-x-3">
               <div className="w-8 h-8 admin-gradient-primary rounded-full flex items-center justify-center">
-                <Globe className="w-5 h-5 text-white" />
+                <Image
+                  src="/logo.png"
+                  width={34}
+                  height={34}
+                  alt="Regalhub Logo"
+                  className="object-contain"
+                />
               </div>
               {!isCollapsed && (
                 <span className="text-xl font-bold admin-text-gradient">

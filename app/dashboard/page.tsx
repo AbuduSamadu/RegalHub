@@ -32,7 +32,7 @@ export default function DashboardPage() {
               Welcome back, Sarah! 👋
             </h1>
             <p className="text-lg text-gray-600">
-              Here's what's happening in your startup ecosystem
+              Here&apo;s what&apo;s happening in your startup ecosystem
             </p>
           </div>
 
