@@ -415,7 +415,7 @@ export default function GalleryPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header/>
+      <Header />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
@@ -496,13 +496,7 @@ export default function GalleryPage() {
         </div>
 
         {/* Gallery Grid */}
-        <div
-          className={`grid gap-4 mb-8 ${
-            viewMode === "masonry"
-              ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-              : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-          }`}
-        >
+        <div className="grid gap-4 mb-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {paginatedItems.map((item, index) => (
             <Dialog key={item.id}>
               <DialogTrigger asChild>
@@ -803,7 +797,7 @@ export default function GalleryPage() {
           </div>
         )}
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 }

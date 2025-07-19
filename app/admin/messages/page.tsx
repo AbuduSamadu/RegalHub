@@ -23,13 +23,9 @@ import {
 } from "@/components/ui/dialog";
 import {
   MessageCircle,
-  Mail,
-  Phone,
   Search,
-  Filter,
   Eye,
   Reply,
-  Archive,
   Trash2,
   CheckCircle,
   Clock,

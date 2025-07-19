@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, ArrowLeft, Building, Users, DollarSign, User, Handshake } from "lucide-react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { Label } from "@/components/ui/label";
 
 const userRoles = [
   {
@@ -96,7 +97,7 @@ export default function OnboardingPage() {
               Welcome to the Ecosystem
             </h1>
             <p className="text-lg text-gray-600">
-              Let's get you set up in just a few steps
+              Let&apo;s get you set up in just a few steps
             </p>
           </div>
 
@@ -173,15 +174,15 @@ export default function OnboardingPage() {
                       Tell us about yourself
                     </CardTitle>
                     <CardDescription className="text-lg">
-                      We'll use this information to personalize your experience
+                      We&apo;ll use this information to personalize your experience
                     </CardDescription>
                   </div>
 
                   <div className="space-y-4 max-w-md mx-auto">
                     <div>
-                      <label className="block text-sm font-medium mb-2">
+                      <Label className="block text-sm font-medium mb-2">
                         Full Name
-                      </label>
+                      </Label>
                       <input
                         type="text"
                         className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-teal-primary focus:border-transparent"
@@ -197,9 +198,9 @@ export default function OnboardingPage() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium mb-2">
+                      <Label className="block text-sm font-medium mb-2">
                         Email Address
-                      </label>
+                      </Label>
                       <input
                         type="email"
                         className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-teal-primary focus:border-transparent"
@@ -215,9 +216,9 @@ export default function OnboardingPage() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium mb-2">
+                      <Label className="block text-sm font-medium mb-2">
                         Company/Organization
-                      </label>
+                      </Label>
                       <input
                         type="text"
                         className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-teal-primary focus:border-transparent"
@@ -288,8 +289,8 @@ export default function OnboardingPage() {
                     Welcome to the Ecosystem!
                   </CardTitle>
                   <CardDescription className="text-lg max-w-2xl mx-auto">
-                    You're all set! We've created your profile and you can now
-                    access all the features of our platform. Let's start
+                    You&apos;re all set! We&apos;ve created your profile and you can now
+                    access all the features of our platform. Let&apos;s start
                     building the future together.
                   </CardDescription>
 

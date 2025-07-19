@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -98,26 +92,22 @@ const values = [
   },
 ];
 
-
 export default function AbouContentPage() {
   return (
     <main role="main">
       {/* Hero Section */}
-      <section
-        className="py-20 bg-gradient-to-br from-teal-primary/10 to-magenta-primary/10"
-        role="banner"
-      >
+      <section className="py-20 bg-gradient-to-br from-teal-primary/10 to-magenta-primary/10">
         <div className="container mx-auto px-6 lg:px-20">
           <div className="max-w-4xl mx-auto text-center space-y-8">
             <div className="flex items-center justify-center space-x-2 text-teal-primary">
               <Globe className="h-6 w-6" aria-hidden="true" />
               <span className="text-sm font-medium uppercase tracking-wider">
-                About StartupEco
+                About Regalhub
               </span>
             </div>
 
             <h1 className="text-5xl lg:text-6xl font-bold text-neutral-dark leading-tight tracking-tight">
-              Building the Future of
+              Building the Future of{" "}
               <span className="text-teal-primary"> Entrepreneurship</span>
             </h1>
 
