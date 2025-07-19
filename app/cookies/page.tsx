@@ -20,7 +20,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Calendar } from "@/components/ui/calendar";
 import {
   Calendar as CalendarIcon,
   Clock,
@@ -31,7 +30,6 @@ import {
   Grid,
   List,
   Plus,
-  ExternalLink,
 } from "lucide-react";
 
 const events = [

@@ -11,7 +11,7 @@ import {
   DialogTrigger,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Search, Building, Calendar, User, DollarSign, X } from "lucide-react";
+import { Search, Building, Calendar, User, DollarSign } from "lucide-react";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 interface SearchResult {
@@ -57,28 +57,6 @@ const mockResults: SearchResult[] = [
     url: "/programs/ai-accelerator",
   },
 ];
-
-const getResultIcon = (type: string) => {
-  switch (type) {
-    case "startup":
-      return <Building className="h-4 w-4 text-teal-primary" />;
-    case "event":
-      return <Calendar className="h-4 w-4 text-magenta-primary" />;
-    case "mentor":
-      return <User className="h-4 w-4 text-blue-600" />;
-    case "program":
-      return <DollarSign className="h-4 w-4 text-green-600" />;
-    default:
-      return <Search className="h-4 w-4" />;
-  }
-};
-
-const categoryColors = {
-  startup: "bg-teal-primary/10 text-teal-primary",
-  event: "bg-magenta-primary/10 text-magenta-primary",
-  mentor: "bg-blue-100 text-blue-800",
-  program: "bg-green-100 text-green-800",
-};
 
 export default function GlobalSearch() {
   const [isOpen, setIsOpen] = useState(false);
@@ -170,24 +148,27 @@ export default function GlobalSearch() {
               >
                 All
               </Button>
-              {categories.map((category) => (
-                <Button
-                  key={category.key}
-                  variant={
-                    selectedCategory === category.key ? "default" : "outline"
-                  }
-                  size="sm"
-                  onClick={() => setSelectedCategory(category.key)}
-                  className={
-                    selectedCategory === category.key
-                      ? "bg-teal-primary hover:bg-teal-primary/90"
-                      : ""
-                  }
-                >
-                  <category.icon className="h-3 w-3 mr-1" />
-                  {category.label}
-                </Button>
-              ))}
+              {categories.map((category) => {
+                const buttonClassName =
+                  selectedCategory === category.key
+                    ? "bg-teal-primary hover:bg-teal-primary/90"
+                    : "";
+
+                return (
+                  <Button
+                    key={category.key}
+                    variant={
+                      selectedCategory === category.key ? "default" : "outline"
+                    }
+                    size="sm"
+                    onClick={() => setSelectedCategory(category.key)}
+                    className={buttonClassName}
+                  >
+                    <category.icon className="h-3 w-3 mr-1" />
+                    {category.label}
+                  </Button>
+                );
+              })}
             </div>
           </div>
 
@@ -196,13 +177,19 @@ export default function GlobalSearch() {
             {searchTerm.length > 0 ? (
               results.length > 0 ? (
                 <div className="p-2">
-                  {results.map((result, index) => (
+                  {results.map((result) => (
                     <div
-                      key={index}
+                      key={result.id}
+                      role="button"
+                      tabIndex={0}
                       className="flex items-start space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer"
                       onClick={() => {
-                        // Handle result click
                         setIsOpen(false);
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          setIsOpen(false);
+                        }
                       }}
                     >
                       <div className="flex-shrink-0">
@@ -241,7 +228,7 @@ export default function GlobalSearch() {
               ) : (
                 <div className="p-8 text-center text-gray-500">
                   <Search className="h-8 w-8 mx-auto mb-3 text-gray-300" />
-                  <p>No results found for "{searchTerm}"</p>
+                  <p>No results found for &quot;{searchTerm}&quot;</p>
                   <p className="text-sm mt-1">
                     Try different keywords or categories
                   </p>

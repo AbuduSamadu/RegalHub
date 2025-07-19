@@ -27,11 +27,9 @@ import {
   Clock,
   MessageSquare,
   Send,
-  CheckCircle,
-  Globe,
-  Users,
-  Building,
+  CheckCircle
 } from "lucide-react";
+import { Label } from "@/components/ui/label";
 
 const contactMethods = [
   {
@@ -146,9 +144,9 @@ export default function ContactPage() {
                     <form onSubmit={handleSubmit} className="space-y-6">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
-                          <label className="text-sm font-medium">
+                          <Label className="text-sm font-medium">
                             Full Name *
-                          </label>
+                          </Label>
                           <Input
                             placeholder="Your full name"
                             value={formData.name}
@@ -159,9 +157,9 @@ export default function ContactPage() {
                           />
                         </div>
                         <div className="space-y-2">
-                          <label className="text-sm font-medium">
+                          <Label className="text-sm font-medium">
                             Email Address *
-                          </label>
+                          </Label>
                           <Input
                             type="email"
                             placeholder="your@email.com"
@@ -176,9 +174,9 @@ export default function ContactPage() {
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
-                          <label className="text-sm font-medium">
+                          <Label className="text-sm font-medium">
                             Company/Organization
-                          </label>
+                          </Label>
                           <Input
                             placeholder="Your company name"
                             value={formData.company}
@@ -188,9 +186,9 @@ export default function ContactPage() {
                           />
                         </div>
                         <div className="space-y-2">
-                          <label className="text-sm font-medium">
+                          <Label className="text-sm font-medium">
                             Inquiry Type *
-                          </label>
+                          </Label>
                           <Select
                             value={formData.inquiryType}
                             onValueChange={(value) =>
@@ -223,7 +221,7 @@ export default function ContactPage() {
                       </div>
 
                       <div className="space-y-2">
-                        <label className="text-sm font-medium">Subject *</label>
+                        <Label className="text-sm font-medium">Subject *</Label>
                         <Input
                           placeholder="Brief subject line"
                           value={formData.subject}
@@ -235,7 +233,7 @@ export default function ContactPage() {
                       </div>
 
                       <div className="space-y-2">
-                        <label className="text-sm font-medium">Message *</label>
+                        <Label className="text-sm font-medium">Message *</Label>
                         <Textarea
                           placeholder="Tell us more about your inquiry..."
                           rows={6}

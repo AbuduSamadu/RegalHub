@@ -70,7 +70,6 @@ export default function FeatureGrid() {
   return (
     <section
       className="py-20 bg-gray-50"
-      role="region"
       aria-labelledby="features-heading"
     >
       <div className="container mx-auto px-6 lg:px-20">

@@ -24,7 +24,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-6 lg:px-20">
         <div className="flex h-16 items-center justify-between">
-         <Logo />
+          <Logo />
 
           {/* Desktop Navigation */}
           <NavigationMenu className="hidden md:flex">
@@ -73,7 +73,7 @@ export default function Header() {
                 <NavigationMenuLink asChild>
                   <Link
                     href="/community"
-                    className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
+                    className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-teal-primary hover:text-teal-primary-foreground"
                   >
                     Community
                   </Link>
@@ -83,9 +83,19 @@ export default function Header() {
                 <NavigationMenuLink asChild>
                   <Link
                     href="/gallery"
-                    className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
+                    className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-teal-primary hover:text-teal-primary-foreground"
                   >
                     Gallery
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild>
+                  <Link
+                    href="/about"
+                    className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-teal-primary hover:text-teal-primary-foreground"
+                  >
+                    About Us
                   </Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
