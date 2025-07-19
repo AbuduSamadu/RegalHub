@@ -35,6 +35,8 @@ import {
   List,
 } from "lucide-react";
 import Image from "next/image";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 
 interface GalleryItem {
   id: number;
@@ -413,6 +415,7 @@ export default function GalleryPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <Header/>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
@@ -800,6 +803,7 @@ export default function GalleryPage() {
           </div>
         )}
       </div>
+      <Footer/>
     </div>
   );
 }

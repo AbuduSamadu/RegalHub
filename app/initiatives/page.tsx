@@ -24,7 +24,6 @@ import { Progress } from "@/components/ui/progress";
 import {
   Rocket,
   Users,
-  Calendar,
   DollarSign,
   Award,
   Search,

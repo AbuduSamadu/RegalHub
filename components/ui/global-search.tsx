@@ -148,24 +148,27 @@ export default function GlobalSearch() {
               >
                 All
               </Button>
-              {categories.map((category) => (
-                <Button
-                  key={category.key}
-                  variant={
-                    selectedCategory === category.key ? "default" : "outline"
-                  }
-                  size="sm"
-                  onClick={() => setSelectedCategory(category.key)}
-                  className={
-                    selectedCategory === category.key
-                      ? "bg-teal-primary hover:bg-teal-primary/90"
-                      : ""
-                  }
-                >
-                  <category.icon className="h-3 w-3 mr-1" />
-                  {category.label}
-                </Button>
-              ))}
+              {categories.map((category) => {
+                const buttonClassName =
+                  selectedCategory === category.key
+                    ? "bg-teal-primary hover:bg-teal-primary/90"
+                    : "";
+
+                return (
+                  <Button
+                    key={category.key}
+                    variant={
+                      selectedCategory === category.key ? "default" : "outline"
+                    }
+                    size="sm"
+                    onClick={() => setSelectedCategory(category.key)}
+                    className={buttonClassName}
+                  >
+                    <category.icon className="h-3 w-3 mr-1" />
+                    {category.label}
+                  </Button>
+                );
+              })}
             </div>
           </div>
 
@@ -174,13 +177,19 @@ export default function GlobalSearch() {
             {searchTerm.length > 0 ? (
               results.length > 0 ? (
                 <div className="p-2">
-                  {results.map((result, index) => (
+                  {results.map((result) => (
                     <div
-                      key={index}
+                      key={result.id}
+                      role="button"
+                      tabIndex={0}
                       className="flex items-start space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer"
                       onClick={() => {
-                        // Handle result click
                         setIsOpen(false);
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          setIsOpen(false);
+                        }
                       }}
                     >
                       <div className="flex-shrink-0">
@@ -219,7 +228,7 @@ export default function GlobalSearch() {
               ) : (
                 <div className="p-8 text-center text-gray-500">
                   <Search className="h-8 w-8 mx-auto mb-3 text-gray-300" />
-                  <p>No results found for "{searchTerm}"</p>
+                  <p>No results found for &quot;{searchTerm}&quot;</p>
                   <p className="text-sm mt-1">
                     Try different keywords or categories
                   </p>
