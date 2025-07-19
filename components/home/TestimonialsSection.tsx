@@ -68,10 +68,7 @@ export default function TestimonialsSection() {
               <CardContent className="p-6 space-y-4">
                 <div className="flex items-center space-x-3">
                   <Avatar>
-                    <AvatarImage
-                      src={`/api/placeholder/40/40`}
-                      alt={testimonial.name}
-                    />
+                    <AvatarImage alt={testimonial.name} />
                     <AvatarFallback className="bg-teal-primary text-white">
                       {testimonial.avatar}
                     </AvatarFallback>

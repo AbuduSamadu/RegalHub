@@ -30,8 +30,10 @@ export default function Header() {
           <NavigationMenu className="hidden md:flex">
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuTrigger>Discover</NavigationMenuTrigger>
-                <NavigationMenuContent className="bg-white border border-gray-20">
+                <NavigationMenuTrigger className="hover:bg-teal-primary hover:text-teal-primary-foreground">
+                  Discover
+                </NavigationMenuTrigger>
+                <NavigationMenuContent className="bg-white border border-gray-20 ">
                   <div className="grid gap-3 p-4 md:w-[400px]">
                     <NavigationMenuLink asChild>
                       <Link
@@ -132,7 +134,7 @@ export default function Header() {
               side="right"
               className="w-[300px] sm:w-[400px] bg-white border border-gray-200"
             >
-              <div className="flex flex-col gap-4 mt-8">
+              <div className="flex flex-col gap-4 mt-8 ">
                 <Link
                   href="/startups"
                   className="text-lg font-medium"

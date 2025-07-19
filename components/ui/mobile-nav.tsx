@@ -2,25 +2,20 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Home, 
-  Calendar, 
-  LayoutDashboard, 
-  Users, 
-  User,
-  Bell,
-  Search,
-  Bookmark
-} from "lucide-react";
+import { Home, Calendar, LayoutDashboard, Users, User } from "lucide-react";
 
 const navItems = [
   { icon: Home, label: "Home", href: "/", badge: null },
   { icon: Calendar, label: "Events", href: "/events", badge: null },
-  { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard", badge: null },
+  {
+    icon: LayoutDashboard,
+    label: "Dashboard",
+    href: "/dashboard",
+    badge: null,
+  },
   { icon: Users, label: "Community", href: "/community", badge: null },
-  { icon: User, label: "Profile", href: "/profile", badge: null }
+  { icon: User, label: "Profile", href: "/profile", badge: null },
 ];
 
 export default function MobileNav() {
@@ -43,8 +38,8 @@ export default function MobileNav() {
             <div className="relative">
               <item.icon className="h-5 w-5" />
               {item.badge && (
-                <Badge 
-                  variant="destructive" 
+                <Badge
+                  variant="destructive"
                   className="absolute -top-2 -right-2 h-4 w-4 rounded-full p-0 flex items-center justify-center text-xs"
                 >
                   {item.badge}
