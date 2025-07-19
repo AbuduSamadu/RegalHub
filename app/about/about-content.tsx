@@ -242,10 +242,7 @@ export default function AbouContentPage() {
               >
                 <CardContent className="p-6 text-center space-y-4">
                   <Avatar className="w-20 h-20 mx-auto">
-                    <AvatarImage
-                      src={`/api/placeholder/80/80`}
-                      alt={member.name}
-                    />
+                    <AvatarImage alt={member.name} />
                     <AvatarFallback className="bg-teal-primary text-white text-lg">
                       {member.avatar}
                     </AvatarFallback>

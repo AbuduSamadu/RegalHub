@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Dialog,
@@ -168,7 +168,7 @@ export default function MentorshipBooking() {
                       Book Session
                     </Button>
                   </DialogTrigger>
-                  <DialogContent>
+                 <DialogContent className="max-w-2xl bg-white border border-gray-200 shadow-lg rounded-lg">
                     <DialogHeader>
                       <DialogTitle>Confirm Session Booking</DialogTitle>
                       <DialogDescription>
@@ -226,7 +226,6 @@ export default function MentorshipBooking() {
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center space-x-3">
                     <Avatar>
-                      <AvatarImage src="/api/placeholder/40/40" />
                       <AvatarFallback className="bg-magenta-primary text-white">
                         {session.mentorAvatar}
                       </AvatarFallback>

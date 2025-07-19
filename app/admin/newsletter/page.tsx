@@ -23,7 +23,6 @@ import {
 } from "@/components/ui/dialog";
 import {
   Mail,
-  Send,
   Users,
   Eye,
   Download,
@@ -31,9 +30,7 @@ import {
   Edit,
   Trash2,
   Search,
-  Calendar,
   TrendingUp,
-  FileText,
 } from "lucide-react";
 import {
   Table,
