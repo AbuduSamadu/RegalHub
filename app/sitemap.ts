@@ -1,8 +1,10 @@
-import { MetadataRoute } from 'next'
+import { MetadataRoute } from 'next';
+
+export const revalidate = 60; // Regenerate every 60 seconds
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://startupeco.com'
-  
+  const baseUrl = 'http://localhost:3001';
+
   const staticPages = [
     '',
     '/about',
@@ -17,19 +19,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/privacy',
     '/terms',
     '/cookies',
-    '/signin'
-  ]
+    '/signin',
+  ];
 
   const staticRoutes = staticPages.map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
     changeFrequency: route === '' ? 'daily' as const : 'weekly' as const,
     priority: route === '' ? 1 : route === '/about' ? 0.9 : 0.8,
-  }))
+  }));
 
-  // In a real app, you'd fetch dynamic routes from your database
   const dynamicRoutes = [
-    // Example dynamic routes - replace with actual data
     {
       url: `${baseUrl}/events/startup-pitch-night`,
       lastModified: new Date(),
@@ -42,7 +42,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly' as const,
       priority: 0.6,
     },
-  ]
+  ];
 
-  return [...staticRoutes, ...dynamicRoutes]
+  return [...staticRoutes, ...dynamicRoutes];
 }
