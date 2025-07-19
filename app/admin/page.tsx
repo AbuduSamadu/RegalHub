@@ -1,8 +1,26 @@
 "use client";
 
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import {
   Users,
   Building,
@@ -16,8 +34,12 @@ import {
   ArrowUpRight,
   BarChart3,
   PieChart,
+  Plus,
+  Send,
 } from "lucide-react";
 import {
+  LineChart,
+  Line,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -30,7 +52,26 @@ import {
   Pie,
 } from "recharts";
 
+interface Startup {
+  id: number;
+  name: string;
+  founder: string;
+  email: string;
+  industry: string;
+  stage: string;
+  description: string;
+  location: string;
+  employees: string;
+  website: string;
+}
+
 export default function AdminDashboard() {
+  const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
+  const [selectedStartup, setSelectedStartup] = useState<Startup | null>(null);
+  const [isViewStartupModalOpen, setIsViewStartupModalOpen] = useState(false);
+  const [isAddEventModalOpen, setIsAddEventModalOpen] = useState(false);
+  const [isSendInviteModalOpen, setIsSendInviteModalOpen] = useState(false);
+
   const stats = [
     {
       title: "Total Startups",
@@ -137,6 +178,39 @@ export default function AdminDashboard() {
     return status === "completed" ? "text-green-600" : "text-yellow-600";
   };
 
+  const handleViewStartup = (startup: Startup) => {
+    setSelectedStartup(startup);
+    setIsViewStartupModalOpen(true);
+  };
+
+  const sampleStartups = [
+    {
+      id: 1,
+      name: "TechFlow AI",
+      founder: "Sarah Chen",
+      email: "sarah@techflow.ai",
+      industry: "AI/ML",
+      stage: "Series A",
+      description:
+        "Revolutionizing workflow automation with AI-powered solutions.",
+      location: "San Francisco, CA",
+      employees: "25-50",
+      website: "https://techflow.ai",
+    },
+    {
+      id: 2,
+      name: "EcoGreen Solutions",
+      founder: "Marcus Rodriguez",
+      email: "marcus@ecogreen.com",
+      industry: "CleanTech",
+      stage: "Seed",
+      description: "Sustainable energy solutions for urban environments.",
+      location: "Berlin, Germany",
+      employees: "10-25",
+      website: "https://ecogreen.com",
+    },
+  ];
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -146,20 +220,81 @@ export default function AdminDashboard() {
             Dashboard Overview
           </h1>
           <p className="text-gray-600 mt-1">
-            Welcome back! Here&apos;s what&apos;s happening in your ecosystem.
+            Welcome back! Here&apo;s what&apo;s happening in your ecosystem.
           </p>
         </div>
-        <Button className="bg-[#FF6B35] hover:bg-[#FF6B35]/90 text-white">
-          <UserPlus className="w-4 h-4 mr-2" />
-          Add New User
-        </Button>
+        <Dialog open={isAddUserModalOpen} onOpenChange={setIsAddUserModalOpen}>
+          <DialogTrigger asChild>
+            <Button className="bg-[#FF6B35] hover:bg-[#FF6B35]/90 text-white">
+              <UserPlus className="w-4 h-4 mr-2" />
+              Add New User
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="max-w-4xl bg-white border border-gray-200 shadow-lg rounded-lg">
+            <DialogHeader>
+              <DialogTitle>Add New User</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="userName">Full Name</Label>
+                  <Input id="userName" placeholder="Enter full name" />
+                </div>
+                <div>
+                  <Label htmlFor="userEmail">Email Address</Label>
+                  <Input
+                    id="userEmail"
+                    type="email"
+                    placeholder="Enter email address"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="userRole">User Role</Label>
+                  <Select>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select role" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-white border border-gray-200">
+                      <SelectItem value="startup">Startup Founder</SelectItem>
+                      <SelectItem value="mentor">Mentor</SelectItem>
+                      <SelectItem value="investor">Investor</SelectItem>
+                      <SelectItem value="talent">Talent</SelectItem>
+                      <SelectItem value="partner">Partner</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label htmlFor="userCompany">Company</Label>
+                  <Input id="userCompany" placeholder="Enter company name" />
+                </div>
+              </div>
+              <div>
+                <Label htmlFor="userBio">Bio</Label>
+                <Textarea id="userBio" placeholder="Enter user bio..." />
+              </div>
+              <div className="flex justify-end space-x-2">
+                <Button
+                  variant="outline"
+                  onClick={() => setIsAddUserModalOpen(false)}
+                >
+                  Cancel
+                </Button>
+                <Button className="bg-[#FF6B35] hover:bg-[#FF6B35]/90 text-white">
+                  Create User
+                </Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stats.map((stat) => (
+        {stats.map((stat, index) => (
           <Card
-            key={stat.title}
+            key={index}
             className="border-0 shadow-lg hover:shadow-xl transition-shadow duration-300"
           >
             <CardContent className="p-6">
@@ -216,7 +351,7 @@ export default function AdminDashboard() {
           </CardContent>
         </Card>
 
-        {/* Service Distribution */}
+        {/* Service Requests */}
         <Card className="border-0 shadow-lg">
           <CardHeader>
             <CardTitle className="flex items-center">
@@ -319,52 +454,228 @@ export default function AdminDashboard() {
 
       {/* Quick Actions */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer">
-          <CardContent className="p-6 text-center">
-            <div className="w-12 h-12 bg-[#FF6B35]/10 rounded-xl flex items-center justify-center mx-auto mb-4">
-              <Building className="w-6 h-6 text-[#FF6B35]" />
+        <Dialog
+          open={isViewStartupModalOpen}
+          onOpenChange={setIsViewStartupModalOpen}
+        >
+          <DialogTrigger asChild>
+            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer">
+              <CardContent className="p-6 text-center">
+                <div className="w-12 h-12 bg-[#FF6B35]/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+                  <Building className="w-6 h-6 text-[#FF6B35]" />
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-2">
+                  View Startups
+                </h3>
+                <p className="text-sm text-gray-600 mb-4">
+                  Browse and manage startup applications
+                </p>
+                <Button variant="outline" className="w-full">
+                  <Eye className="w-4 h-4 mr-2" />
+                  View Startups
+                </Button>
+              </CardContent>
+            </Card>
+          </DialogTrigger>
+          <DialogContent className="max-w-4xl bg-white border border-gray-200 shadow-lg rounded-lg">
+            <DialogHeader>
+              <DialogTitle>Startup Directory</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {sampleStartups.map((startup) => (
+                  <Card key={startup.id} className="p-4">
+                    <div className="flex items-center space-x-3 mb-3">
+                      <div className="w-10 h-10 bg-[#FF6B35]/10 rounded-lg flex items-center justify-center">
+                        <Building className="w-5 h-5 text-[#FF6B35]" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-gray-900">
+                          {startup.name}
+                        </h4>
+                        <p className="text-sm text-gray-500">
+                          {startup.founder}
+                        </p>
+                      </div>
+                    </div>
+                    <p className="text-sm text-gray-600 mb-3">
+                      {startup.description}
+                    </p>
+                    <div className="flex items-center justify-between text-xs text-gray-500">
+                      <span>{startup.industry}</span>
+                      <Badge variant="outline">{startup.stage}</Badge>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+              <div className="flex justify-end">
+                <Button
+                  variant="outline"
+                  onClick={() => setIsViewStartupModalOpen(false)}
+                >
+                  Close
+                </Button>
+              </div>
             </div>
-            <h3 className="font-semibold text-gray-900 mb-2">
-              Manage Startups
-            </h3>
-            <p className="text-sm text-gray-600 mb-4">
-              Review and approve new startup applications
-            </p>
-            <Button variant="outline" className="w-full">
-              View Startups
-            </Button>
-          </CardContent>
-        </Card>
+          </DialogContent>
+        </Dialog>
 
-        <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer">
-          <CardContent className="p-6 text-center">
-            <div className="w-12 h-12 bg-[#00BFCB]/10 rounded-xl flex items-center justify-center mx-auto mb-4">
-              <Calendar className="w-6 h-6 text-[#00BFCB]" />
+        <Dialog
+          open={isAddEventModalOpen}
+          onOpenChange={setIsAddEventModalOpen}
+        >
+          <DialogTrigger asChild>
+            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer">
+              <CardContent className="p-6 text-center">
+                <div className="w-12 h-12 bg-[#00BFCB]/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+                  <Calendar className="w-6 h-6 text-[#00BFCB]" />
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-2">
+                  Create Event
+                </h3>
+                <p className="text-sm text-gray-600 mb-4">
+                  Schedule new events and workshops
+                </p>
+                <Button variant="outline" className="w-full">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add Event
+                </Button>
+              </CardContent>
+            </Card>
+          </DialogTrigger>
+          <DialogContent className="max-w-2xl bg-white border border-gray-200 shadow-lg rounded-lg">
+            <DialogHeader>
+              <DialogTitle>Create New Event</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="eventTitle">Event Title</Label>
+                <Input id="eventTitle" placeholder="Enter event title" />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="eventDate">Date</Label>
+                  <Input id="eventDate" type="date" />
+                </div>
+                <div>
+                  <Label htmlFor="eventTime">Time</Label>
+                  <Input id="eventTime" type="time" />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="eventLocation">Location</Label>
+                  <Input id="eventLocation" placeholder="Event location" />
+                </div>
+                <div>
+                  <Label htmlFor="eventType">Event Type</Label>
+                  <Select>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select type" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-white border border-gray-200">
+                      <SelectItem value="workshop">Workshop</SelectItem>
+                      <SelectItem value="networking">Networking</SelectItem>
+                      <SelectItem value="conference">Conference</SelectItem>
+                      <SelectItem value="pitch">Pitch Competition</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              <div>
+                <Label htmlFor="eventDescription">Description</Label>
+                <Textarea
+                  id="eventDescription"
+                  placeholder="Event description"
+                />
+              </div>
+              <div className="flex justify-end space-x-2">
+                <Button
+                  variant="outline"
+                  onClick={() => setIsAddEventModalOpen(false)}
+                >
+                  Cancel
+                </Button>
+                <Button className="bg-[#00BFCB] hover:bg-[#00BFCB]/90 text-white">
+                  Create Event
+                </Button>
+              </div>
             </div>
-            <h3 className="font-semibold text-gray-900 mb-2">Create Event</h3>
-            <p className="text-sm text-gray-600 mb-4">
-              Schedule new events and workshops
-            </p>
-            <Button variant="outline" className="w-full">
-              Add Event
-            </Button>
-          </CardContent>
-        </Card>
+          </DialogContent>
+        </Dialog>
 
-        <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer">
-          <CardContent className="p-6 text-center">
-            <div className="w-12 h-12 bg-[#6B7280]/10 rounded-xl flex items-center justify-center mx-auto mb-4">
-              <Users className="w-6 h-6 text-[#6B7280]" />
+        <Dialog
+          open={isSendInviteModalOpen}
+          onOpenChange={setIsSendInviteModalOpen}
+        >
+          <DialogTrigger asChild>
+            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer">
+              <CardContent className="p-6 text-center">
+                <div className="w-12 h-12 bg-[#6B7280]/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+                  <Users className="w-6 h-6 text-[#6B7280]" />
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-2">
+                  Send Invites
+                </h3>
+                <p className="text-sm text-gray-600 mb-4">
+                  Invite new mentors to the platform
+                </p>
+                <Button variant="outline" className="w-full">
+                  <Send className="w-4 h-4 mr-2" />
+                  Send Invites
+                </Button>
+              </CardContent>
+            </Card>
+          </DialogTrigger>
+          <DialogContent className="max-w-2xl bg-white border border-gray-200 shadow-lg rounded-lg">
+            <DialogHeader>
+              <DialogTitle>Send Mentor Invitations</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="inviteEmails">Email Addresses</Label>
+                <Textarea
+                  id="inviteEmails"
+                  placeholder="Enter email addresses (one per line)"
+                  className="min-h-[100px]"
+                />
+              </div>
+              <div>
+                <Label htmlFor="inviteRole">Invite As</Label>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select role" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-white border border-gray-200">
+                    <SelectItem value="mentor">Mentor</SelectItem>
+                    <SelectItem value="investor">Investor</SelectItem>
+                    <SelectItem value="partner">Partner</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label htmlFor="inviteMessage">Personal Message</Label>
+                <Textarea
+                  id="inviteMessage"
+                  placeholder="Add a personal message to the invitation..."
+                  defaultValue="We'd love to have you join our startup ecosystem platform as a mentor. Your expertise would be invaluable to our community of entrepreneurs."
+                />
+              </div>
+              <div className="flex justify-end space-x-2">
+                <Button
+                  variant="outline"
+                  onClick={() => setIsSendInviteModalOpen(false)}
+                >
+                  Cancel
+                </Button>
+                <Button className="bg-[#6B7280] hover:bg-[#6B7280]/90 text-white">
+                  <Send className="w-4 h-4 mr-2" />
+                  Send Invitations
+                </Button>
+              </div>
             </div>
-            <h3 className="font-semibold text-gray-900 mb-2">Invite Mentors</h3>
-            <p className="text-sm text-gray-600 mb-4">
-              Add new mentors to the platform
-            </p>
-            <Button variant="outline" className="w-full">
-              Send Invites
-            </Button>
-          </CardContent>
-        </Card>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );

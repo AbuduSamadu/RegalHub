@@ -23,7 +23,6 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Search,
-  Filter,
   Plus,
   Eye,
   Edit,
@@ -32,10 +31,8 @@ import {
   XCircle,
   Clock,
   Building,
-  MapPin,
   Users,
-  Mail,
-  Phone,
+  Save,
 } from "lucide-react";
 import {
   Table,
@@ -69,6 +66,8 @@ export default function StartupsManagement() {
   const [serviceFilter, setServiceFilter] = useState("all");
   const [selectedStartup, setSelectedStartup] = useState<Startup | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isAddStartupModalOpen, setIsAddStartupModalOpen] = useState(false);
+
   const startups: Startup[] = [
     {
       id: 1,
@@ -208,10 +207,107 @@ export default function StartupsManagement() {
             Manage startup applications and profiles
           </p>
         </div>
-        <Button className="bg-[#FF6B35] hover:bg-[#FF6B35]/90 text-white">
-          <Plus className="w-4 h-4 mr-2" />
-          Add Startup
-        </Button>
+        <Dialog
+          open={isAddStartupModalOpen}
+          onOpenChange={setIsAddStartupModalOpen}
+        >
+          <DialogTrigger asChild>
+            <Button className="bg-[#FF6B35] hover:bg-[#FF6B35]/90 text-white">
+              <Plus className="w-4 h-4 mr-2" />
+              Add Startup
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="max-w-2xl bg-white border border-gray-200 shadow-lg rounded-lg">
+            <DialogHeader>
+              <DialogTitle>Add New Startup</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="startupName">Startup Name</Label>
+                  <Input id="startupName" placeholder="Enter startup name" />
+                </div>
+                <div>
+                  <Label htmlFor="founderName">Founder Name</Label>
+                  <Input id="founderName" placeholder="Enter founder name" />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="startupEmail">Email Address</Label>
+                  <Input
+                    id="startupEmail"
+                    type="email"
+                    placeholder="Enter email address"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="startupPhone">Phone Number</Label>
+                  <Input id="startupPhone" placeholder="Enter phone number" />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="startupIndustry">Industry</Label>
+                  <Select>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select industry" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-white border border-gray-200">
+                      <SelectItem value="ai">AI/ML</SelectItem>
+                      <SelectItem value="fintech">FinTech</SelectItem>
+                      <SelectItem value="healthtech">HealthTech</SelectItem>
+                      <SelectItem value="cleantech">CleanTech</SelectItem>
+                      <SelectItem value="edtech">EdTech</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label htmlFor="startupStage">Stage</Label>
+                  <Select>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select stage" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-white border border-gray-200">
+                      <SelectItem value="mvp">MVP</SelectItem>
+                      <SelectItem value="seed">Seed</SelectItem>
+                      <SelectItem value="series-a">Series A</SelectItem>
+                      <SelectItem value="series-b">Series B</SelectItem>
+                      <SelectItem value="growth">Growth</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              <div>
+                <Label htmlFor="startupLocation">Location</Label>
+                <Input id="startupLocation" placeholder="Enter location" />
+              </div>
+              <div>
+                <Label htmlFor="startupDescription">Description</Label>
+                <Textarea
+                  id="startupDescription"
+                  placeholder="Enter startup description..."
+                />
+              </div>
+              <div>
+                <Label htmlFor="startupWebsite">Website</Label>
+                <Input id="startupWebsite" placeholder="Enter website URL" />
+              </div>
+              <div className="flex justify-end space-x-2">
+                <Button
+                  variant="outline"
+                  onClick={() => setIsAddStartupModalOpen(false)}
+                >
+                  Cancel
+                </Button>
+                <Button className="bg-[#FF6B35] hover:bg-[#FF6B35]/90 text-white">
+                  <Save className="w-4 h-4 mr-2" />
+                  Add Startup
+                </Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
 
       {/* Stats Cards */}

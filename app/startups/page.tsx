@@ -215,7 +215,7 @@ export default function StartupsPage() {
                           {startup.name}
                         </CardTitle>
                         <Badge
-                          variant="secondary"
+                          variant="magenta"
                           className={`text-xs ${
                             startup.lookingFor === "Funding"
                               ? "bg-green-100 text-green-800"
