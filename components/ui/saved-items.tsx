@@ -5,17 +5,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { 
-  Bookmark, 
-  Building, 
-  Calendar, 
-  User, 
-  DollarSign, 
-  MapPin, 
+import {
+  Bookmark,
+  Building,
+  Calendar,
+  User,
+  DollarSign,
+  MapPin,
   Clock,
   Trash2,
-  ExternalLink
+  ExternalLink,
 } from "lucide-react";
 
 interface SavedItem {
@@ -45,9 +44,9 @@ const savedItems: SavedItem[] = [
     metadata: {
       location: "San Francisco, CA",
       stage: "Series A",
-      industry: "GreenTech"
+      industry: "GreenTech",
     },
-    url: "/startups/ecotech"
+    url: "/startups/ecotech",
   },
   {
     id: "2",
@@ -57,9 +56,9 @@ const savedItems: SavedItem[] = [
     savedDate: "1 week ago",
     metadata: {
       date: "March 15, 2024",
-      location: "San Francisco, CA"
+      location: "San Francisco, CA",
     },
-    url: "/events/pitch-night"
+    url: "/events/pitch-night",
   },
   {
     id: "3",
@@ -69,9 +68,9 @@ const savedItems: SavedItem[] = [
     savedDate: "3 days ago",
     metadata: {
       rating: 4.9,
-      industry: "Product Management"
+      industry: "Product Management",
     },
-    url: "/mentors/sarah-kim"
+    url: "/mentors/sarah-kim",
   },
   {
     id: "4",
@@ -81,10 +80,10 @@ const savedItems: SavedItem[] = [
     savedDate: "5 days ago",
     metadata: {
       price: "$100K investment",
-      location: "Virtual"
+      location: "Virtual",
     },
-    url: "/programs/ai-accelerator"
-  }
+    url: "/programs/ai-accelerator",
+  },
 ];
 
 const getItemIcon = (type: string) => {
@@ -122,15 +121,18 @@ export default function SavedItems() {
   const [activeTab, setActiveTab] = useState("all");
 
   const removeItem = (id: string) => {
-    setItems(prev => prev.filter(item => item.id !== id));
+    setItems((prev) => prev.filter((item) => item.id !== id));
   };
 
-  const filteredItems = activeTab === "all" 
-    ? items 
-    : items.filter(item => item.type === activeTab);
+  const filteredItems =
+    activeTab === "all"
+      ? items
+      : items.filter((item) => item.type === activeTab);
 
   const getTabCount = (type: string) => {
-    return type === "all" ? items.length : items.filter(item => item.type === type).length;
+    return type === "all"
+      ? items.length
+      : items.filter((item) => item.type === type).length;
   };
 
   return (
@@ -160,7 +162,7 @@ export default function SavedItems() {
               Programs ({getTabCount("program")})
             </TabsTrigger>
           </TabsList>
-          
+
           <TabsContent value={activeTab} className="mt-6">
             {filteredItems.length === 0 ? (
               <div className="text-center py-8 text-gray-500">
@@ -170,18 +172,21 @@ export default function SavedItems() {
             ) : (
               <div className="space-y-4">
                 {filteredItems.map((item) => (
-                  <Card key={item.id} className="border hover:shadow-md transition-shadow">
+                  <Card
+                    key={item.id}
+                    className="border hover:shadow-md transition-shadow"
+                  >
                     <CardContent className="p-4">
                       <div className="flex items-start justify-between">
                         <div className="flex items-start space-x-3 flex-1">
-                          <div className="mt-1">
-                            {getItemIcon(item.type)}
-                          </div>
+                          <div className="mt-1">{getItemIcon(item.type)}</div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center space-x-2 mb-1">
-                              <h4 className="font-medium text-sm">{item.title}</h4>
-                              <Badge 
-                                variant="secondary" 
+                              <h4 className="font-medium text-sm">
+                                {item.title}
+                              </h4>
+                              <Badge
+                                variant="secondary"
                                 className={`text-xs ${getTypeColor(item.type)}`}
                               >
                                 {item.type}
@@ -190,7 +195,7 @@ export default function SavedItems() {
                             <p className="text-sm text-gray-600 mb-2">
                               {item.description}
                             </p>
-                            
+
                             {/* Metadata */}
                             <div className="flex flex-wrap gap-3 text-xs text-gray-500 mb-3">
                               {item.metadata.location && (
@@ -221,23 +226,23 @@ export default function SavedItems() {
                                 </div>
                               )}
                             </div>
-                            
+
                             <div className="flex items-center justify-between">
                               <div className="flex items-center space-x-1 text-xs text-gray-400">
                                 <Clock className="h-3 w-3" />
                                 <span>Saved {item.savedDate}</span>
                               </div>
                               <div className="flex items-center space-x-2">
-                                <Button 
-                                  size="sm" 
+                                <Button
+                                  size="sm"
                                   variant="outline"
                                   className="text-xs"
                                 >
                                   <ExternalLink className="h-3 w-3 mr-1" />
                                   View
                                 </Button>
-                                <Button 
-                                  size="sm" 
+                                <Button
+                                  size="sm"
                                   variant="ghost"
                                   onClick={() => removeItem(item.id)}
                                   className="text-xs text-red-600 hover:text-red-700"

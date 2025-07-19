@@ -6,23 +6,22 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Calendar } from "@/components/ui/calendar";
-import { 
-  Dialog, 
-  DialogContent, 
-  DialogDescription, 
-  DialogHeader, 
-  DialogTitle, 
-  DialogTrigger 
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { 
-  Calendar as CalendarIcon, 
-  Clock, 
-  Video, 
-  MessageSquare, 
+import {
+  Calendar as CalendarIcon,
+  Clock,
+  Video,
+  MessageSquare,
   Star,
-  CheckCircle
 } from "lucide-react";
 
 interface TimeSlot {
@@ -49,7 +48,7 @@ const timeSlots: TimeSlot[] = [
   { id: "3", time: "11:00 AM", available: true },
   { id: "4", time: "2:00 PM", available: true },
   { id: "5", time: "3:00 PM", available: false },
-  { id: "6", time: "4:00 PM", available: true }
+  { id: "6", time: "4:00 PM", available: true },
 ];
 
 const upcomingSessions: Session[] = [
@@ -62,7 +61,7 @@ const upcomingSessions: Session[] = [
     duration: "60 min",
     status: "upcoming",
     type: "video",
-    topic: "Product Strategy"
+    topic: "Product Strategy",
   },
   {
     id: "2",
@@ -73,19 +72,25 @@ const upcomingSessions: Session[] = [
     duration: "45 min",
     status: "completed",
     type: "video",
-    topic: "Fundraising Strategy"
-  }
+    topic: "Fundraising Strategy",
+  },
 ];
 
 export default function MentorshipBooking() {
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
+    new Date()
+  );
   const [selectedTime, setSelectedTime] = useState<string>("");
   const [sessionTopic, setSessionTopic] = useState<string>("");
   const [isBookingOpen, setIsBookingOpen] = useState(false);
 
   const handleBookSession = () => {
     // Handle booking logic here
-    console.log("Booking session:", { selectedDate, selectedTime, sessionTopic });
+    console.log("Booking session:", {
+      selectedDate,
+      selectedTime,
+      sessionTopic,
+    });
     setIsBookingOpen(false);
     // Reset form
     setSelectedTime("");
@@ -119,7 +124,9 @@ export default function MentorshipBooking() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Calendar */}
             <div>
-              <Label className="text-sm font-medium mb-2 block">Select Date</Label>
+              <Label className="text-sm font-medium mb-2 block">
+                Select Date
+              </Label>
               <Calendar
                 mode="single"
                 selected={selectedDate}
@@ -128,10 +135,12 @@ export default function MentorshipBooking() {
                 disabled={(date) => date < new Date()}
               />
             </div>
-            
+
             {/* Time Slots */}
             <div>
-              <Label className="text-sm font-medium mb-2 block">Available Times</Label>
+              <Label className="text-sm font-medium mb-2 block">
+                Available Times
+              </Label>
               <div className="grid grid-cols-2 gap-2">
                 {timeSlots.map((slot) => (
                   <Button
@@ -141,8 +150,8 @@ export default function MentorshipBooking() {
                     disabled={!slot.available}
                     onClick={() => setSelectedTime(slot.time)}
                     className={`${
-                      selectedTime === slot.time 
-                        ? "bg-teal-primary hover:bg-teal-primary/90" 
+                      selectedTime === slot.time
+                        ? "bg-teal-primary hover:bg-teal-primary/90"
                         : ""
                     }`}
                   >
@@ -151,7 +160,7 @@ export default function MentorshipBooking() {
                   </Button>
                 ))}
               </div>
-              
+
               {selectedDate && selectedTime && (
                 <Dialog open={isBookingOpen} onOpenChange={setIsBookingOpen}>
                   <DialogTrigger asChild>
@@ -163,7 +172,8 @@ export default function MentorshipBooking() {
                     <DialogHeader>
                       <DialogTitle>Confirm Session Booking</DialogTitle>
                       <DialogDescription>
-                        Book a mentorship session for {selectedDate?.toDateString()} at {selectedTime}
+                        Book a mentorship session for{" "}
+                        {selectedDate?.toDateString()} at {selectedTime}
                       </DialogDescription>
                     </DialogHeader>
                     <div className="space-y-4">
@@ -178,14 +188,14 @@ export default function MentorshipBooking() {
                         />
                       </div>
                       <div className="flex space-x-2">
-                        <Button 
+                        <Button
                           onClick={handleBookSession}
                           className="flex-1 bg-teal-primary hover:bg-teal-primary/90"
                         >
                           Confirm Booking
                         </Button>
-                        <Button 
-                          variant="outline" 
+                        <Button
+                          variant="outline"
                           onClick={() => setIsBookingOpen(false)}
                           className="flex-1"
                         >
@@ -226,14 +236,14 @@ export default function MentorshipBooking() {
                       <p className="text-sm text-gray-600">{session.topic}</p>
                     </div>
                   </div>
-                  <Badge 
-                    variant="secondary" 
+                  <Badge
+                    variant="secondary"
                     className={`${getStatusColor(session.status)}`}
                   >
                     {session.status}
                   </Badge>
                 </div>
-                
+
                 <div className="flex items-center space-x-4 text-sm text-gray-600 mb-3">
                   <div className="flex items-center space-x-1">
                     <CalendarIcon className="h-4 w-4" />
@@ -241,7 +251,9 @@ export default function MentorshipBooking() {
                   </div>
                   <div className="flex items-center space-x-1">
                     <Clock className="h-4 w-4" />
-                    <span>{session.time} ({session.duration})</span>
+                    <span>
+                      {session.time} ({session.duration})
+                    </span>
                   </div>
                   <div className="flex items-center space-x-1">
                     {session.type === "video" ? (
@@ -249,20 +261,29 @@ export default function MentorshipBooking() {
                     ) : (
                       <MessageSquare className="h-4 w-4" />
                     )}
-                    <span>{session.type === "video" ? "Video Call" : "Chat"}</span>
+                    <span>
+                      {session.type === "video" ? "Video Call" : "Chat"}
+                    </span>
                   </div>
                 </div>
-                
+
                 <div className="flex space-x-2">
                   {session.status === "upcoming" && (
                     <>
-                      <Button size="sm" className="bg-teal-primary hover:bg-teal-primary/90">
+                      <Button
+                        size="sm"
+                        className="bg-teal-primary hover:bg-teal-primary/90"
+                      >
                         Join Session
                       </Button>
                       <Button variant="outline" size="sm">
                         Reschedule
                       </Button>
-                      <Button variant="outline" size="sm" className="text-red-600 hover:text-red-700">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="text-red-600 hover:text-red-700"
+                      >
                         Cancel
                       </Button>
                     </>

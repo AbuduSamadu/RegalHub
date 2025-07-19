@@ -68,10 +68,7 @@ const features = [
 
 export default function FeatureGrid() {
   return (
-    <section
-      className="py-20 bg-gray-50"
-      aria-labelledby="features-heading"
-    >
+    <section className="py-20 bg-gray-50" aria-labelledby="features-heading">
       <div className="container mx-auto px-6 lg:px-20">
         <div className="text-center mb-16">
           <h2
@@ -86,15 +83,11 @@ export default function FeatureGrid() {
           </p>
         </div>
 
-        <div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          role="list"
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature) => (
             <Card
               key={feature.title}
               className="border-0 shadow-md hover:shadow-lg transition-all duration-300 group hover:scale-105"
-              role="listitem"
             >
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between mb-3">

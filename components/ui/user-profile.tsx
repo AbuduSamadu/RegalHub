@@ -11,20 +11,16 @@ import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
-import { 
-  User, 
-  Edit, 
-  Settings, 
-  Award, 
+import {
+  Edit,
+  Settings,
+  Award,
   Calendar,
   Bookmark,
-  MessageSquare,
   MapPin,
   Building,
-  Mail,
-  Globe,
   Camera,
-  Save
+  Save,
 } from "lucide-react";
 
 interface UserProfile {
@@ -38,6 +34,7 @@ interface UserProfile {
   interests: string[];
   isPublic: boolean;
   profileCompletion: number;
+  avatarUrl?: string;
 }
 
 const mockProfile: UserProfile = {
@@ -48,19 +45,44 @@ const mockProfile: UserProfile = {
   location: "San Francisco, CA",
   company: "EcoTech Solutions",
   website: "https://ecotech-solutions.com",
-  interests: ["AI", "Sustainability", "B2B", "Product Management", "Fundraising"],
+  interests: [
+    "AI",
+    "Sustainability",
+    "B2B",
+    "Product Management",
+    "Fundraising",
+  ],
   isPublic: true,
-  profileCompletion: 85
+  profileCompletion: 85,
 };
 
 const achievements = [
-  { id: "1", title: "Community Contributor", description: "Active in community discussions", icon: "🏆" },
+  {
+    id: "1",
+    title: "Community Contributor",
+    description: "Active in community discussions",
+    icon: "🏆",
+  },
   { id: "2", title: "Mentor", description: "Helped 5+ startups", icon: "🎯" },
-  { id: "3", title: "Event Speaker", description: "Spoke at 3 events", icon: "🎤" },
-  { id: "4", title: "Startup of the Month", description: "Featured startup", icon: "⭐" }
+  {
+    id: "3",
+    title: "Event Speaker",
+    description: "Spoke at 3 events",
+    icon: "🎤",
+  },
+  {
+    id: "4",
+    title: "Startup of the Month",
+    description: "Featured startup",
+    icon: "⭐",
+  },
 ];
 
-export default function UserProfile({ isEditable = true }: { isEditable?: boolean }) {
+export default function UserProfile({
+  isEditable = true,
+}: Readonly<{
+  isEditable?: boolean;
+}>) {
   const [profile, setProfile] = useState(mockProfile);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -69,23 +91,26 @@ export default function UserProfile({ isEditable = true }: { isEditable?: boolea
     setIsEditing(false);
   };
 
-  const handleInputChange = (field: keyof UserProfile, value: any) => {
-    setProfile(prev => ({ ...prev, [field]: value }));
+  const handleInputChange = (
+    field: keyof UserProfile,
+    value: UserProfile[keyof UserProfile]
+  ) => {
+    setProfile((prev) => ({ ...prev, [field]: value }));
   };
 
   const addInterest = (interest: string) => {
     if (interest && !profile.interests.includes(interest)) {
-      setProfile(prev => ({
+      setProfile((prev) => ({
         ...prev,
-        interests: [...prev.interests, interest]
+        interests: [...prev.interests, interest],
       }));
     }
   };
 
   const removeInterest = (interest: string) => {
-    setProfile(prev => ({
+    setProfile((prev) => ({
       ...prev,
-      interests: prev.interests.filter(i => i !== interest)
+      interests: prev.interests.filter((i) => i !== interest),
     }));
   };
 
@@ -100,13 +125,16 @@ export default function UserProfile({ isEditable = true }: { isEditable?: boolea
                 <Avatar className="w-20 h-20">
                   <AvatarImage src="/api/placeholder/80/80" />
                   <AvatarFallback className="bg-teal-primary text-white text-xl">
-                    {profile.name.split(' ').map(n => n[0]).join('')}
+                    {profile.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")}
                   </AvatarFallback>
                 </Avatar>
                 {isEditable && isEditing && (
-                  <Button 
-                    size="sm" 
-                    variant="outline" 
+                  <Button
+                    size="sm"
+                    variant="outline"
                     className="absolute -bottom-2 -right-2 h-8 w-8 rounded-full p-0"
                   >
                     <Camera className="h-3 w-3" />
@@ -114,7 +142,9 @@ export default function UserProfile({ isEditable = true }: { isEditable?: boolea
                 )}
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-neutral-dark">{profile.name}</h1>
+                <h1 className="text-2xl font-bold text-neutral-dark">
+                  {profile.name}
+                </h1>
                 <p className="text-lg text-gray-600">{profile.role}</p>
                 <div className="flex items-center space-x-4 mt-2 text-sm text-gray-500">
                   <div className="flex items-center space-x-1">
@@ -128,30 +158,27 @@ export default function UserProfile({ isEditable = true }: { isEditable?: boolea
                 </div>
               </div>
             </div>
-            
+
             {isEditable && (
               <div className="flex items-center space-x-2">
                 {isEditing ? (
                   <>
-                    <Button 
+                    <Button
                       onClick={handleSave}
                       className="bg-teal-primary hover:bg-teal-primary/90"
                     >
                       <Save className="h-4 w-4 mr-2" />
                       Save Changes
                     </Button>
-                    <Button 
-                      variant="outline" 
+                    <Button
+                      variant="outline"
                       onClick={() => setIsEditing(false)}
                     >
                       Cancel
                     </Button>
                   </>
                 ) : (
-                  <Button 
-                    onClick={() => setIsEditing(true)}
-                    variant="outline"
-                  >
+                  <Button onClick={() => setIsEditing(true)} variant="outline">
                     <Edit className="h-4 w-4 mr-2" />
                     Edit Profile
                   </Button>
@@ -165,7 +192,9 @@ export default function UserProfile({ isEditable = true }: { isEditable?: boolea
             <div className="mb-6">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm font-medium">Profile Completion</span>
-                <span className="text-sm text-gray-600">{profile.profileCompletion}%</span>
+                <span className="text-sm text-gray-600">
+                  {profile.profileCompletion}%
+                </span>
               </div>
               <Progress value={profile.profileCompletion} className="h-2" />
             </div>
@@ -175,11 +204,13 @@ export default function UserProfile({ isEditable = true }: { isEditable?: boolea
           <div className="mb-6">
             {isEditing ? (
               <div>
-                <Label htmlFor="bio" className="text-sm font-medium">Bio</Label>
+                <Label htmlFor="bio" className="text-sm font-medium">
+                  Bio
+                </Label>
                 <Textarea
                   id="bio"
                   value={profile.bio}
-                  onChange={(e) => handleInputChange('bio', e.target.value)}
+                  onChange={(e) => handleInputChange("bio", e.target.value)}
                   className="mt-1"
                   rows={3}
                 />
@@ -194,14 +225,14 @@ export default function UserProfile({ isEditable = true }: { isEditable?: boolea
             <h3 className="font-medium mb-3">Interests & Expertise</h3>
             <div className="flex flex-wrap gap-2">
               {profile.interests.map((interest) => (
-                <Badge 
-                  key={interest} 
-                  variant="secondary" 
+                <Badge
+                  key={interest}
+                  variant="secondary"
                   className="bg-teal-primary/10 text-teal-primary"
                 >
                   {interest}
                   {isEditing && (
-                    <button 
+                    <button
                       onClick={() => removeInterest(interest)}
                       className="ml-2 text-xs hover:text-red-600"
                     >
@@ -211,9 +242,9 @@ export default function UserProfile({ isEditable = true }: { isEditable?: boolea
                 </Badge>
               ))}
               {isEditing && (
-                <Button 
-                  variant="outline" 
-                  size="sm" 
+                <Button
+                  variant="outline"
+                  size="sm"
                   onClick={() => {
                     const interest = prompt("Add new interest:");
                     if (interest) addInterest(interest);
@@ -229,22 +260,26 @@ export default function UserProfile({ isEditable = true }: { isEditable?: boolea
           {isEditing && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="email" className="text-sm font-medium">Email</Label>
+                <Label htmlFor="email" className="text-sm font-medium">
+                  Email
+                </Label>
                 <Input
                   id="email"
                   type="email"
                   value={profile.email}
-                  onChange={(e) => handleInputChange('email', e.target.value)}
+                  onChange={(e) => handleInputChange("email", e.target.value)}
                   className="mt-1"
                 />
               </div>
               <div>
-                <Label htmlFor="website" className="text-sm font-medium">Website</Label>
+                <Label htmlFor="website" className="text-sm font-medium">
+                  Website
+                </Label>
                 <Input
                   id="website"
                   type="url"
                   value={profile.website}
-                  onChange={(e) => handleInputChange('website', e.target.value)}
+                  onChange={(e) => handleInputChange("website", e.target.value)}
                   className="mt-1"
                 />
               </div>
@@ -261,7 +296,7 @@ export default function UserProfile({ isEditable = true }: { isEditable?: boolea
           <TabsTrigger value="saved">Saved Items</TabsTrigger>
           {isEditable && <TabsTrigger value="settings">Settings</TabsTrigger>}
         </TabsList>
-        
+
         <TabsContent value="achievements" className="mt-6">
           <Card className="border-0 shadow-md">
             <CardHeader>
@@ -278,7 +313,9 @@ export default function UserProfile({ isEditable = true }: { isEditable?: boolea
                       <div className="text-2xl">{achievement.icon}</div>
                       <div>
                         <h4 className="font-medium">{achievement.title}</h4>
-                        <p className="text-sm text-gray-600">{achievement.description}</p>
+                        <p className="text-sm text-gray-600">
+                          {achievement.description}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -287,7 +324,7 @@ export default function UserProfile({ isEditable = true }: { isEditable?: boolea
             </CardContent>
           </Card>
         </TabsContent>
-        
+
         <TabsContent value="activity" className="mt-6">
           <Card className="border-0 shadow-md">
             <CardHeader>
@@ -303,7 +340,7 @@ export default function UserProfile({ isEditable = true }: { isEditable?: boolea
             </CardContent>
           </Card>
         </TabsContent>
-        
+
         <TabsContent value="saved" className="mt-6">
           <Card className="border-0 shadow-md">
             <CardHeader>
@@ -319,7 +356,7 @@ export default function UserProfile({ isEditable = true }: { isEditable?: boolea
             </CardContent>
           </Card>
         </TabsContent>
-        
+
         {isEditable && (
           <TabsContent value="settings" className="mt-6">
             <Card className="border-0 shadow-md">
@@ -339,10 +376,12 @@ export default function UserProfile({ isEditable = true }: { isEditable?: boolea
                   </div>
                   <Switch
                     checked={profile.isPublic}
-                    onCheckedChange={(checked) => handleInputChange('isPublic', checked)}
+                    onCheckedChange={(checked) =>
+                      handleInputChange("isPublic", checked)
+                    }
                   />
                 </div>
-                
+
                 <div className="flex items-center justify-between">
                   <div>
                     <h4 className="font-medium">Email Notifications</h4>
@@ -352,7 +391,7 @@ export default function UserProfile({ isEditable = true }: { isEditable?: boolea
                   </div>
                   <Switch defaultChecked />
                 </div>
-                
+
                 <div className="flex items-center justify-between">
                   <div>
                     <h4 className="font-medium">Mentorship Requests</h4>
