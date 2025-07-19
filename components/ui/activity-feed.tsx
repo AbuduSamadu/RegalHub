@@ -4,22 +4,28 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { 
-  Calendar, 
-  MessageSquare, 
-  DollarSign, 
-  Users, 
-  Eye, 
+import {
+  Calendar,
+  MessageSquare,
+  DollarSign,
+  Users,
+  Eye,
   CheckCircle,
   Filter,
-  Activity
+  Activity,
 } from "lucide-react";
 
 interface ActivityItem {
   id: string;
-  type: "event" | "message" | "funding" | "profile" | "mentorship" | "achievement";
+  type:
+    | "event"
+    | "message"
+    | "funding"
+    | "profile"
+    | "mentorship"
+    | "achievement";
   title: string;
   description: string;
   time: string;
@@ -34,7 +40,7 @@ const mockActivities: ActivityItem[] = [
     title: "Event RSVP",
     description: "You RSVP'd to 'Startup Pitch Night 2025'",
     time: "2 hours ago",
-    actionUrl: "/events/pitch-night-2025"
+    actionUrl: "/events/pitch-night-2025",
   },
   {
     id: "2",
@@ -42,7 +48,7 @@ const mockActivities: ActivityItem[] = [
     title: "Profile View",
     description: "Investor Sarah Kim viewed your startup profile",
     time: "4 hours ago",
-    avatar: "SK"
+    avatar: "SK",
   },
   {
     id: "3",
@@ -50,7 +56,7 @@ const mockActivities: ActivityItem[] = [
     title: "Mentorship Session",
     description: "Completed session with John Davis",
     time: "1 day ago",
-    avatar: "JD"
+    avatar: "JD",
   },
   {
     id: "4",
@@ -58,14 +64,14 @@ const mockActivities: ActivityItem[] = [
     title: "Funding Application",
     description: "Applied to AI Accelerator Program",
     time: "2 days ago",
-    actionUrl: "/programs/ai-accelerator"
+    actionUrl: "/programs/ai-accelerator",
   },
   {
     id: "5",
     type: "achievement",
     title: "Achievement Unlocked",
     description: "Earned 'Community Contributor' badge",
-    time: "3 days ago"
+    time: "3 days ago",
   },
   {
     id: "6",
@@ -74,8 +80,8 @@ const mockActivities: ActivityItem[] = [
     description: "Received message from mentor Alex Chen",
     time: "3 days ago",
     avatar: "AC",
-    actionUrl: "/messages/alex-chen"
-  }
+    actionUrl: "/messages/alex-chen",
+  },
 ];
 
 const getActivityIcon = (type: string) => {
@@ -125,12 +131,13 @@ export default function ActivityFeed() {
     { key: "event", label: "Events" },
     { key: "mentorship", label: "Mentoring" },
     { key: "funding", label: "Funding" },
-    { key: "message", label: "Messages" }
+    { key: "message", label: "Messages" },
   ];
 
-  const filteredActivities = selectedFilter === "all" 
-    ? activities 
-    : activities.filter(activity => activity.type === selectedFilter);
+  const filteredActivities =
+    selectedFilter === "all"
+      ? activities
+      : activities.filter((activity) => activity.type === selectedFilter);
 
   return (
     <Card className="border-0 shadow-md">
@@ -142,12 +149,12 @@ export default function ActivityFeed() {
           </CardTitle>
           <div className="flex items-center space-x-2">
             <Filter className="h-4 w-4 text-gray-400" />
-            <select 
+            <select
               className="text-sm border rounded px-2 py-1"
               value={selectedFilter}
               onChange={(e) => setSelectedFilter(e.target.value)}
             >
-              {filters.map(filter => (
+              {filters.map((filter) => (
                 <option key={filter.key} value={filter.key}>
                   {filter.label}
                 </option>
@@ -165,13 +172,12 @@ export default function ActivityFeed() {
                 {index < filteredActivities.length - 1 && (
                   <div className="absolute left-6 top-12 w-0.5 h-8 bg-gray-200"></div>
                 )}
-                
+
                 <div className="flex items-start space-x-4">
                   <div className="flex-shrink-0 relative">
                     <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center">
                       {activity.avatar ? (
                         <Avatar className="w-8 h-8">
-                          <AvatarImage src={`/api/placeholder/32/32`} />
                           <AvatarFallback className="text-xs bg-teal-primary text-white">
                             {activity.avatar}
                           </AvatarFallback>
@@ -181,12 +187,12 @@ export default function ActivityFeed() {
                       )}
                     </div>
                   </div>
-                  
+
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between mb-1">
                       <h4 className="font-medium text-sm">{activity.title}</h4>
-                      <Badge 
-                        variant="secondary" 
+                      <Badge
+                        variant="secondary"
                         className={`text-xs ${getActivityColor(activity.type)}`}
                       >
                         {activity.type}
@@ -200,9 +206,9 @@ export default function ActivityFeed() {
                         {activity.time}
                       </span>
                       {activity.actionUrl && (
-                        <Button 
-                          variant="ghost" 
-                          size="sm" 
+                        <Button
+                          variant="ghost"
+                          size="sm"
                           className="text-xs text-teal-primary hover:text-teal-primary/80"
                         >
                           View Details
@@ -215,7 +221,7 @@ export default function ActivityFeed() {
             ))}
           </div>
         </ScrollArea>
-        
+
         <div className="mt-4 pt-4 border-t">
           <Button variant="outline" className="w-full text-sm">
             View All Activity

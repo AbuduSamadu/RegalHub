@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import ProgressTracker from "@/components/ui/progress-tracker";
 import ActivityFeed from "@/components/ui/activity-feed";
 import {
@@ -167,7 +167,6 @@ export default function DashboardPage() {
                 <CardContent className="space-y-4">
                   <div className="flex items-center space-x-3">
                     <Avatar>
-                      <AvatarImage src="/api/placeholder/40/40" />
                       <AvatarFallback className="bg-magenta-primary text-white">
                         JD
                       </AvatarFallback>

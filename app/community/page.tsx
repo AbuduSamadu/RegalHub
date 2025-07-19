@@ -222,10 +222,7 @@ export default function CommunityPage() {
                     <CardContent className="p-6">
                       <div className="flex items-start space-x-4">
                         <Avatar>
-                          <AvatarImage
-                            src={`/api/placeholder/40/40`}
-                            alt={discussion.author}
-                          />
+                          <AvatarImage alt={discussion.author} />
                           <AvatarFallback className="bg-teal-primary text-white">
                             {discussion.avatar}
                           </AvatarFallback>
@@ -328,10 +325,7 @@ export default function CommunityPage() {
                         #{index + 1}
                       </div>
                       <Avatar className="w-8 h-8">
-                        <AvatarImage
-                          src={`/api/placeholder/32/32`}
-                          alt={contributor.name}
-                        />
+                        <AvatarImage alt={contributor.name} />
                         <AvatarFallback className="bg-teal-primary text-white text-xs">
                           {contributor.avatar}
                         </AvatarFallback>
