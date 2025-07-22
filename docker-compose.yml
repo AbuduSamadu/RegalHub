@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  regalhub:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: regalhub-app
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+    restart: unless-stopped
+    
+  # Optional: Add Sentry if you want to run it locally
+  sentry:
+    image: getsentry/sentry:latest
+    container_name: regalhub-sentry
+    ports:
+      - "9000:9000"
+    environment:
+      - SENTRY_SECRET_KEY=your-secret-key
+    restart: unless-stopped
+    depends_on:
+      - redis
+      - postgres
+    
+  redis:
+    image: redis:alpine
+    container_name: regalhub-redis
+    restart: unless-stopped
+    
+  postgres:
+    image: postgres:13
+    container_name: regalhub-postgres
+    environment:
+      - POSTGRES_DB=sentry
+      - POSTGRES_USER=sentry
+      - POSTGRES_PASSWORD=sentry
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
