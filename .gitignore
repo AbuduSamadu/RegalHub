@@ -35,3 +35,17 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Sentry Config File
+.env.sentry-build-plugin
+
+Dockerfile
+.dockerignore
+.env.local
+.env.*.local
+coverage
+.nyc_output
+.cache
+.parcel-cache
+.DS_Store
+*.log

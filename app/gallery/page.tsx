@@ -498,7 +498,11 @@ export default function GalleryPage() {
         {/* Gallery Grid */}
         <div className="grid gap-4 mb-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {paginatedItems.map((item, index) => (
-            <Dialog key={item.id}>
+            <Dialog
+              key={item.id}
+              open={selectedImage !== null}
+              onOpenChange={(open) => !open && setSelectedImage(null)}
+            >
               <DialogTrigger asChild>
                 <Card
                   className="group cursor-pointer hover:shadow-xl transition-all duration-300 overflow-hidden bg-white"
@@ -585,146 +589,150 @@ export default function GalleryPage() {
                   </CardContent>
                 </Card>
               </DialogTrigger>
-              <DialogContent className="max-w-7xl w-full h-[90vh] p-0">
-                <div className="relative w-full h-full bg-black rounded-lg overflow-hidden">
-                  <DialogTitle></DialogTitle>
-                  {/* Close button */}
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="absolute top-4 right-4 z-20 bg-black/50 text-white hover:bg-black/70"
-                    onClick={() => setSelectedImage(null)} // Reset selectedImage to null
-                  >
-                    <X className="w-5 h-5" />
-                  </Button>
+              <DialogContent className="max-w-8xl w-full h-[90vh] p-0">
+                {selectedImage && (
+                  <div className="relative w-full h-full bg-black rounded-lg overflow-hidden">
+                    <DialogTitle></DialogTitle>
+                    {/* Close button */}
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="absolute top-4 right-4 z-20 bg-black/50 text-white hover:bg-black/70"
+                      onClick={() => setSelectedImage(null)} // Reset selectedImage to null
+                    >
+                      <X className="w-5 h-5" />
+                    </Button>
 
-                  {/* Navigation buttons */}
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/50 text-white hover:bg-black/70"
-                    onClick={prevImage}
-                  >
-                    <ChevronLeft className="w-6 h-6" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/50 text-white hover:bg-black/70"
-                    onClick={nextImage}
-                  >
-                    <ChevronRight className="w-6 h-6" />
-                  </Button>
+                    {/* Navigation buttons */}
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/50 text-white hover:bg-black/70"
+                      onClick={prevImage}
+                    >
+                      <ChevronLeft className="w-6 h-6" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/50 text-white hover:bg-black/70"
+                      onClick={nextImage}
+                    >
+                      <ChevronRight className="w-6 h-6" />
+                    </Button>
 
-                  {/* Main Image */}
-                  <div className="w-full h-full flex items-center justify-center p-4">
-                    <Image
-                      src={filteredItems[carouselIndex]?.image}
-                      fill
-                      alt={filteredItems[carouselIndex]?.title}
-                      className="max-w-full max-h-full object-contain"
-                    />
-                  </div>
+                    {/* Main Image */}
+                    <div className="w-full h-full flex items-center justify-center p-4">
+                      <Image
+                        src={filteredItems[carouselIndex]?.image}
+                        fill
+                        alt={filteredItems[carouselIndex]?.title}
+                        className="max-w-full max-h-full object-contain"
+                      />
+                    </div>
 
-                  {/* Image Info Panel */}
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6 text-white">
-                    <div className="max-w-4xl mx-auto">
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="flex-1">
-                          <h3 className="text-2xl font-bold mb-2">
-                            {filteredItems[carouselIndex]?.title}
-                          </h3>
-                          <p className="text-gray-300 mb-4 leading-relaxed">
-                            {filteredItems[carouselIndex]?.description}
-                          </p>
+                    {/* Image Info Panel */}
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6 text-white">
+                      <div className="max-w-4xl mx-auto">
+                        <div className="flex items-start justify-between mb-4">
+                          <div className="flex-1">
+                            <h3 className="text-2xl font-bold mb-2">
+                              {filteredItems[carouselIndex]?.title}
+                            </h3>
+                            <p className="text-gray-300 mb-4 leading-relaxed">
+                              {filteredItems[carouselIndex]?.description}
+                            </p>
+                          </div>
+                          <div className="flex space-x-2 ml-4">
+                            <Button
+                              size="icon"
+                              variant="ghost"
+                              className="text-white hover:bg-white/20"
+                            >
+                              <Heart
+                                className={`w-5 h-5 ${
+                                  likedImages.includes(
+                                    filteredItems[carouselIndex]?.id || 0
+                                  )
+                                    ? "fill-red-500 text-red-500"
+                                    : ""
+                                }`}
+                              />
+                            </Button>
+                            <Button
+                              size="icon"
+                              variant="ghost"
+                              className="text-white hover:bg-white/20"
+                            >
+                              <Download className="w-5 h-5" />
+                            </Button>
+                            <Button
+                              size="icon"
+                              variant="ghost"
+                              className="text-white hover:bg-white/20"
+                            >
+                              <Share2 className="w-5 h-5" />
+                            </Button>
+                          </div>
                         </div>
-                        <div className="flex space-x-2 ml-4">
-                          <Button
-                            size="icon"
-                            variant="ghost"
-                            className="text-white hover:bg-white/20"
-                          >
-                            <Heart
-                              className={`w-5 h-5 ${
-                                likedImages.includes(
-                                  filteredItems[carouselIndex]?.id || 0
-                                )
-                                  ? "fill-red-500 text-red-500"
-                                  : ""
-                              }`}
-                            />
-                          </Button>
-                          <Button
-                            size="icon"
-                            variant="ghost"
-                            className="text-white hover:bg-white/20"
-                          >
-                            <Download className="w-5 h-5" />
-                          </Button>
-                          <Button
-                            size="icon"
-                            variant="ghost"
-                            className="text-white hover:bg-white/20"
-                          >
-                            <Share2 className="w-5 h-5" />
-                          </Button>
-                        </div>
-                      </div>
 
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                        <div className="flex items-center space-x-2">
-                          <Calendar className="w-4 h-4" />
-                          <span>
-                            {new Date(
-                              filteredItems[carouselIndex]?.date || ""
-                            ).toLocaleDateString()}
-                          </span>
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                          <div className="flex items-center space-x-2">
+                            <Calendar className="w-4 h-4" />
+                            <span>
+                              {new Date(
+                                filteredItems[carouselIndex]?.date || ""
+                              ).toLocaleDateString()}
+                            </span>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <MapPin className="w-4 h-4" />
+                            <span>
+                              {filteredItems[carouselIndex]?.location}
+                            </span>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <Users className="w-4 h-4" />
+                            <span>
+                              {filteredItems[carouselIndex]?.attendees}{" "}
+                              attendees
+                            </span>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <Eye className="w-4 h-4" />
+                            <span>
+                              {filteredItems[carouselIndex]?.views} views
+                            </span>
+                          </div>
                         </div>
-                        <div className="flex items-center space-x-2">
-                          <MapPin className="w-4 h-4" />
-                          <span>{filteredItems[carouselIndex]?.location}</span>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <Users className="w-4 h-4" />
-                          <span>
-                            {filteredItems[carouselIndex]?.attendees} attendees
-                          </span>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <Eye className="w-4 h-4" />
-                          <span>
-                            {filteredItems[carouselIndex]?.views} views
-                          </span>
-                        </div>
-                      </div>
 
-                      <div className="flex items-center justify-between mt-4">
-                        <div className="flex flex-wrap gap-2">
-                          {filteredItems[carouselIndex]?.tags.map(
-                            (tag, index) => (
+                        <div className="flex items-center justify-between mt-4">
+                          <div className="flex flex-wrap gap-2">
+                            {filteredItems[carouselIndex]?.tags.map((tag, index) => (
                               <Badge
-                                key={index}
+                                key={`${tag}-${index}`}
                                 variant="secondary"
                                 className="text-xs bg-white/20 text-white border-white/30"
                               >
                                 #{tag}
                               </Badge>
-                            )
-                          )}
-                        </div>
-                        <div className="text-xs text-gray-400">
-                          Photo by {filteredItems[carouselIndex]?.photographer}{" "}
-                          • {filteredItems[carouselIndex]?.size}
+                            ))}
+                          </div>
+                          <div className="text-xs text-gray-400">
+                            Photo by{" "}
+                            {filteredItems[carouselIndex]?.photographer} •{" "}
+                            {filteredItems[carouselIndex]?.size}
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Image Counter */}
-                  <div className="absolute top-4 left-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
-                    {carouselIndex + 1} / {filteredItems.length}
+                    {/* Image Counter */}
+                    <div className="absolute top-4 left-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
+                      {carouselIndex + 1} / {filteredItems.length}
+                    </div>
                   </div>
-                </div>
+                )}
               </DialogContent>
             </Dialog>
           ))}

@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  regalhub:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: regalhub-app
+    ports:
+      - "3001:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    restart: unless-stopped
