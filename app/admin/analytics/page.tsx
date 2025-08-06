@@ -153,9 +153,9 @@ export default function AnalyticsPage() {
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {kpiCards.map((kpi, index) => (
+        {kpiCards.map((kpi) => (
           <Card
-            key={index}
+            key={kpi.title}
             className="border-0 shadow-lg hover:shadow-xl transition-shadow duration-300"
           >
             <CardContent className="p-6">
@@ -255,16 +255,16 @@ export default function AnalyticsPage() {
                   outerRadius={120}
                   dataKey="value"
                 >
-                  {serviceRequestData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  {serviceRequestData.map((entry) => (
+                    <Cell key={`cell-${entry.name}`} fill={entry.color} />
                   ))}
                 </Pie>
                 <Tooltip />
               </RechartsPieChart>
             </ResponsiveContainer>
             <div className="grid grid-cols-2 gap-4 mt-4">
-              {serviceRequestData.map((item, index) => (
-                <div key={index} className="flex items-center">
+              {serviceRequestData.map((item) => (
+                <div key={item.name} className="flex items-center">
                   <div
                     className="w-3 h-3 rounded-full mr-2"
                     style={{ backgroundColor: item.color }}
@@ -370,7 +370,7 @@ export default function AnalyticsPage() {
           <div className="space-y-4">
             {topPerformingEvents.map((event, index) => (
               <div
-                key={index}
+                key={event.name}
                 className="flex items-center justify-between p-4 bg-gray-50 rounded-xl"
               >
                 <div className="flex items-center space-x-4">

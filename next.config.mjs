@@ -1,14 +1,15 @@
 /** @type {import('next').NextConfig} */
-const { withSentryConfig } = require("@sentry/nextjs");
+import { withSentryConfig } from "@sentry/nextjs";
 
 const nextConfig = {
-  output: 'export',
+  // Add standalone output for Docker
+  output: 'standalone',
   images: {
-    unoptimized: true
-  }
+    unoptimized: true // Keep this for Docker compatibility
+  },
 };
 
-module.exports = withSentryConfig(
+export default withSentryConfig(
   nextConfig,
   {
     // For all available options, see:
@@ -27,7 +28,7 @@ module.exports = withSentryConfig(
     // Upload a larger set of source maps for prettier stack traces (increases build time)
     widenClientFileUpload: true,
 
-    // Route browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers.
+    // Now you can enable tunnelRoute since we're not using static export
     tunnelRoute: "/monitoring",
 
     // Automatically tree-shake Sentry logger statements to reduce bundle size

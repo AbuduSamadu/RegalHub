@@ -21,7 +21,7 @@ import {
 import Image from "next/image";
 
 export function AdminSidebar() {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
   const pathname = usePathname();
 
   const navItems = [
@@ -49,17 +49,18 @@ export function AdminSidebar() {
   return (
     <>
       {/* Mobile Overlay */}
-      {!isCollapsed && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
-          onClick={() => setIsCollapsed(true)}
+      {!isMobileOpen && (
+        <button
+          className="fixed inset-0 bg-opacity-50 z-40 md:hidden lg:hidden border-none cursor-pointer"
+          aria-label="Close sidebar"
+          onClick={() => setIsMobileOpen(true)}
         />
       )}
 
       {/* Sidebar */}
       <div
-        className={`fixed left-0 top-0 h-full bg-white border-r z-50 transition-all duration-300 ${
-          isCollapsed ? "-translate-x-full lg:translate-x-0 lg:w-20" : "w-64"
+        className={`fixed  left-0 top-0 h-full bg-white border-r z-50 transition-all duration-300 ${
+          isMobileOpen ? "-translate-x-full lg:translate-x-0 lg:w-20" : "w-64"
         }`}
       >
         <div className="flex flex-col h-full">
@@ -75,7 +76,7 @@ export function AdminSidebar() {
                   className="object-contain"
                 />
               </div>
-              {!isCollapsed && (
+              {!isMobileOpen && (
                 <span className="text-xl font-bold admin-text-gradient">
                   StartupEco
                 </span>
@@ -84,7 +85,7 @@ export function AdminSidebar() {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => setIsCollapsed(!isCollapsed)}
+              onClick={() => setIsMobileOpen(!isMobileOpen)}
               className="lg:hidden"
             >
               <X className="w-5 h-5" />
@@ -106,7 +107,7 @@ export function AdminSidebar() {
                   }`}
                 >
                   <item.icon className="w-5 h-5 flex-shrink-0" />
-                  {!isCollapsed && (
+                  {!isMobileOpen && (
                     <>
                       <span className="font-medium">{item.label}</span>
                       {item.badge && (
@@ -122,7 +123,7 @@ export function AdminSidebar() {
           </nav>
 
           {/* Admin Info */}
-          {!isCollapsed && (
+          {!isMobileOpen && (
             <div className="p-4 border-t">
               <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-xl">
                 <div className="w-10 h-10 bg-[#00BFCB]/20 rounded-full flex items-center justify-center">
@@ -144,7 +145,7 @@ export function AdminSidebar() {
       <Button
         variant="ghost"
         size="icon"
-        onClick={() => setIsCollapsed(false)}
+        onClick={() => setIsMobileOpen(false)}
         className="fixed top-4 left-4 z-40 lg:hidden"
       >
         <Menu className="w-5 h-5" />

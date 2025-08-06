@@ -50,22 +50,9 @@ import {
   Pie,
 } from "recharts";
 
-interface Startup {
-  id: number;
-  name: string;
-  founder: string;
-  email: string;
-  industry: string;
-  stage: string;
-  description: string;
-  location: string;
-  employees: string;
-  website: string;
-}
 
 export default function AdminDashboard() {
   const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
-  const [selectedStartup, setSelectedStartup] = useState<Startup | null>(null);
   const [isViewStartupModalOpen, setIsViewStartupModalOpen] = useState(false);
   const [isAddEventModalOpen, setIsAddEventModalOpen] = useState(false);
   const [isSendInviteModalOpen, setIsSendInviteModalOpen] = useState(false);
@@ -174,11 +161,6 @@ export default function AdminDashboard() {
 
   const getStatusColor = (status: string) => {
     return status === "completed" ? "text-green-600" : "text-yellow-600";
-  };
-
-  const handleViewStartup = (startup: Startup) => {
-    setSelectedStartup(startup);
-    setIsViewStartupModalOpen(true);
   };
 
   const sampleStartups = [

@@ -79,6 +79,7 @@ export function AdminTopbar() {
 
   return (
     <header className="bg-white lg:ml-64 border-b px-6 py-4 flex items-center justify-between">
+      <div className="flex-1 md:hidden"></div>
       {/* Search */}
       <div className="flex-1 max-w-md">
         <div className="relative">

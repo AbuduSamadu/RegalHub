@@ -302,8 +302,8 @@ export default function MentorsManagement() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stats.map((stat, index) => (
-          <Card key={index} className="border-0 shadow-lg">
+        {stats.map((stat) => (
+          <Card key={stat.label} className="border-0 shadow-lg">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -410,7 +410,7 @@ export default function MentorsManagement() {
                         <div className="flex flex-wrap gap-1">
                           {mentor.expertise.slice(0, 2).map((exp, index) => (
                             <Badge
-                              key={index}
+                              key={`${exp}-${index}`}
                               variant="secondary"
                               className="text-xs"
                             >
