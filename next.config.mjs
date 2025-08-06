@@ -16,7 +16,7 @@ export default withSentryConfig(
     // https://www.npmjs.com/package/@sentry/webpack-plugin#options
 
     org: "sentry",
-    project: "internal",
+    // project: "internal",docker run -p 3001:3000 regalhub-app
     sentryUrl: "http://localhost:9000/",
 
     // Only print logs for uploading source maps in CI
