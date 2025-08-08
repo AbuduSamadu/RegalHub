@@ -3,16 +3,15 @@ FROM node:22.16-alpine
 
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
+# Install dependencies first (better caching)
+COPY package.json package-lock.json* ./
+RUN npm ci --only=production && npm cache clean --force
 
-# Install dependencies
-RUN npm ci
-
-# Copy source code
+# Copy source code after dependencies
 COPY . .
 
 # Build the application
+ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm run build
 
 # Expose port
