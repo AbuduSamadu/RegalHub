@@ -22,7 +22,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto px-6 lg:px-20">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <Logo />
 
@@ -68,6 +68,17 @@ export default function Header() {
                         </div>
                       </Link>
                     </NavigationMenuLink>
+                    <NavigationMenuLink asChild>
+                      <Link
+                        href="/library"
+                        className="block p-2 hover:bg-teal-primary/90"
+                      >
+                        <div className="font-medium">library</div>
+                        <div className="text-sm text-muted-foreground">
+                          Library management
+                        </div>
+                      </Link>
+                    </NavigationMenuLink>
                   </div>
                 </NavigationMenuContent>
               </NavigationMenuItem>
@@ -106,7 +117,7 @@ export default function Header() {
 
           {/* Desktop Auth Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            <GlobalSearch />
+            {/* <GlobalSearch /> */}
             <NotificationDropdown />
             <Button
               variant="outline"

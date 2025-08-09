@@ -41,8 +41,10 @@ export const INDUSTRIES = [
 export const NAVIGATION_ITEMS = [
   { name: "Home", href: "/" },
   { name: "Startups", href: "/startups" },
+  { name: "Gallery", href: "/gallery" },
   { name: "Events", href: "/events" },
-  { name: "Services", href: "/services" },
-  { name: "Community", href: "/community" },
+  { name: "Communities", href: "/communities" },
+  { name: "Initiatives", href: "/initiatives" },
+  { name: "Libraries", href: "/libraries" },
   { name: "About", href: "/about" },
 ];

@@ -7,7 +7,6 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, ArrowLeft, Building, Users, DollarSign, User, Handshake } from "lucide-react";
 import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import { Label } from "@/components/ui/label";
 
 const userRoles = [
@@ -352,7 +351,7 @@ export default function OnboardingPage() {
           </Card>
         </div>
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

@@ -1,28 +1,37 @@
-"use client";
-
 import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import SavedItems from "@/components/ui/saved-items";
+import { ResourceLibrary } from "@/components/library/resource-library";
+import { Metadata } from "next";
 
-export default function LibraryPage() {
+
+export const metadata: Metadata = {
+  title: "Resource Library - StartupEco",
+  description:
+    "Access comprehensive resources including guides, templates, tools, and educational content to accelerate your startup journey.",
+  keywords:
+    "startup resources, business templates, guides, tools, educational content, startup library",
+};
+
+export default function LibrariesPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="flex min-h-screen flex-col">
       <Header />
-      <main className="py-12">
-        <div className="container mx-auto px-6 lg:px-20 max-w-6xl">
-          <div className="mb-8">
-            <h1 className="text-4xl font-bold text-neutral-dark mb-4">
-              My Library
-            </h1>
-            <p className="text-lg text-gray-600">
-              Access all your saved startups, events, mentors, and programs
-            </p>
+      <main className="flex-1">
+        <div className="bg-gradient-to-br from-indigo-50 via-blue-50 to-cyan-50 py-16">
+          <div className="container">
+            <div className="mx-auto max-w-2xl text-center">
+              <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+                Resource Library
+              </h1>
+              <p className="mt-4 text-lg leading-8 text-gray-600">
+                Comprehensive collection of guides, templates, and tools to
+                accelerate your startup success
+              </p>
+            </div>
           </div>
-          
-          <SavedItems />
         </div>
+        <ResourceLibrary />
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
