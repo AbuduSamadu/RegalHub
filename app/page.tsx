@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
+import { TestimonialsSections } from "@/components/home/Testimonial";
+import { HowItWorksSection } from "@/components/home/how-it-works";
+import { CallToAction } from "@/components/home/call-to-action";
+import { GallerySection } from "@/components/home/gallery";
+import { FeaturedStartup } from "@/components/home/feature-startups";
+import { FeaturesSection } from "@/components/home/featured-sections";
+import { StatsSection } from "@/components/home/stats-section";
+import { UpcomingEventss } from "@/components/home/upcoming-events";
 import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import HeroSection from "@/components/home/HeroSection";
-import FeatureGrid from "@/components/home/FeatureGrid";
-import FeaturedStartups from "@/components/home/FeaturedStartups";
-import UpcomingEvents from "@/components/home/UpcomingEvents";
-import TestimonialsSection from "@/components/home/TestimonialsSection";
-import NewsletterCTA from "@/components/home/NewsletterCTA";
-import { JsonLd } from "@/components/seo/JsonLd";
+import { HeroSection } from "@/components/home/hero-section";
+import { Footer } from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
   title: "Global Startup Ecosystem Platform - Connect, Collaborate, Grow",
@@ -42,42 +44,22 @@ export const metadata: Metadata = {
   },
 };
 
-const organizationSchema = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "StartupEco",
-  url: "https://startupeco.com",
-  logo: "https://startupeco.com/logo.png",
-  description:
-    "Global startup ecosystem platform connecting entrepreneurs, mentors, and investors",
-  foundingDate: "2020",
-  contactPoint: {
-    "@type": "ContactPoint",
-    telephone: "+1-555-123-4567",
-    contactType: "customer service",
-    email: "hello@startupeco.com",
-  },
-  sameAs: [
-    "https://twitter.com/startupeco",
-    "https://linkedin.com/company/startupeco",
-    "https://facebook.com/startupeco",
-  ],
-};
-
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white">
-      <JsonLd data={organizationSchema} />
+    <div className="flex min-h-screen flex-col">
       <Header />
-      <main role="main">
+      <main className="flex-1">
         <HeroSection />
-        <FeatureGrid />
-        <FeaturedStartups />
-        <UpcomingEvents />
-        <TestimonialsSection />
-        <NewsletterCTA />
+        <FeaturesSection />
+        <HowItWorksSection />
+        <StatsSection />
+        <FeaturedStartup />
+        <GallerySection />
+        <UpcomingEventss />
+        <TestimonialsSections />
+        <CallToAction />
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

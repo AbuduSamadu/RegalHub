@@ -1,118 +1,200 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
 import Link from "next/link";
-import Logo from "./logo";
+import {
+  Rocket,
+  Twitter,
+  Linkedin,
+  Mail,
+  Github,
+  Instagram,
+} from "lucide-react";
+import { motion } from "framer-motion";
+import { SITE_CONFIG } from "@/constants";
 
+export function Footer() {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  };
 
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+      },
+    },
+  };
 
-export default function Footer() {
   return (
-    <footer className="bg-neutral-dark pt-16 pb-8">
-      <div className="container mx-auto px-6 lg:px-20">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Brand */}
-          <div className="space-y-4">
-            <Logo />
-            <p className="text-gray-400 text-sm">
-              Connecting the global startup ecosystem through mentorship,
-              funding, and community.
+    <footer className="bg-background dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
+      <div className="container mx-auto px-4 py-12">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          className="grid grid-cols-1 md:grid-cols-4 gap-8"
+        >
+          <motion.div variants={itemVariants} className="space-y-4">
+            <div className="flex items-center space-x-2">
+              <motion.div
+                whileHover={{ rotate: 360 }}
+                transition={{ duration: 0.5 }}
+              >
+                <Rocket className="h-6 w-6 text-primary" />
+              </motion.div>
+              <span className="font-bold text-xl text-foreground">
+                {SITE_CONFIG.name}
+              </span>
+            </div>
+            <p className="text-muted-foreground max-w-xs">
+              {SITE_CONFIG.description}. Building the future of entrepreneurship
+              through meaningful connections.
             </p>
             <div className="flex space-x-4">
-              <Facebook className="h-5 w-5 text-gray-400 hover:text-teal-primary cursor-pointer" />
-              <Twitter className="h-5 w-5 text-gray-400 hover:text-teal-primary cursor-pointer" />
-              <Linkedin className="h-5 w-5 text-gray-400 hover:text-teal-primary cursor-pointer" />
-              <Instagram className="h-5 w-5 text-gray-400 hover:text-teal-primary cursor-pointer" />
+              {[
+                {
+                  icon: Twitter,
+                  href: SITE_CONFIG.links.twitter,
+                  label: "Twitter",
+                },
+                {
+                  icon: Linkedin,
+                  href: SITE_CONFIG.links.linkedin,
+                  label: "LinkedIn",
+                },
+                {
+                  icon: Github,
+                  href: SITE_CONFIG.links.github,
+                  label: "GitHub",
+                },
+                { icon: Instagram, href: "#", label: "Instagram" },
+                { icon: Mail, href: "#", label: "Email" },
+              ].map((social, index) => (
+                <motion.div
+                  key={social.label}
+                  whileHover={{ scale: 1.2, y: -2 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <Link
+                    href={social.href}
+                    className="text-muted-foreground hover:text-foreground transition-colors duration-300"
+                    aria-label={social.label}
+                  >
+                    <social.icon className="h-5 w-5" />
+                  </Link>
+                </motion.div>
+              ))}
             </div>
-          </div>
+          </motion.div>
 
-          {/* Platform */}
-          <div className="space-y-4">
-            <h4 className="font-semibold text-lg">Platform</h4>
-            <div className="space-y-2">
-              <Link
-                href="/startups"
-                className="block text-gray-400 hover:text-gray-800 text-sm"
-              >
-                Startups
-              </Link>
-              <Link
-                href="/events"
-                className="block text-gray-400  hover:text-gray-800 text-sm"
-              >
-                Events
-              </Link>
-              <Link
-                href="/initiatives"
-                className="block text-gray-400  hover:text-gray-800 text-sm"
-              >
-                Initiatives
-              </Link>
-              <Link
-                href="/community"
-                className="block text-gray-400  hover:text-gray-800 text-sm"
-              >
-                Community
-              </Link>
-            </div>
-          </div>
+          <motion.div variants={itemVariants}>
+            <h3 className="font-semibold mb-4 text-foreground">Platform</h3>
+            <ul className="space-y-2 text-sm">
+              {[
+                { name: "Startups", href: "/startups" },
+                { name: "Mentors", href: "/mentors" },
+                { name: "Investors", href: "/investors" },
+                { name: "Events", href: "/events" },
+              ].map((link) => (
+                <motion.li key={link.name} whileHover={{ x: 5 }}>
+                  <Link
+                    href={link.href}
+                    className="text-muted-foreground hover:text-foreground transition-colors duration-300"
+                  >
+                    {link.name}
+                  </Link>
+                </motion.li>
+              ))}
+            </ul>
+          </motion.div>
 
-          {/* Support */}
-          <div className="space-y-4">
-            <h4 className="font-semibold text-lg">Support</h4>
-            <div className="space-y-2">
+          <motion.div variants={itemVariants}>
+            <h3 className="font-semibold mb-4 text-foreground">Resources</h3>
+            <ul className="space-y-2 text-sm">
+              {[
+                { name: "Blog", href: "/blog" },
+                { name: "Guides", href: "/guides" },
+                { name: "Templates", href: "/templates" },
+                { name: "Support", href: "/support" },
+              ].map((link) => (
+                <motion.li key={link.name} whileHover={{ x: 5 }}>
+                  <Link
+                    href={link.href}
+                    className="text-muted-foreground hover:text-foreground transition-colors duration-300"
+                  >
+                    {link.name}
+                  </Link>
+                </motion.li>
+              ))}
+            </ul>
+          </motion.div>
+
+          <motion.div variants={itemVariants}>
+            <h3 className="font-semibold mb-4 text-foreground">Company</h3>
+            <ul className="space-y-2 text-sm">
+              {[
+                { name: "About", href: "/about" },
+                { name: "Careers", href: "/careers" },
+                { name: "Contact", href: "/contact" },
+                { name: "Privacy", href: "/privacy" },
+              ].map((link) => (
+                <motion.li key={link.name} whileHover={{ x: 5 }}>
+                  <Link
+                    href={link.href}
+                    className="text-muted-foreground hover:text-foreground transition-colors duration-300"
+                  >
+                    {link.name}
+                  </Link>
+                </motion.li>
+              ))}
+            </ul>
+          </motion.div>
+        </motion.div>
+
+        <motion.div
+          variants={itemVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-800"
+        >
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <p className="text-center text-muted-foreground text-sm">
+              © {new Date().getFullYear()} {SITE_CONFIG.name}. All rights
+              reserved.
+            </p>
+            <div className="flex items-center space-x-4 mt-4 md:mt-0">
               <Link
-                href="/contact"
-                className="block text-gray-400 hover:text-gray-800 text-sm"
+                href="/terms"
+                className="text-muted-foreground hover:text-foreground text-sm transition-colors"
               >
-                Contact Us
-              </Link>
-              <Link
-                href="/help"
-                className="block text-gray-400 hover:text-gray-800 text-sm"
-              >
-                Help Center
+                Terms
               </Link>
               <Link
                 href="/privacy"
-                className="block text-gray-400 hover:text-gray-800 text-sm"
+                className="text-muted-foreground hover:text-foreground text-sm transition-colors"
               >
-                Privacy Policy
+                Privacy
               </Link>
               <Link
-                href="/terms"
-                className="block text-gray-400 hover:text-gray-800 text-sm"
+                href="/cookies"
+                className="text-muted-foreground hover:text-foreground text-sm transition-colors"
               >
-                Terms of Service
+                Cookies
               </Link>
             </div>
           </div>
-
-          {/* Newsletter */}
-          <div className="space-y-4">
-            <h4 className="font-semibold text-lg">Stay Updated</h4>
-            <p className="text-gray-400 text-sm">
-              Get the latest news and updates from the startup ecosystem.
-            </p>
-            <div className="flex space-x-2">
-              <Input
-                type="email"
-                placeholder="Your email"
-                className="bg-gray-800 border-gray-700 text-white placeholder-gray-400"
-              />
-              <Button className="bg-teal-primary hover:bg-teal-primary/90">
-                Subscribe
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        <div className="border-t border-gray-700 mt-12 pt-8 text-center text-gray-400 text-sm">
-          <p>
-            &copy; 2024 StartupEco. All rights reserved. Building the future
-            together.
-          </p>
-        </div>
+        </motion.div>
       </div>
     </footer>
   );

@@ -35,8 +35,9 @@ import {
   List,
 } from "lucide-react";
 import Image from "next/image";
+import { Footer } from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+
 
 interface GalleryItem {
   id: number;
